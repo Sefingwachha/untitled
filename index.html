@@ -3,33 +3,107 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>SEFIN</title>
   
-  <!-- Favicon with Cache-Buster (?v=2) to force it to show up immediately -->
+  <!-- Primary SEO Meta Tags -->
+  <title>Sefin Gwachha | Independent Creative Developer</title>
+  <meta name="title" content="Sefin Gwachha | Independent Creative Developer" />
+  <meta name="description" content="Sefin Gwachha is a Creative Developer based in Nepal specializing in React, WebGL, GSAP, and immersive, award-winning digital experiences." />
+  <meta name="keywords" content="Sefin Gwachha, Creative Developer, Freelance Web Developer, UI/UX Designer, React Developer Nepal, GSAP, WebGL, Awwwards" />
+  <meta name="author" content="Sefin Gwachha" />
+  <meta name="theme-color" content="#050505" />
+  
+  <!-- Canonical & Crawler Directives -->
+  <link rel="canonical" href="https://sefin.com.np/" />
+  <meta name="robots" content="index, follow, max-image-preview:large" />
+
+  <!-- Open Graph / Facebook / LinkedIn -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://sefin.com.np/" />
+  <meta property="og:title" content="Sefin Gwachha | Creative Developer" />
+  <meta property="og:description" content="Architecting bespoke web experiences. Fusing robust engineering with cinematic motion and immersive design." />
+  <meta property="og:image" content="https://sefin.com.np/og-image.jpg" />
+
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image" />
+  <meta property="twitter:url" content="https://sefin.com.np/" />
+  <meta property="twitter:title" content="Sefin Gwachha | Creative Developer" />
+  <meta property="twitter:description" content="Architecting bespoke web experiences. Fusing robust engineering with cinematic motion and immersive design." />
+  <meta property="twitter:image" content="https://sefin.com.np/og-image.jpg" />
+
+  <!-- Favicon Integration -->
   <link rel="icon" type="image/png" href="logo.png?v=2" />
   <link rel="apple-touch-icon" href="logo.png?v=2" />
   
-  <!-- Premium Typography -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@1,400;1,500;1,600&family=Syncopate:wght@400;600;700&display=swap" rel="stylesheet" />
+  <!-- Performance Optimization: Preconnect -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Syncopate:wght@400;600;700&family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@1,400;1,500;1,600&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="style.css" />
-</head>
-<body class="loading no-select"> <!-- no-select class added for security -->
 
+  <!-- Google Analytics (GA4) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-XXXXXXXXXX'); /* REPLACE WITH YOUR ID */
+  </script>
+
+  <!-- Google Structured Data (JSON-LD) -->
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org/",
+      "@type": "Person",
+      "name": "Sefin Gwachha",
+      "url": "https://sefin.com.np/",
+      "image": "https://sefin.com.np/logo.png",
+      "sameAs": [
+        "https://www.linkedin.com/in/sefin-gwachha/",
+        "https://github.com/Sefingwachha",
+        "https://instagram.com/___sefin"
+      ],
+      "jobTitle": "Independent Creative Developer",
+      "worksFor": {
+        "@type": "Organization",
+        "name": "Freelance"
+      },
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Bhaktapur",
+        "addressCountry": "Nepal"
+      }
+    }
+  </script>
+
+  <!-- Fallback for users with JavaScript disabled -->
+  <noscript>
+    <style>
+      .preloader, .cursor-dot, .global-image-reveal, .floating-hire-badge { display: none !important; }
+      .anim-up, .anim-fade, .mask-up { transform: none !important; opacity: 1 !important; }
+      body.loading { overflow: auto; }
+    </style>
+  </noscript>
+</head>
+<body class="loading no-select">
+
+  <!-- Cinematic SVG Noise Overlay -->
   <div class="noise-overlay" aria-hidden="true"></div>
 
-  <!-- KINETIC CURSOR -->
+  <!-- Minimal Physics Cursor -->
   <div class="cursor-tracker" id="cursor-tracker" aria-hidden="true">
     <div class="cursor-dot"><span class="cursor-text">VIEW</span></div>
   </div>
 
-  <!-- GLOBAL FLOATING IMAGE REVEAL -->
+  <!-- Global Image Tracker -->
   <div class="global-image-reveal" id="image-tracker" aria-hidden="true">
     <div class="reveal-inner">
-      <!-- draggable="false" prevents image theft -->
       <img src="" alt="Project Preview" id="global-reveal-img" decoding="async" loading="lazy" draggable="false" />
     </div>
   </div>
 
+  <!-- The Conversion Badge -->
   <a href="mailto:sefingwachha@gmail.com" class="floating-hire-badge" aria-label="Hire Me">
     <div class="badge-inner">
       <svg viewBox="0 0 100 100" width="100" height="100" aria-hidden="true">
@@ -40,12 +114,14 @@
     </div>
   </a>
 
+  <!-- Architectural Background Grid -->
   <div class="grid-overlay" aria-hidden="true">
     <div class="grid-container">
       <div class="grid-col"></div><div class="grid-col"></div><div class="grid-col"></div><div class="grid-col"></div>
     </div>
   </div>
 
+  <!-- Preloader -->
   <div class="preloader" aria-hidden="true">
     <div class="loader-content">
       <span class="loader-title">SEFIN GWACHHA</span>
@@ -53,8 +129,9 @@
     </div>
   </div>
 
+  <!-- Frosted Glass Header -->
   <header class="navbar">
-    <div class="nav-brand">SEFIN</div>
+    <div class="nav-brand">SEFIN&copy;</div>
     <div class="nav-status hidden-mobile">
       <div class="status-dot"></div> ACCEPTING NEW CLIENTS
     </div>
@@ -65,8 +142,10 @@
     </nav>
   </header>
 
+  <!-- Main Content Wrapper -->
   <main id="main-content">
     
+    <!-- HERO SECTION -->
     <section class="hero grid-container" id="home">
       <div class="hero-content" data-parallax="0.15">
         <div class="hero-top animate-fade">
@@ -74,7 +153,8 @@
           <p>ELEVATING BRANDS GLOBALLY</p>
         </div>
         
-        <h2 class="hero-title">
+        <h1 class="sr-only" style="position:absolute; width:1px; height:1px; overflow:hidden;">Sefin Gwachha - Creative Developer</h1>
+        <h2 class="hero-title" aria-hidden="true">
           <div class="anim-line"><span class="anim-up">CRAFTING</span></div>
           <div class="anim-line"><span class="anim-up delay-1"><span class="serif">digital</span> LEGACIES</span></div>
         </h2>
@@ -86,12 +166,15 @@
       </div>
     </section>
 
+    <!-- ABOUT SECTION -->
     <section class="about section-padding border-top" id="about">
       <div class="grid-container">
+        
         <div class="col-label trigger" data-parallax="0.05">
           <span class="section-num anim-fade">( 01 )</span>
           <h2 class="section-title anim-fade delay-1">VISION</h2>
         </div>
+        
         <div class="col-content">
           <h3 class="about-text trigger">
             <span class="anim-line"><span class="anim-up">I partner with forward-thinking brands</span></span>
@@ -115,15 +198,19 @@
             </article>
           </div>
         </div>
+
       </div>
     </section>
 
+    <!-- WORKS SECTION -->
     <section class="works section-padding border-top" id="works">
       <div class="grid-container">
+        
         <div class="col-label trigger" data-parallax="0.05">
           <span class="section-num anim-fade">( 02 )</span>
           <h2 class="section-title anim-fade delay-1">ARCHIVE</h2>
         </div>
+        
         <div class="col-content">
           <div class="works-index" id="velocity-container">
             
@@ -133,36 +220,40 @@
               <div class="idx-col text-right anim-fade delay-2">YEAR</div>
             </div>
 
-            <a href="#" class="index-row project-item trigger" data-image="Main Frame.webp">
+            <!-- SEO FIX: Replaced dead '#' links with javascript:void(0); -->
+            <a href="javascript:void(0);" class="index-row project-item trigger" data-image="Main Frame.webp" aria-label="View Euphoria Fashion Case Study">
               <div class="idx-col title anim-fade">EUPHORIA</div>
               <div class="idx-col hidden-mobile meta anim-fade delay-1">Platform Architecture</div>
               <div class="idx-col text-right meta anim-fade delay-2">2024</div>
             </a>
 
-            <a href="#" class="index-row project-item trigger" data-image="hero banner.webp">
+            <a href="javascript:void(0);" class="index-row project-item trigger" data-image="hero banner.webp" aria-label="View Cherished Photography Case Study">
               <div class="idx-col title anim-fade">CHERISHED</div>
               <div class="idx-col hidden-mobile meta anim-fade delay-1">UI/UX & Engineering</div>
               <div class="idx-col text-right meta anim-fade delay-2">2025</div>
             </a>
 
-            <a href="https://www.expertservicehub.com/" target="_blank" rel="noopener noreferrer" class="index-row project-item trigger" data-image="site.webp">
+            <a href="https://www.expertservicehub.com/" target="_blank" rel="noopener noreferrer" class="index-row project-item trigger" data-image="site.webp" aria-label="Visit Expert Hub Live Site">
               <div class="idx-col title anim-fade">EXPERT HUB</div>
               <div class="idx-col hidden-mobile meta anim-fade delay-1">Fullstack Development</div>
               <div class="idx-col text-right meta anim-fade delay-2">2026</div>
             </a>
 
-            <div class="index-row project-item trigger" data-image="Hero Banner UI.webp">
+            <a href="javascript:void(0);" class="index-row project-item trigger" data-image="Hero Banner UI.webp" aria-label="View Ultimate Canvas Project">
               <div class="idx-col title anim-fade">ULTIMATE</div>
               <div class="idx-col hidden-mobile meta anim-fade delay-1">Generative WebGL</div>
               <div class="idx-col text-right meta anim-fade delay-2">2023</div>
-            </div>
+            </a>
             
           </div>
         </div>
+
       </div>
     </section>
+
   </main>
 
+  <!-- FOOTER -->
   <footer class="footer border-top" id="contact">
     <div class="grid-container footer-top trigger">
       <div class="col-full">
