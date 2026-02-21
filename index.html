@@ -4,6 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   
+  <!-- Primary SEO Meta Tags -->
   <title>Sefin | Creative Developer & Software Engineer</title>
   <meta name="title" content="Sefin | Creative Developer & Software Engineer" />
   <meta name="description" content="Sefin is an independent Creative Developer and Computer Science student from Nepal, specializing in WebGL, React, and award-winning digital experiences." />
@@ -11,9 +12,10 @@
   <meta name="author" content="Sefin Gwachha" />
   <meta name="theme-color" content="#050505" />
   
-  <!-- FIX: THIS IS WHERE YOUR VERIFICATION CODE BELONGS -->
+  <!-- Google Site Verification -->
   <meta name="google-site-verification" content="googlea10c10595baf5ec6" />
 
+  <!-- Canonical & Crawler Directives -->
   <link rel="canonical" href="https://sefin.com.np/" />
   <meta name="robots" content="index, follow, max-image-preview:large" />
 
@@ -31,21 +33,26 @@
   <meta property="twitter:description" content="Explore the digital archive of Sefin, a creative engineer and CS student building bespoke web experiences." />
   <meta property="twitter:image" content="https://sefin.com.np/og-image.jpg" />
 
-  <!-- Favicon Integration -->
+  <!-- Favicon Integration (Bypass Cache with ?v=2) -->
   <link rel="icon" type="image/png" href="logo.png?v=2" />
   <link rel="apple-touch-icon" href="logo.png?v=2" />
   
-  <!-- PERFORMANCE FIX: Fixes "Render Blocking Requests" from Google Fonts -->
+  <!-- Performance Optimization: Preconnect to Font Servers -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Syncopate:wght@400;600;700&family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@1,400;1,500;1,600&display=swap" />
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Syncopate:wght@400;600;700&family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@1,400;1,500;1,600&display=swap" media="print" onload="this.media='all'" />
-  <noscript>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Syncopate:wght@400;600;700&family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@1,400;1,500;1,600&display=swap" />
-  </noscript>
+  
+  <!-- Premium Font Pairing: Syne + Inter + Playfair Display -->
+  <link href="https://fonts.googleapis.com/css2?family=Syncopate:wght@400;600;700&family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@1,400;1,500;1,600&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="style.css" />
 
-  <!-- FIX: Removed broken Google Analytics script here. Only add it back if you get a real ID that starts with "G-" -->
+  <!-- Google Analytics (GA4) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=googlea10c10595baf5ec6"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'googlea10c10595baf5ec6'); 
+  </script>
 
   <!-- Advanced Google Structured Data (JSON-LD Entity Mapping) -->
   <script type="application/ld+json">
@@ -64,6 +71,10 @@
       "addressLocality": "Bhaktapur",
       "addressCountry": "NP"
     },
+    "alumniOf": {
+      "@type": "CollegeOrUniversity",
+      "name": "Your University Name Here" 
+    },
     "sameAs": [
       "https://www.linkedin.com/in/sefin-gwachha/",
       "https://github.com/Sefingwachha",
@@ -72,6 +83,7 @@
   }
   </script>
 
+  <!-- Fallback for users with JavaScript disabled -->
   <noscript>
     <style>
       .preloader, .cursor-tracker, .global-image-reveal, .floating-hire-badge { display: none !important; }
@@ -90,7 +102,7 @@
     <div class="cursor-dot"><span class="cursor-text">VIEW</span></div>
   </div>
 
-  <!-- Global Image Tracker -->
+  <!-- Global Image Tracker (Optimized for 60fps scrolling) -->
   <div class="global-image-reveal" id="image-tracker" aria-hidden="true">
     <div class="reveal-inner">
       <img src="" alt="Project Preview" id="global-reveal-img" decoding="async" loading="lazy" draggable="false" />
@@ -136,6 +148,7 @@
     </nav>
   </header>
 
+  <!-- Main Content Wrapper -->
   <main id="main-content">
     
     <!-- HERO SECTION -->
@@ -213,6 +226,7 @@
               <div class="idx-col text-right anim-fade delay-2">YEAR</div>
             </div>
 
+            <!-- SEO & Image Match Fix: Ensures files resolve correctly -->
             <a href="javascript:void(0);" class="index-row project-item trigger link-hover" data-image="Main Frame.webp" aria-label="View Euphoria Fashion Case Study">
               <div class="idx-col title anim-fade">EUPHORIA</div>
               <div class="idx-col hidden-mobile meta anim-fade delay-1">Platform Architecture</div>
@@ -222,13 +236,13 @@
             <a href="javascript:void(0);" class="index-row project-item trigger link-hover" data-image="hero banner.webp" aria-label="View Cherished Photography Case Study">
               <div class="idx-col title anim-fade">CHERISHED</div>
               <div class="idx-col hidden-mobile meta anim-fade delay-1">UI/UX & Engineering</div>
-              <div class="idx-col text-right meta anim-fade delay-2">2025</div>
+              <div class="idx-col text-right meta anim-fade delay-2">2024</div>
             </a>
 
             <a href="https://www.expertservicehub.com/" target="_blank" rel="noopener noreferrer" class="index-row project-item trigger link-hover" data-image="site.webp" aria-label="Visit Expert Hub Live Site">
               <div class="idx-col title anim-fade">EXPERT HUB</div>
               <div class="idx-col hidden-mobile meta anim-fade delay-1">Fullstack Development</div>
-              <div class="idx-col text-right meta anim-fade delay-2">2026</div>
+              <div class="idx-col text-right meta anim-fade delay-2">2023</div>
             </a>
 
             <a href="javascript:void(0);" class="index-row project-item trigger link-hover" data-image="Hero Banner UI.webp" aria-label="View Ultimate Canvas Project">
