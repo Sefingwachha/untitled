@@ -13,7 +13,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const loaderPercent = document.getElementById("loader-percent");
     
     const loaderInterval = setInterval(() => {
-        // Fast jump to clear LCP metric
         percent += Math.floor(Math.random() * 20) + 5;
         if (percent > 100) percent = 100;
         if (loaderPercent) loaderPercent.textContent = percent + '%';
@@ -34,9 +33,11 @@ document.addEventListener("DOMContentLoaded", () => {
     const hoverLinks = document.querySelectorAll('.link-hover');
     const projects = document.querySelectorAll('.project-item');
 
-    // ONLY execute on Mouse-enabled devices
-    if (window.matchMedia("(hover: hover) and (pointer: fine)").matches) {
-        
+    // Display trackers immediately on desktop width
+    if (window.innerWidth >= 768) {
+        if (cursorTracker) cursorTracker.style.display = 'block';
+        if (globalReveal) globalReveal.style.display = 'block';
+
         let mouseX = window.innerWidth / 2, mouseY = window.innerHeight / 2;
         let dotX = mouseX, dotY = mouseY;
         let revX = mouseX, revY = mouseY;
@@ -64,9 +65,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
             if (globalReveal) {
                 const isActive = globalReveal.classList.contains('active');
-                globalReveal.style.transform = `translate(-50%, -50%) scale(${isActive ? 1 : 0.8}) rotate(${tilt}deg)`;
-                globalReveal.style.left = `${revX}px`; 
-                globalReveal.style.top = `${revY}px`;
+                globalReveal.style.transform = `translate3d(-50%, -50%, 0) translate3d(${revX}px, ${revY}px, 0) scale(${isActive ? 1 : 0.8}) rotate(${tilt}deg)`;
             }
 
             requestAnimationFrame(renderPhysics);
@@ -100,7 +99,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     // 3. BULLETPROOF SCROLL REVEALS
-    const observerOptions = { root: null, rootMargin: '0px 0px -10% 0px', threshold: 0 };
+    const observerOptions = { root: null, rootMargin: '0px 0px -5% 0px', threshold: 0 };
     const scrollObserver = new IntersectionObserver((entries, observer) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
