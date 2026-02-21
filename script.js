@@ -13,6 +13,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const loaderPercent = document.getElementById("loader-percent");
     
     const loaderInterval = setInterval(() => {
+        // Fast jump to clear LCP metric
         percent += Math.floor(Math.random() * 20) + 5;
         if (percent > 100) percent = 100;
         if (loaderPercent) loaderPercent.textContent = percent + '%';
@@ -26,13 +27,14 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }, 15);
 
-    // 2. KINETIC CURSOR & IMAGE REVEAL (Hardware Accelerated)
+    // 2. KINETIC CURSOR & IMAGE REVEAL
     const cursorTracker = document.getElementById('cursor-tracker');
     const globalReveal = document.getElementById('image-tracker');
     const globalRevealImg = document.getElementById('global-reveal-img');
     const hoverLinks = document.querySelectorAll('.link-hover');
     const projects = document.querySelectorAll('.project-item');
 
+    // ONLY execute on Mouse-enabled devices
     if (window.matchMedia("(hover: hover) and (pointer: fine)").matches) {
         
         let mouseX = window.innerWidth / 2, mouseY = window.innerHeight / 2;
