@@ -74,7 +74,7 @@ a { text-decoration: none; color: inherit; }
 .global-image-reveal { 
   position: fixed; top: 0; left: 0; z-index: 100; pointer-events: none; 
   opacity: 0; transition: opacity 0.4s var(--ease-out-quint); 
-  will-change: transform, opacity;
+  will-change: transform, opacity; display: none; /* Defaults hidden, activated by JS on desktop */
 }
 .global-image-reveal .reveal-inner {
   width: 350px; height: 450px; overflow: hidden; border-radius: 4px;
@@ -84,7 +84,7 @@ a { text-decoration: none; color: inherit; }
 .global-image-reveal.active { opacity: 1; }
 .global-image-reveal.active .reveal-inner { transform: translate(-50%, -50%) scale(1) rotate(0deg); }
 
-.reveal-inner img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(100%); transform: scale(1.2); transition: transform 0.6s var(--ease-out-quint); will-change: transform; }
+.reveal-inner img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(100%); transform: scale(1.2); transition: transform 0.6s var(--ease-out-quint); }
 .global-image-reveal.active .reveal-inner img { transform: scale(1); filter: grayscale(0%); }
 
 /* ===================================
@@ -92,7 +92,7 @@ a { text-decoration: none; color: inherit; }
    =================================== */
 .cursor-tracker {
   position: fixed; top: 0; left: 0; z-index: 10000; pointer-events: none; mix-blend-mode: difference;
-  will-change: transform;
+  will-change: transform; display: none; /* Defaults hidden, activated by JS on desktop */
 }
 .cursor-dot {
   width: 12px; height: 12px; background: var(--text); border-radius: 50%;
@@ -118,7 +118,7 @@ a { text-decoration: none; color: inherit; }
 /* ===================================
    PRELOADER
    =================================== */
-.preloader { position: fixed; inset: 0; background: var(--bg); z-index: 99999; display: flex; align-items: center; justify-content: center; transition: opacity 1s var(--ease-out-quint), visibility 1s; }
+.preloader { position: fixed; inset: 0; background: var(--bg); z-index: 99999; display: flex; align-items: center; justify-content: center; transition: opacity 0.8s var(--ease-out-quint), visibility 0.8s; }
 .loader-content { display: flex; flex-direction: column; align-items: center; gap: 1rem; font-size: 0.85rem; letter-spacing: 0.1em; text-transform: uppercase; }
 #loader-percent { font-family: 'Playfair Display', serif; font-size: clamp(3rem, 8vw, 5rem); font-style: italic; }
 body.loaded .preloader { opacity: 0; visibility: hidden; }
@@ -184,7 +184,7 @@ body.loaded .hero .anim-fade, .trigger.is-visible .anim-fade { opacity: 1; trans
 .idx-col.meta { font-size: 1rem; font-weight: 400; color: var(--text-muted); transition: opacity 0.4s; }
 .text-right { text-align: right; }
 
-@media (hover: hover) and (pointer: fine) {
+@media (min-width: 768px) {
   .works-index:hover .index-row { opacity: 0.3; }
   .works-index .index-row:hover { opacity: 1; color: #fff; }
   .works-index .index-row:hover .idx-col.title { transform: translateX(1.5vw); }
@@ -209,7 +209,6 @@ body.loaded .hero .anim-fade, .trigger.is-visible .anim-fade { opacity: 1; trans
 .footer-col .label { font-size: 0.75rem; letter-spacing: 0.1em; color: var(--text-muted); display: block; margin-bottom: 0.5rem; text-transform: uppercase; }
 .footer-col p, .social-links a { font-size: 1rem; font-weight: 500; }
 .social-links { display: flex; gap: 2rem; }
-/* SEO FIX: Safe Mobile Tap Targets */
 .social-links a { position: relative; display: inline-block; padding: 0.5rem 0; }
 .social-links a::after { content: ''; position: absolute; bottom: 0.3rem; left: 0; width: 0%; height: 1px; background: currentColor; transition: width 0.4s var(--ease-out-quint); }
 .social-links a:hover::after { width: 100%; }
