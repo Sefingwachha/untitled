@@ -26,15 +26,16 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }, 15);
 
-    // 2. KINETIC CURSOR & IMAGE REVEAL
+    // 2. KINETIC CURSOR & IMAGE REVEAL (Touch-Bug Fixed)
     const cursorTracker = document.getElementById('cursor-tracker');
     const globalReveal = document.getElementById('image-tracker');
     const globalRevealImg = document.getElementById('global-reveal-img');
     const hoverLinks = document.querySelectorAll('.link-hover');
     const projects = document.querySelectorAll('.project-item');
 
-    // Display trackers immediately on desktop width
+    // FIX: Using innerWidth guarantees images will show on Windows Touch Laptops
     if (window.innerWidth >= 768) {
+        
         if (cursorTracker) cursorTracker.style.display = 'block';
         if (globalReveal) globalReveal.style.display = 'block';
 
@@ -49,6 +50,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
 
         function renderPhysics() {
+            // Cursor LERP
             dotX += (mouseX - dotX) * 0.25;
             dotY += (mouseY - dotY) * 0.25;
             
@@ -56,6 +58,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 cursorTracker.style.transform = `translate3d(${dotX}px, ${dotY}px, 0)`;
             }
 
+            // Image LERP
             revX += (mouseX - revX) * 0.1;
             revY += (mouseY - revY) * 0.1;
             
@@ -65,7 +68,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
             if (globalReveal) {
                 const isActive = globalReveal.classList.contains('active');
-                globalReveal.style.transform = `translate3d(-50%, -50%, 0) translate3d(${revX}px, ${revY}px, 0) scale(${isActive ? 1 : 0.8}) rotate(${tilt}deg)`;
+                globalReveal.style.transform = `translate(-50%, -50%) scale(${isActive ? 1 : 0.8}) rotate(${tilt}deg)`;
+                globalReveal.style.left = `${revX}px`; 
+                globalReveal.style.top = `${revY}px`;
             }
 
             requestAnimationFrame(renderPhysics);
@@ -99,7 +104,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     // 3. BULLETPROOF SCROLL REVEALS
-    const observerOptions = { root: null, rootMargin: '0px 0px -5% 0px', threshold: 0 };
+    const observerOptions = { root: null, rootMargin: '0px 0px -10% 0px', threshold: 0 };
     const scrollObserver = new IntersectionObserver((entries, observer) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
