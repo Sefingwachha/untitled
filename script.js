@@ -13,6 +13,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const loaderPercent = document.getElementById("loader-percent");
     
     const loaderInterval = setInterval(() => {
+        // Fast jump to clear LCP metric
         percent += Math.floor(Math.random() * 20) + 5;
         if (percent > 100) percent = 100;
         if (loaderPercent) loaderPercent.textContent = percent + '%';
@@ -26,14 +27,14 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }, 15);
 
-    // 2. KINETIC CURSOR & IMAGE REVEAL (Touch-Bug Fixed)
+    // 2. KINETIC CURSOR & IMAGE REVEAL (Safe Windows Touch Fix)
     const cursorTracker = document.getElementById('cursor-tracker');
     const globalReveal = document.getElementById('image-tracker');
     const globalRevealImg = document.getElementById('global-reveal-img');
     const hoverLinks = document.querySelectorAll('.link-hover');
     const projects = document.querySelectorAll('.project-item');
 
-    // FIX: Using innerWidth guarantees images will show on Windows Touch Laptops
+    // ONLY execute on Desktop devices (Width > 768 to bypass touch bugs)
     if (window.innerWidth >= 768) {
         
         if (cursorTracker) cursorTracker.style.display = 'block';
@@ -58,7 +59,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 cursorTracker.style.transform = `translate3d(${dotX}px, ${dotY}px, 0)`;
             }
 
-            // Image LERP
+            // Image Reveal LERP
             revX += (mouseX - revX) * 0.1;
             revY += (mouseY - revY) * 0.1;
             
