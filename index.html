@@ -4,7 +4,6 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   
-  <!-- Ultimate SEO Meta Tags (Rank #1 for Sefin) -->
   <title>Sefin | Creative Developer & Software Engineer</title>
   <meta name="title" content="Sefin | Creative Developer & Software Engineer" />
   <meta name="description" content="Sefin is an independent Creative Developer and Computer Science student from Nepal, specializing in WebGL, React, and award-winning digital experiences." />
@@ -12,10 +11,9 @@
   <meta name="author" content="Sefin Gwachha" />
   <meta name="theme-color" content="#050505" />
   
-  <!-- Google Site Verification -->
-  <meta name="google-site-verification" content="YOUR_GOOGLE_VERIFICATION_CODE_HERE" />
+  <!-- FIX: THIS IS WHERE YOUR VERIFICATION CODE BELONGS -->
+  <meta name="google-site-verification" content="googlea10c10595baf5ec6" />
 
-  <!-- Canonical & Crawler Directives -->
   <link rel="canonical" href="https://sefin.com.np/" />
   <meta name="robots" content="index, follow, max-image-preview:large" />
 
@@ -33,26 +31,21 @@
   <meta property="twitter:description" content="Explore the digital archive of Sefin, a creative engineer and CS student building bespoke web experiences." />
   <meta property="twitter:image" content="https://sefin.com.np/og-image.jpg" />
 
-  <!-- Favicon Integration (Bypass Cache with ?v=2) -->
+  <!-- Favicon Integration -->
   <link rel="icon" type="image/png" href="logo.png?v=2" />
   <link rel="apple-touch-icon" href="logo.png?v=2" />
   
-  <!-- Performance Optimization: Preconnect to Font Servers -->
+  <!-- PERFORMANCE FIX: Fixes "Render Blocking Requests" from Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  
-  <!-- Premium Font Pairing: Syne + Inter + Playfair Display -->
-  <link href="https://fonts.googleapis.com/css2?family=Syncopate:wght@400;600;700&family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@1,400;1,500;1,600&display=swap" rel="stylesheet" />
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Syncopate:wght@400;600;700&family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@1,400;1,500;1,600&display=swap" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Syncopate:wght@400;600;700&family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@1,400;1,500;1,600&display=swap" media="print" onload="this.media='all'" />
+  <noscript>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Syncopate:wght@400;600;700&family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@1,400;1,500;1,600&display=swap" />
+  </noscript>
   <link rel="stylesheet" href="style.css" />
 
-  <!-- Google Analytics (GA4) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=googlea10c10595baf5ec6"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'googlea10c10595baf5ec6'); 
-  </script>
+  <!-- FIX: Removed broken Google Analytics script here. Only add it back if you get a real ID that starts with "G-" -->
 
   <!-- Advanced Google Structured Data (JSON-LD Entity Mapping) -->
   <script type="application/ld+json">
@@ -71,10 +64,6 @@
       "addressLocality": "Bhaktapur",
       "addressCountry": "NP"
     },
-    "alumniOf": {
-      "@type": "College",
-      "name": "Herald College Of Kathmandu" 
-    },
     "sameAs": [
       "https://www.linkedin.com/in/sefin-gwachha/",
       "https://github.com/Sefingwachha",
@@ -83,7 +72,6 @@
   }
   </script>
 
-  <!-- Fallback for users with JavaScript disabled -->
   <noscript>
     <style>
       .preloader, .cursor-tracker, .global-image-reveal, .floating-hire-badge { display: none !important; }
@@ -102,7 +90,7 @@
     <div class="cursor-dot"><span class="cursor-text">VIEW</span></div>
   </div>
 
-  <!-- Global Image Tracker (Optimized for 60fps scrolling) -->
+  <!-- Global Image Tracker -->
   <div class="global-image-reveal" id="image-tracker" aria-hidden="true">
     <div class="reveal-inner">
       <img src="" alt="Project Preview" id="global-reveal-img" decoding="async" loading="lazy" draggable="false" />
@@ -148,7 +136,6 @@
     </nav>
   </header>
 
-  <!-- Main Content Wrapper (Creates the Curtain Footer effect) -->
   <main id="main-content">
     
     <!-- HERO SECTION -->
@@ -208,7 +195,7 @@
       </div>
     </section>
 
-    <!-- WORKS SECTION (Interactive List) -->
+    <!-- WORKS SECTION -->
     <section class="works section-padding border-top" id="works">
       <div class="grid-container">
         
@@ -226,7 +213,6 @@
               <div class="idx-col text-right anim-fade delay-2">YEAR</div>
             </div>
 
-            <!-- SEO FIX: Replaced dead '#' links with javascript:void(0); -->
             <a href="javascript:void(0);" class="index-row project-item trigger link-hover" data-image="Main Frame.webp" aria-label="View Euphoria Fashion Case Study">
               <div class="idx-col title anim-fade">EUPHORIA</div>
               <div class="idx-col hidden-mobile meta anim-fade delay-1">Platform Architecture</div>
@@ -259,11 +245,11 @@
 
   </main>
 
-  <!-- FOOTER (The Ultimate Ask) -->
+  <!-- FOOTER -->
   <footer class="footer border-top" id="contact">
     <div class="grid-container footer-top trigger">
       <div class="col-full">
-        <span class="section-num anim-fade">READY TO ELEVATE YOUR BRAND?</span>
+        <span class="section-num anim-fade">HAVE A PROJECT IN MIND?</span>
         <a href="mailto:sefingwachha@gmail.com" class="massive-link link-hover">
           <div class="anim-line"><span class="anim-up delay-1">LET'S INITIATE</span></div>
           <div class="anim-line"><span class="anim-up delay-2"><span class="serif">a dialogue</span> &rarr;</span></div>
