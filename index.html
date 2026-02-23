@@ -2,232 +2,291 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  
-  <title>Sefin | Creative Developer</title>
-  <meta name="description" content="Sefin Gwachha — Independent Creative Developer & CS student from Nepal. Engineering immersive, award-calibre digital experiences." />
-  <meta name="theme-color" content="#060504" />
-  <meta name="google-site-verification" content="googlea10c10595baf5ec6" />
-  
-  <link rel="canonical" href="https://sefin.com.np/" />
-
-  <!-- Premium Typography: Syncopate (Architectural) + Inter (Clean) + Playfair (Editorial) -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sefin Gwachha | Creative Developer</title>
+  <meta name="description" content="Sefin Gwachha — Creative Developer & CS Student from Bhaktapur, Nepal." />
+  <link rel="icon" href="logo.png" type="image/png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Playfair+Display:ital,wght@1,400;1,500&family=Syncopate:wght@400;600;700&display=swap" rel="stylesheet" />
-  
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="style.css" />
-
-  <!-- Advanced SEO Entity Schema -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "Person",
-    "name": "Sefin Gwachha",
-    "url": "https://sefin.com.np/",
-    "jobTitle": "Creative Developer",
-    "description": "Independent Creative Developer from Bhaktapur, Nepal.",
-    "knowsAbout": ["WebGL", "Three.js", "React", "Next.js", "UI/UX Design", "Motion Design"],
-    "sameAs": [
-      "https://www.linkedin.com/in/sefin-gwachha/",
-      "https://github.com/Sefingwachha"
-    ]
-  }
-  </script>
-
-  <noscript>
-    <style>
-      .preloader, .cursor-sys, .prism-canvas, .reveal { display: none !important; }
-      .mask-line span, .blur-in { transform: none !important; opacity: 1 !important; filter: none !important; }
-      body.loading { overflow: auto !important; }
-    </style>
-  </noscript>
 </head>
-<body class="loading no-select">
+<body>
 
-  <!-- Cinematic Overlays -->
-  <div class="noise" aria-hidden="true"></div>
-  <div class="vig" aria-hidden="true"></div>
+  <!-- Film grain + vignette overlays -->
+  <div class="grain" aria-hidden="true"></div>
+  <div class="vignette" aria-hidden="true"></div>
 
-  <!-- Custom Kinetic Cursor -->
-  <div class="cursor" id="cursor" aria-hidden="true">
-    <div class="c-ring"></div>
-    <div class="c-dot"></div>
-    <span class="c-txt">VIEW</span>
+  <!-- Custom cursor (desktop only) -->
+  <div id="cursor" aria-hidden="true">
+    <div class="cur-ring"></div>
+    <div class="cur-dot"></div>
+    <span class="cur-label">VIEW</span>
   </div>
 
-  <!-- Center-Pin Image Reveal -->
-  <div class="reveal" id="reveal" aria-hidden="true">
-    <div class="rev-inner" id="rev-inner">
-      <img id="rimg" src="" alt="Project preview" draggable="false" decoding="async" loading="lazy" />
-      <div class="rev-info">
-        <span id="rname"></span>
-        <span id="rrole"></span>
+  <!-- =============================================
+       PROJECT IMAGE HOVER PANEL
+       Floats near cursor when hovering archive rows
+  ============================================= -->
+  <div id="img-panel" aria-hidden="true">
+    <div id="img-panel-inner">
+      <img id="img-panel-src" src="" alt="" draggable="false" />
+      <div class="img-panel-wipe"></div>
+      <div class="img-panel-info">
+        <span id="img-panel-title"></span>
+        <span id="img-panel-year"></span>
       </div>
     </div>
   </div>
 
-  <!-- Spinning Hire Badge -->
-  <a href="mailto:sefingwachha@gmail.com" class="badge" aria-label="Hire Sefin">
-    <div class="bdg-wheel" id="bdg">
-      <svg viewBox="0 0 100 100" width="120" height="120" aria-hidden="true">
-        <defs><path id="tp" d="M50,50 m-38,0 a38,38 0 1,1 76,0 a38,38 0 1,1 -76,0"/></defs>
-        <text font-size="10.5" fill="currentColor" letter-spacing="2"><textPath href="#tp">AVAILABLE FOR WORK ✦ LET'S TALK ✦ </textPath></text>
+  <!-- Spinning hire badge -->
+  <a href="mailto:sefingwachha@gmail.com" class="badge" aria-label="Hire me — send email">
+    <div class="badge-wheel" id="badge-wheel">
+      <svg viewBox="0 0 100 100" aria-hidden="true">
+        <defs>
+          <path id="ring-path" d="M50,50 m-37,0 a37,37 0 1,1 74,0 a37,37 0 1,1 -74,0"/>
+        </defs>
+        <text font-size="10.8" letter-spacing="2">
+          <textPath href="#ring-path">AVAILABLE FOR WORK ✦ LET'S TALK ✦ </textPath>
+        </text>
       </svg>
-      <div class="bdg-dot"></div>
+      <div class="badge-dot"></div>
     </div>
   </a>
 
-  <!-- Architectural Grid Lines -->
-  <div class="glines" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
-
-  <!-- Preloader -->
-  <div class="pre" id="pre">
-    <div class="pre-in">
-      <div class="pre-logo">SEFIN</div>
-      <div class="pre-bar"><div class="pre-fill" id="pfill"></div></div>
-      <div class="pre-pct"><span id="pnum">0</span>%</div>
-    </div>
-    <div class="pre-wipe" id="pwipe"></div>
+  <!-- Architectural grid lines -->
+  <div class="grid-lines" aria-hidden="true">
+    <span></span><span></span><span></span><span></span>
   </div>
 
-  <!-- Navbar -->
-  <header class="nav" id="nav" role="banner">
-    <a href="#home" class="nav-brand" data-mag="0.3">SEFIN<sup>©</sup></a>
-    <div class="nav-mid hm"><span class="pdot"></span><span>ACCEPTING CLIENTS — 2026</span></div>
-    <nav class="nav-r">
-      <a href="#about" class="nl hm" data-mag="0.2">Manifesto</a>
-      <a href="#works" class="nl hm" data-mag="0.2">Archive</a>
-      <a href="mailto:sefingwachha@gmail.com" class="ncta" data-mag="0.4">
-        <span>LET'S TALK</span>
-        <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M1 6.5h11M7.5 2l4.5 4.5L7.5 11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </a>
+  <!-- =============================================
+       PRELOADER
+  ============================================= -->
+  <div id="preloader">
+    <div class="pre-content">
+      <p class="pre-logo">SG</p>
+      <div class="pre-bar">
+        <div class="pre-bar-fill" id="pre-fill"></div>
+      </div>
+      <p class="pre-number"><span id="pre-num">0</span>%</p>
+    </div>
+    <div class="pre-wipe" id="pre-wipe"></div>
+  </div>
+
+  <!-- =============================================
+       NAVIGATION
+  ============================================= -->
+  <header id="nav">
+    <a href="#home" class="nav-brand">SEFIN<sup>©</sup></a>
+    <div class="nav-status d-hide">
+      <span class="pulse-dot"></span>
+      <span>ACCEPTING CLIENTS — 2026</span>
+    </div>
+    <nav class="nav-links">
+      <a href="#about"  class="nav-link d-hide">About</a>
+      <a href="#works"  class="nav-link d-hide">Archive</a>
+      <a href="mailto:sefingwachha@gmail.com" class="nav-cta">LET'S TALK</a>
     </nav>
   </header>
 
-  <main id="main">
-    
-    <!-- HERO SECTION -->
-    <section class="hero" id="home">
-      <canvas id="prism-canvas" class="prism-canvas" aria-hidden="true"></canvas>
-      <div class="hero-content">
-        <div class="hero-eye">
-          <span>CREATIVE ENGINEER</span>
-          <span class="sep hm">✦</span><span class="hm">NEPAL-BASED</span>
-          <span class="sep hm">✦</span><span class="hm">ELEVATING BRANDS GLOBALLY</span>
+  <!-- =============================================
+       MAIN CONTENT
+  ============================================= -->
+  <main id="site-main">
+
+    <!-- HERO -->
+    <section id="home" class="hero">
+      <p class="hero-eyebrow">
+        <span class="d-hide">CREATIVE ENGINEER &nbsp;✦&nbsp; NEPAL-BASED &nbsp;✦&nbsp; </span>ELEVATING BRANDS GLOBALLY
+      </p>
+      <h1 class="hero-title" aria-label="Crafting digital legacies">
+        <div class="h-row">
+          <span class="h-word" data-word="CRAFTING">CRAFTING</span>
         </div>
-        <h1 class="htitle" aria-label="Crafting digital legacies">
-          <div class="hrow">
-            <span class="big-word" data-word="CRAFTING">CRAFTING</span>
-          </div>
-          <div class="hrow hrow2">
-            <em class="hserif">digital</em>
-            <span class="big-word" data-word="LEGACIES">LEGACIES</span>
-          </div>
-        </h1>
-        <div class="hfoot">
-          <div class="hscroll"><span>SCROLL</span><div class="strack"><div class="sline"></div></div></div>
-          <span class="hnum hm">( 00 )</span>
+        <div class="h-row h-indent">
+          <em class="h-serif">digital</em>
+          <span class="h-word" data-word="LEGACIES">LEGACIES</span>
         </div>
+      </h1>
+      <div class="hero-foot">
+        <span class="hero-scroll">
+          SCROLL
+          <span class="scroll-track"><span class="scroll-line"></span></span>
+        </span>
+        <span class="hero-index d-hide">( 00 )</span>
       </div>
     </section>
 
     <!-- MARQUEE -->
-    <div class="mq bt bb">
-      <div class="mqt">
-        <div class="mqr"><span>CREATIVE DEVELOPMENT</span><span class="st">✦</span><span>MOTION DESIGN</span><span class="st">✦</span><span>WEBGL EXPERIENCES</span><span class="st">✦</span><span>REACT & NEXT.JS</span><span class="st">✦</span><span>ART DIRECTION</span><span class="st">✦</span><span>UI/UX DESIGN</span><span class="st">✦</span></div>
-        <div class="mqr" aria-hidden="true"><span>CREATIVE DEVELOPMENT</span><span class="st">✦</span><span>MOTION DESIGN</span><span class="st">✦</span><span>WEBGL EXPERIENCES</span><span class="st">✦</span><span>REACT & NEXT.JS</span><span class="st">✦</span><span>ART DIRECTION</span><span class="st">✦</span><span>UI/UX DESIGN</span><span class="st">✦</span></div>
+    <div class="marquee bdr-t bdr-b">
+      <div class="marquee-track">
+        <div class="marquee-row">
+          <span>CREATIVE DEVELOPMENT</span><em>✦</em>
+          <span>MOTION DESIGN</span><em>✦</em>
+          <span>WEBGL &amp; THREE.JS</span><em>✦</em>
+          <span>REACT &amp; NEXT.JS</span><em>✦</em>
+          <span>ART DIRECTION</span><em>✦</em>
+          <span>UI/UX DESIGN</span><em>✦</em>
+          <span>GSAP ANIMATION</span><em>✦</em>
+        </div>
+        <div class="marquee-row" aria-hidden="true">
+          <span>CREATIVE DEVELOPMENT</span><em>✦</em>
+          <span>MOTION DESIGN</span><em>✦</em>
+          <span>WEBGL &amp; THREE.JS</span><em>✦</em>
+          <span>REACT &amp; NEXT.JS</span><em>✦</em>
+          <span>ART DIRECTION</span><em>✦</em>
+          <span>UI/UX DESIGN</span><em>✦</em>
+          <span>GSAP ANIMATION</span><em>✦</em>
+        </div>
       </div>
     </div>
 
-    <!-- ABOUT SECTION -->
-    <section class="about sp bt" id="about">
-      <div class="wrap">
-        <div class="cside ru"><span class="snum">( 01 )</span><h2 class="slbl">MANIFESTO</h2></div>
-        <div class="cmain">
-          <h3 class="ahead">
-            <div class="lm"><span>I engineer digital experiences</span></div>
-            <div class="lm"><span>where performant code meets</span></div>
-            <div class="lm"><span>cinematic motion. Fusing</span></div>
-            <div class="lm"><span>robust architecture with</span></div>
-            <div class="lm"><span><em class="serif-em">immersive design.</em></span></div>
+    <!-- ABOUT -->
+    <section id="about" class="section bdr-t">
+      <div class="sec-grid">
+        <aside class="sec-label reveal-up">
+          <span class="sec-num">( 01 )</span>
+          <h2 class="sec-name">MANIFESTO</h2>
+        </aside>
+        <div class="sec-body">
+          <h3 class="about-headline reveal-lines">
+            <div class="mask"><span>I engineer digital experiences</span></div>
+            <div class="mask"><span>where performant code meets</span></div>
+            <div class="mask"><span>cinematic motion — fusing</span></div>
+            <div class="mask"><span>robust architecture with</span></div>
+            <div class="mask"><span><em class="accent-serif">immersive design.</em></span></div>
           </h3>
-          <div class="svcs">
-            <article class="svc bt"><div class="svn">01</div><div><h4>DEVELOPMENT</h4><p>React, Next.js, TypeScript. Architecting scalable infrastructures engineered for absolute performance and longevity.</p></div></article>
-            <article class="service-item svc bt"><div class="svn">02</div><div><h4>MOTION & WEBGL</h4><p>GSAP, Three.js, Canvas API. Forging fluid, hardware-accelerated interactions that elevate products to premium status.</p></div></article>
-            <article class="service-item svc bt"><div class="svn">03</div><div><h4>ART DIRECTION</h4><p>UI/UX, Typography, Grid Systems. Designing brutalist interfaces governed by strict mathematics and intentional whitespace.</p></div></article>
+          <div class="services reveal-up">
+            <article class="svc bdr-t">
+              <p class="svc-num">01</p>
+              <div>
+                <h4>DEVELOPMENT</h4>
+                <p>React, Next.js, TypeScript. Architecting scalable infrastructures engineered for absolute performance and longevity.</p>
+              </div>
+            </article>
+            <article class="svc bdr-t">
+              <p class="svc-num">02</p>
+              <div>
+                <h4>MOTION &amp; WEBGL</h4>
+                <p>GSAP, Three.js, Canvas API. Forging fluid, hardware-accelerated interactions that elevate products to premium status.</p>
+              </div>
+            </article>
+            <article class="svc bdr-t">
+              <p class="svc-num">03</p>
+              <div>
+                <h4>ART DIRECTION</h4>
+                <p>UI/UX, Typography, Grid Systems. Brutalist interfaces governed by strict mathematics and intentional whitespace.</p>
+              </div>
+            </article>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- WORKS SECTION -->
-    <section class="works sp bt" id="works">
-      <div class="wrap">
-        <div class="cside ru"><span class="snum">( 02 )</span><h2 class="slbl">ARCHIVE</h2></div>
-        <div class="cmain">
-          <div class="wlist" id="wlist">
-            <div class="whead hm ru"><span>CLIENT / PROJECT</span><span>ROLE</span><span class="r">YEAR</span></div>
-            
-            <a href="javascript:void(0);" class="wrow proj ru" data-image="Main Frame.webp">
-              <div class="wn">01</div>
-              <div class="winf"><span class="wnm">EUPHORIA</span><span class="wrl hm">Platform Architecture</span></div>
-              <div class="wyr r hm">2024</div>
-              <div class="warr"><svg width="17" height="17" viewBox="0 0 17 17" fill="none"><path d="M2 8.5h13M9 3l5.5 5.5L9 14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+    <!-- ARCHIVE / WORKS -->
+    <section id="works" class="section bdr-t">
+      <div class="sec-grid">
+        <aside class="sec-label reveal-up">
+          <span class="sec-num">( 02 )</span>
+          <h2 class="sec-name">ARCHIVE</h2>
+        </aside>
+        <div class="sec-body">
+          <div class="archive" id="archive">
+
+            <div class="archive-head d-hide">
+              <span>PROJECT</span>
+              <span>ROLE</span>
+              <span class="tr">YEAR</span>
+            </div>
+
+            <!-- Each row: data-img, data-title, data-year drive the hover panel -->
+            <a class="archive-row reveal-up"
+               href="javascript:void(0);"
+               data-img="Main_Frame.webp"
+               data-title="EUPHORIA"
+               data-year="2024">
+              <span class="r-num">01</span>
+              <span class="r-name">EUPHORIA</span>
+              <span class="r-role d-hide">Platform Architecture</span>
+              <span class="r-year tr d-hide">2024</span>
+              <span class="r-arr">&#8599;</span>
             </a>
 
-            <a href="javascript:void(0);" class="wrow proj ru" data-image="hero banner.webp">
-              <div class="wn">02</div>
-              <div class="winf"><span class="wnm">CHERISHED</span><span class="wrl hm">UI/UX & Engineering</span></div>
-              <div class="wyr r hm">2024</div>
-              <div class="warr"><svg width="17" height="17" viewBox="0 0 17 17" fill="none"><path d="M2 8.5h13M9 3l5.5 5.5L9 14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            <a class="archive-row reveal-up"
+               href="javascript:void(0);"
+               data-img="hero_banner.webp"
+               data-title="CHERISHED"
+               data-year="2024">
+              <span class="r-num">02</span>
+              <span class="r-name">CHERISHED</span>
+              <span class="r-role d-hide">UI/UX &amp; Engineering</span>
+              <span class="r-year tr d-hide">2024</span>
+              <span class="r-arr">&#8599;</span>
             </a>
 
-            <a href="https://www.expertservicehub.com/" target="_blank" rel="noopener noreferrer" class="wrow proj ru" data-image="site.webp">
-              <div class="wn">03</div>
-              <div class="winf"><span class="wnm">EXPERT HUB</span><span class="wrl hm">Fullstack Development</span></div>
-              <div class="wyr r hm">2023</div>
-              <div class="warr"><svg width="17" height="17" viewBox="0 0 17 17" fill="none"><path d="M2 8.5h13M9 3l5.5 5.5L9 14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            <a class="archive-row reveal-up"
+               href="https://www.expertservicehub.com/"
+               target="_blank" rel="noopener noreferrer"
+               data-img="site.webp"
+               data-title="EXPERT HUB"
+               data-year="2023">
+              <span class="r-num">03</span>
+              <span class="r-name">EXPERT HUB</span>
+              <span class="r-role d-hide">Fullstack Development</span>
+              <span class="r-year tr d-hide">2023</span>
+              <span class="r-arr">&#8599;</span>
             </a>
 
-            <a href="javascript:void(0);" class="wrow proj ru" data-image="Hero Banner UI.webp">
-              <div class="wn">04</div>
-              <div class="winf"><span class="wnm">ULTIMATE</span><span class="wrl hm">Generative WebGL</span></div>
-              <div class="wyr r hm">2023</div>
-              <div class="warr"><svg width="17" height="17" viewBox="0 0 17 17" fill="none"><path d="M2 8.5h13M9 3l5.5 5.5L9 14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            <a class="archive-row reveal-up"
+               href="javascript:void(0);"
+               data-img="Hero_Banner_UI.webp"
+               data-title="ULTIMATE"
+               data-year="2023">
+              <span class="r-num">04</span>
+              <span class="r-name">ULTIMATE</span>
+              <span class="r-role d-hide">Generative WebGL</span>
+              <span class="r-year tr d-hide">2023</span>
+              <span class="r-arr">&#8599;</span>
             </a>
 
           </div>
         </div>
       </div>
     </section>
-  </main>
 
-  <!-- FOOTER -->
-  <footer class="foot" id="contact">
-    <div class="ftop">
-      <div class="feye">READY TO ELEVATE YOUR BRAND?</div>
-      <a href="mailto:sefingwachha@gmail.com" class="fcta" data-mag="0.06">
-        <div class="fl"><span>LET'S</span></div>
-        <div class="fl"><span><em class="serif-em">create</em> TOGETHER &rarr;</span></div>
+  </main><!-- /site-main -->
+
+  <!-- =============================================
+       FOOTER  (fixed behind main, reveals on scroll)
+  ============================================= -->
+  <footer id="footer">
+    <div class="footer-top">
+      <p class="footer-eyebrow reveal-up">READY TO ELEVATE YOUR BRAND?</p>
+      <a href="mailto:sefingwachha@gmail.com" class="footer-cta">
+        <div class="mask cta-line"><span>LET'S</span></div>
+        <div class="mask cta-line"><span><em class="accent-serif">create</em> TOGETHER &rarr;</span></div>
       </a>
     </div>
-    
-    <div class="fbot bt">
-      <div class="fcol"><span class="flbl">STATUS</span><p>ACCEPTING NEW CLIENTS '26</p></div>
-      <div class="fcol hm"><span class="flbl">LOCAL TIME</span><p id="tdisp">--:--:-- NPT</p></div>
-      <div class="fcol"><span class="flbl">SOCIALS</span>
-        <div class="flinks">
+    <div class="footer-bottom bdr-t">
+      <div class="footer-col reveal-up">
+        <span class="footer-label">STATUS</span>
+        <p>ACCEPTING NEW CLIENTS '26</p>
+      </div>
+      <div class="footer-col d-hide reveal-up">
+        <span class="footer-label">LOCAL TIME</span>
+        <p id="live-time">--:--:-- NPT</p>
+      </div>
+      <div class="footer-col reveal-up">
+        <span class="footer-label">SOCIALS</span>
+        <div class="footer-links">
           <a href="https://linkedin.com/in/sefin-gwachha/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
           <a href="https://github.com/Sefingwachha" target="_blank" rel="noopener noreferrer">GitHub</a>
         </div>
       </div>
-      <div class="fcp hm">© SEFIN GWACHHA 2026</div>
+      <p class="footer-copy d-hide">© SEFIN GWACHHA 2026</p>
     </div>
   </footer>
 
-  <!-- Three.js (Must load before script.js) -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <script src="script.js"></script>
 </body>
 </html>
