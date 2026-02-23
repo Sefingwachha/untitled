@@ -86,76 +86,79 @@ document.addEventListener('DOMContentLoaded', () => {
 
   /* ═══════════════════════════════════════════════
      5.  PROJECT IMAGE REVEAL
-         – separate slow-lerp loop
-         – clip-path wipe per project row
+         – slow lerp keeps panel lagging behind cursor
+         – CSS drives ALL entrance transitions (wipe + scale + opacity)
+         – JS only: sets src, toggles .active, updates badge text
   ═══════════════════════════════════════════════ */
-  const panel    = document.getElementById('img-reveal');
-  const panelImg = document.getElementById('reveal-img');
+  const panel      = document.getElementById('img-reveal');
+  const panelImg   = document.getElementById('reveal-img');
+  const badgeTitle = document.querySelector('.reveal-badge-title');
+  const badgeRole  = document.querySelector('.reveal-badge-role');
+  const revInner   = panel ? panel.querySelector('.img-reveal-inner') : null;
 
-  if (isMouse && panel && panelImg) {
+  if (isMouse && panel && panelImg && revInner) {
     let rx = mouseX, ry = mouseY;
-    let active  = false;
-    let tilt    = 0;
-    let prevMX  = mouseX;
+    let tilt = 0, prevMX = mouseX;
+    let isActive = false;
 
-    /* Preload every project image */
+    /* ── Silently preload all images ── */
     document.querySelectorAll('.project-item[data-image]').forEach(el => {
-      const img = new Image();
-      img.src = el.getAttribute('data-image');
+      const i = new Image(); i.src = el.getAttribute('data-image');
     });
 
-    /* Slow reveal loop */
+    /* ── Physics loop: panel drifts slowly behind cursor ── */
     (function revealLoop() {
-      rx    = lerp(rx, mouseX, 0.08);
-      ry    = lerp(ry, mouseY, 0.08);
-      tilt  = lerp(tilt, clamp((mouseX - prevMX) * 0.55, -14, 14), 0.1);
+      rx   = lerp(rx, mouseX, 0.075);
+      ry   = lerp(ry, mouseY, 0.075);
+      tilt = lerp(tilt, clamp((mouseX - prevMX) * 0.45, -10, 10), 0.09);
       prevMX = mouseX;
 
       panel.style.left = rx + 'px';
       panel.style.top  = ry + 'px';
-      /* rotate the inner frame with velocity */
-      panel.querySelector('.img-reveal-inner').style.transform =
-        `translate(-50%,-50%) rotate(${active ? tilt * 0.6 : 0}deg)`;
+
+      /* Tilt via inline style while CSS handles scale/opacity */
+      if (isActive) {
+        revInner.style.transform = `translate(-50%,-50%) scale(1) rotate(${tilt * 0.4}deg)`;
+      } else {
+        revInner.style.transform = `translate(-50%,-50%) scale(0.88) rotate(${-4 + tilt * 0.1}deg)`;
+      }
+
       requestAnimationFrame(revealLoop);
     })();
 
-    /* Per-project hover */
+    /* ── Per-row events ── */
     document.querySelectorAll('.project-item').forEach(row => {
+
       row.addEventListener('mouseenter', function () {
-        const src = this.getAttribute('data-image');
+        const src   = this.getAttribute('data-image') || '';
+        const title = this.querySelector('.work-title')?.textContent.trim() || '';
+        const role  = this.querySelector('.work-tag')?.textContent.trim()   || '';
 
-        /* swap image with fade */
-        if (src && panelImg.getAttribute('src') !== src) {
-          panelImg.style.opacity = '0';
-          panelImg.style.transform = 'scale(1.06)';
-          panelImg.src = src;
+        /* Always set src — browser cache makes this instant on repeat hovers */
+        if (src) panelImg.src = src;
 
-          const reveal = () => {
-            panelImg.style.opacity = '1';
-            panelImg.style.transform = 'scale(1)';
-            panelImg.removeEventListener('load', reveal);
-          };
-          panelImg.addEventListener('load', reveal);
-          if (panelImg.complete) reveal();
-        }
+        /* Update info badge */
+        if (badgeTitle) badgeTitle.textContent = title;
+        if (badgeRole)  badgeRole.textContent  = role;
 
-        active = true;
+        isActive = true;
         panel.classList.add('active');
         if (cursor) cursor.classList.add('is-view');
       });
 
       row.addEventListener('mouseleave', () => {
-        active = false;
+        isActive = false;
         panel.classList.remove('active');
         if (cursor) cursor.classList.remove('is-view');
       });
 
-      /* Subtle 3-D tilt on each row */
+      /* 3-D perspective tilt per row on mousemove */
       row.addEventListener('mousemove', function (e) {
         const r  = this.getBoundingClientRect();
         const ry = (e.clientX - r.left  - r.width  / 2) / r.width;
         const rx = (e.clientY - r.top   - r.height / 2) / r.height;
-        this.style.transform = `perspective(1400px) rotateX(${-rx * 3}deg) rotateY(${ry * 3}deg)`;
+        this.style.transform =
+          `perspective(1400px) rotateX(${-rx * 2.5}deg) rotateY(${ry * 2.5}deg)`;
       });
       row.addEventListener('mouseleave', function () {
         this.style.transform = '';
