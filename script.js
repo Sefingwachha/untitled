@@ -1,205 +1,249 @@
-document.addEventListener("DOMContentLoaded", () => {
-    
-    // SECURITY: Code Protection
-    document.addEventListener('contextmenu', event => event.preventDefault());
-    document.addEventListener('keydown', (e) => {
-        if (e.keyCode == 123 || (e.ctrlKey && e.shiftKey && e.keyCode == 73) || (e.ctrlKey && e.keyCode == 85) || (e.ctrlKey && e.keyCode == 67)) {
-            e.preventDefault();
-        }
+document.addEventListener('DOMContentLoaded', () => {
+
+  /* ─── SECURITY ─── */
+  document.addEventListener('contextmenu', e => e.preventDefault());
+  document.addEventListener('keydown', e => {
+    if (e.keyCode === 123 ||
+        (e.ctrlKey && e.shiftKey && e.keyCode === 73) ||
+        (e.ctrlKey && e.keyCode === 85) ||
+        (e.ctrlKey && e.keyCode === 67)) {
+      e.preventDefault();
+    }
+  });
+
+  /* ═══════════════════════════════════════
+     1. CHAR SPLITTING
+  ═══════════════════════════════════════ */
+  document.querySelectorAll('.split-chars').forEach(el => {
+    const text = el.getAttribute('data-text') || el.textContent;
+    el.innerHTML = text.split('').map((ch, i) =>
+      `<span class="char" style="transition-delay:${(i * 0.045) + 1.0}s">${ch === ' ' ? '&nbsp;' : ch}</span>`
+    ).join('');
+  });
+
+  /* ═══════════════════════════════════════
+     2. PRELOADER
+  ═══════════════════════════════════════ */
+  let pct = 0;
+  const numEl  = document.getElementById('pre-num');
+  const fillEl = document.getElementById('pre-fill');
+
+  const ticker = setInterval(() => {
+    const jump = Math.floor(Math.random() * 18) + 4;
+    pct = Math.min(100, pct + jump);
+    if (numEl)  numEl.textContent = pct;
+    if (fillEl) fillEl.style.width = pct + '%';
+
+    if (pct >= 100) {
+      clearInterval(ticker);
+      setTimeout(() => {
+        document.body.classList.add('loaded');
+        document.body.classList.remove('loading');
+      }, 180);
+    }
+  }, 20);
+
+  /* ═══════════════════════════════════════
+     3. CURSOR
+  ═══════════════════════════════════════ */
+  const isMouse = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+  const cursor  = document.getElementById('cursor');
+
+  if (isMouse && cursor) {
+    let mx = window.innerWidth / 2,  my = window.innerHeight / 2;
+    let cx = mx, cy = my;
+    let raf;
+
+    window.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; }, { passive: true });
+
+    const tick = () => {
+      cx += (mx - cx) * 0.18;
+      cy += (my - cy) * 0.18;
+      cursor.style.transform = `translate3d(${cx}px,${cy}px,0)`;
+      raf = requestAnimationFrame(tick);
+    };
+    tick();
+
+    // Link hover
+    document.querySelectorAll('a, button, .magnetic, [data-cursor]').forEach(el => {
+      el.addEventListener('mouseenter', () => cursor.classList.add('is-link'));
+      el.addEventListener('mouseleave', () => cursor.classList.remove('is-link'));
     });
 
-    // 1. PERFORMANCE PRELOADER
-    let percent = 0;
-    const loaderPercent = document.getElementById("loader-percent");
-    
-    const loaderInterval = setInterval(() => {
-        percent += Math.floor(Math.random() * 20) + 5;
-        if (percent > 100) percent = 100;
-        if (loaderPercent) loaderPercent.textContent = percent + '%';
-        
-        if (percent === 100) {
-            clearInterval(loaderInterval);
-            setTimeout(() => {
-                document.body.classList.add("loaded");
-                document.body.classList.remove("loading");
-            }, 150); 
-        }
-    }, 15);
+    // Project hover → VIEW mode
+    const imgReveal   = document.getElementById('img-reveal');
+    const revealImg   = document.getElementById('reveal-img');
+    let revX = mx, revY = my;
 
-    // 2. KINETIC CURSOR & IMAGE REVEAL (Safe Windows Touch Fix)
-    const cursorTracker = document.getElementById('cursor-tracker');
-    const globalReveal = document.getElementById('image-tracker');
-    const globalRevealImg = document.getElementById('global-reveal-img');
-    const hoverLinks = document.querySelectorAll('.link-hover');
-    const projects = document.querySelectorAll('.project-item');
+    const revTick = () => {
+      revX += (mx - revX) * 0.09;
+      revY += (my - revY) * 0.09;
+      if (imgReveal) {
+        imgReveal.style.left = revX + 'px';
+        imgReveal.style.top  = revY + 'px';
+      }
+      requestAnimationFrame(revTick);
+    };
+    revTick();
 
-    if (window.innerWidth >= 768) {
-        
-        if (cursorTracker) cursorTracker.style.display = 'block';
-        if (globalReveal) globalReveal.style.display = 'block';
-
-        let mouseX = window.innerWidth / 2, mouseY = window.innerHeight / 2;
-        let dotX = mouseX, dotY = mouseY;
-        let revX = mouseX, revY = mouseY;
-        let lastMouseX = mouseX;
-
-        window.addEventListener('mousemove', (e) => {
-            mouseX = e.clientX;
-            mouseY = e.clientY;
-        });
-
-        function renderPhysics() {
-            // Liquid Cursor Stretch Logic
-            let velX = mouseX - dotX;
-            let velY = mouseY - dotY;
-            let distance = Math.sqrt(velX * velX + velY * velY);
-            
-            dotX += velX * 0.25;
-            dotY += velY * 0.25;
-            
-            let isHovering = cursorTracker && (cursorTracker.classList.contains('hovered') || cursorTracker.classList.contains('view-mode'));
-            let scaleX = 1, scaleY = 1, angle = 0;
-
-            if (!isHovering) {
-                scaleX = Math.min(1.8, 1 + distance * 0.005);
-                scaleY = Math.max(0.5, 1 - distance * 0.002);
-                angle = Math.atan2(velY, velX) * (180 / Math.PI);
-            }
-
-            if (cursorTracker) {
-                const cursorDot = cursorTracker.querySelector('.cursor-dot');
-                cursorTracker.style.transform = `translate3d(${dotX}px, ${dotY}px, 0)`;
-                if (cursorDot) {
-                    cursorDot.style.transform = `translate(-50%, -50%) rotate(${angle}deg) scale(${scaleX}, ${scaleY})`;
-                }
-
-                const cursorText = cursorTracker.querySelector('.cursor-text');
-                if (cursorText && cursorTracker.classList.contains('view-mode')) {
-                    const textOffsetX = (mouseX - dotX) * -0.15;
-                    const textOffsetY = (mouseY - dotY) * -0.15;
-                    cursorText.style.transform = `translate3d(${textOffsetX}px, ${textOffsetY}px, 0)`;
-                } else if (cursorText) {
-                    cursorText.style.transform = `translate3d(0px, 0px, 0)`;
-                }
-            }
-
-            // Image Reveal Logic
-            revX += (mouseX - revX) * 0.1;
-            revY += (mouseY - revY) * 0.1;
-            
-            const velocityX = mouseX - lastMouseX;
-            const tilt = Math.max(-15, Math.min(15, velocityX * 0.2)); 
-            lastMouseX = mouseX;
-
-            if (globalReveal) {
-                const isActive = globalReveal.classList.contains('active');
-                globalReveal.style.transform = `translate3d(-50%, -50%, 0) translate3d(${revX}px, ${revY}px, 0) scale(${isActive ? 1 : 0.8}) rotate(${tilt}deg)`;
-                globalReveal.style.left = `${revX}px`; 
-                globalReveal.style.top = `${revY}px`;
-            }
-
-            requestAnimationFrame(renderPhysics);
-        }
-        renderPhysics();
-
-        // Standard link hovering (The Archival Scanner brackets)
-        hoverLinks.forEach(el => {
-            el.addEventListener('mouseenter', () => { if (cursorTracker) cursorTracker.classList.add('hovered'); });
-            el.addEventListener('mouseleave', () => { if (cursorTracker) cursorTracker.classList.remove('hovered'); });
-        });
-
-        // Projects Table Hovering (Depth of field blur + VIEW cursor + Image reveal)
-        projects.forEach(project => {
-            project.addEventListener('mouseenter', function() {
-                if (cursorTracker) cursorTracker.classList.add('view-mode');
-                document.body.classList.add('project-viewing'); // Blurs the background
-                
-                const imgSrc = this.getAttribute('data-image');
-                if (imgSrc && globalRevealImg) {
-                    globalRevealImg.src = imgSrc;
-                    if (globalReveal) globalReveal.classList.add('active');
-                }
-            });
-            project.addEventListener('mouseleave', () => {
-                if (cursorTracker) cursorTracker.classList.remove('view-mode');
-                document.body.classList.remove('project-viewing');
-                if (globalReveal) globalReveal.classList.remove('active');
-            });
-        });
-
-    } else {
-        if (cursorTracker) cursorTracker.style.display = 'none';
-        if (globalReveal) globalReveal.style.display = 'none';
-    }
-
-    // 3. BULLETPROOF SCROLL REVEALS
-    const observerOptions = { root: null, rootMargin: '0px 0px -5% 0px', threshold: 0 };
-    const scrollObserver = new IntersectionObserver((entries, observer) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('is-visible');
-                observer.unobserve(entry.target); 
-            }
-        });
-    }, observerOptions);
-
-    document.querySelectorAll('.trigger').forEach(el => {
-        scrollObserver.observe(el);
+    document.querySelectorAll('.project-item').forEach(el => {
+      el.addEventListener('mouseenter', function () {
+        cursor.classList.add('is-view');
+        const src = this.getAttribute('data-image');
+        if (src && revealImg) { revealImg.src = src; }
+        if (imgReveal) imgReveal.classList.add('active');
+      });
+      el.addEventListener('mouseleave', () => {
+        cursor.classList.remove('is-view');
+        if (imgReveal) imgReveal.classList.remove('active');
+      });
     });
 
-    // 4. SCROLL PHYSICS (Badge Spin, Skew, Parallax)
-    const spinningBadge = document.querySelector('.badge-inner');
-    const velocityContainer = document.getElementById('velocity-container');
-    const parallaxElements = document.querySelectorAll('[data-parallax]');
-    
-    let lastScrollY = window.pageYOffset;
-    let currentRotation = 0;
-    let scrollTimeout;
+  } else {
+    if (cursor) cursor.style.display = 'none';
+  }
 
-    function handleScrollAnimations() {
-        const currentScrollY = window.pageYOffset;
-        const scrollSpeed = currentScrollY - lastScrollY;
+  /* ═══════════════════════════════════════
+     4. MAGNETIC ELEMENTS
+  ═══════════════════════════════════════ */
+  if (isMouse) {
+    document.querySelectorAll('.magnetic').forEach(el => {
+      const strength = parseFloat(el.getAttribute('data-strength') || '0.3');
+      el.addEventListener('mousemove', e => {
+        const r  = el.getBoundingClientRect();
+        const dx = e.clientX - (r.left + r.width  / 2);
+        const dy = e.clientY - (r.top  + r.height / 2);
+        el.style.transform = `translate(${dx * strength}px, ${dy * strength}px)`;
+      });
+      el.addEventListener('mouseleave', () => {
+        el.style.transition = 'transform 0.7s cubic-bezier(0.16,1,0.3,1)';
+        el.style.transform  = 'translate(0, 0)';
+        setTimeout(() => { el.style.transition = ''; }, 700);
+      });
+    });
+  }
 
-        if (spinningBadge) {
-            currentRotation += scrollSpeed * 0.15; 
-            spinningBadge.style.transform = `rotate(${currentRotation}deg)`;
+  /* ═══════════════════════════════════════
+     5. INTERSECTION OBSERVER (scroll reveals)
+  ═══════════════════════════════════════ */
+  const io = new IntersectionObserver((entries, obs) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        // word-mask children
+        entry.target.querySelectorAll('.word-mask').forEach((wm, i) => {
+          const span = wm.querySelector('span');
+          if (span) {
+            span.style.transitionDelay = (i * 0.07) + 's';
+          }
+          wm.classList.add('is-visible');
+        });
+
+        // self word-mask
+        if (entry.target.classList.contains('word-mask')) {
+          entry.target.classList.add('is-visible');
         }
 
-        if (window.innerWidth >= 768) {
-            if (velocityContainer) {
-                const skewAmount = Math.max(-5, Math.min(5, scrollSpeed * 0.05));
-                velocityContainer.style.transform = `skewY(${skewAmount}deg)`;
-            }
-
-            parallaxElements.forEach(el => {
-                const speedMultiplier = parseFloat(el.getAttribute('data-parallax'));
-                const yPos = currentScrollY * speedMultiplier;
-                el.style.transform = `translateY(${yPos}px)`;
-            });
+        // reveal-up
+        if (entry.target.classList.contains('reveal-up')) {
+          entry.target.classList.add('is-visible');
         }
-        
-        lastScrollY = currentScrollY;
 
-        clearTimeout(scrollTimeout);
-        scrollTimeout = setTimeout(() => {
-            if (velocityContainer && window.innerWidth >= 768) {
-                velocityContainer.style.transform = `skewY(0deg)`;
-            }
-        }, 100);
+        // footer eyebrow
+        if (entry.target.classList.contains('footer-eyebrow')) {
+          entry.target.classList.add('is-visible');
+        }
+
+        obs.unobserve(entry.target);
+      }
+    });
+  }, { rootMargin: '0px 0px -8% 0px', threshold: 0 });
+
+  document.querySelectorAll('.word-mask, .reveal-up, .reveal-line, .footer-eyebrow, .about-headline').forEach(el => {
+    io.observe(el);
+  });
+
+  /* ═══════════════════════════════════════
+     6. SCROLL PHYSICS
+  ═══════════════════════════════════════ */
+  let lastY = window.pageYOffset;
+  let badgeRot = 0;
+  let scrollTimer;
+  const badge = document.querySelector('.badge-wheel');
+  const nav   = document.getElementById('nav');
+  let navVisible = true;
+
+  function onScroll() {
+    const y     = window.pageYOffset;
+    const delta = y - lastY;
+
+    // Badge spin with scroll
+    if (badge) {
+      badgeRot += delta * 0.12;
+      badge.style.transform = `rotate(${badgeRot}deg)`;
     }
 
-    window.addEventListener('scroll', () => {
-        window.requestAnimationFrame(handleScrollAnimations);
-    }, { passive: true });
-
-    // 5. LIVE LOCAL TIME
-    function updateTime() {
-        const timeEl = document.getElementById('time-display');
-        if (!timeEl) return;
-        const now = new Date();
-        const options = { timeZone: 'Asia/Kathmandu', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false };
-        timeEl.textContent = `${new Intl.DateTimeFormat('en-US', options).format(now)} NPT`;
+    // Nav hide/show
+    if (delta > 8 && y > 120 && navVisible) {
+      nav && nav.classList.add('hide');
+      navVisible = false;
+    } else if (delta < -4 && !navVisible) {
+      nav && nav.classList.remove('hide');
+      navVisible = true;
     }
-    setInterval(updateTime, 1000);
-    updateTime();
+
+    // Reset skew
+    clearTimeout(scrollTimer);
+    scrollTimer = setTimeout(() => {}, 100);
+
+    lastY = y;
+  }
+
+  window.addEventListener('scroll', () => requestAnimationFrame(onScroll), { passive: true });
+
+  /* ═══════════════════════════════════════
+     7. LIVE TIME
+  ═══════════════════════════════════════ */
+  const timeEl = document.getElementById('time-display');
+  if (timeEl) {
+    const fmt = new Intl.DateTimeFormat('en-US', {
+      timeZone: 'Asia/Kathmandu',
+      hour: '2-digit', minute: '2-digit', second: '2-digit',
+      hour12: false
+    });
+    const tick = () => { timeEl.textContent = fmt.format(new Date()) + ' NPT'; };
+    tick();
+    setInterval(tick, 1000);
+  }
+
+  /* ═══════════════════════════════════════
+     8. WORKS LIST SKEW ON SCROLL (desktop)
+  ═══════════════════════════════════════ */
+  if (isMouse) {
+    const worksList = document.getElementById('works-list');
+    if (worksList) {
+      let skew = 0;
+      window.addEventListener('scroll', () => {
+        const delta = window.pageYOffset - lastY;
+        const target = Math.max(-4, Math.min(4, delta * 0.04));
+        skew += (target - skew) * 0.1;
+        worksList.style.transform = `skewY(${skew}deg)`;
+      }, { passive: true });
+    }
+  }
+
+  /* ═══════════════════════════════════════
+     9. CTA massive — word mask trigger
+  ═══════════════════════════════════════ */
+  const ctaMasks = document.querySelectorAll('.cta-line .word-mask');
+  const ctaIO = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        ctaMasks.forEach((m, i) => {
+          setTimeout(() => m.classList.add('is-visible'), i * 120);
+        });
+      }
+    });
+  }, { threshold: 0.3 });
+  if (ctaMasks.length) ctaIO.observe(ctaMasks[0].closest('.cta-massive') || ctaMasks[0]);
+
 });
