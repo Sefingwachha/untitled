@@ -15,7 +15,7 @@
 * { margin: 0; padding: 0; box-sizing: border-box; }
 html { scroll-behavior: smooth; font-size: 16px; }
 
-/* USER EXPERIENCE: Prevent text selection and image drag */
+/* SECURITY: Prevent text selection and image drag */
 .no-select { -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none; }
 img { -webkit-user-drag: none; user-drag: none; }
 
