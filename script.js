@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
     
-    // SECURITY: Code Protection Layer
+    // SECURITY: Code Protection
     document.addEventListener('contextmenu', event => event.preventDefault());
     document.addEventListener('keydown', (e) => {
         if (e.keyCode == 123 || (e.ctrlKey && e.shiftKey && e.keyCode == 73) || (e.ctrlKey && e.keyCode == 85) || (e.ctrlKey && e.keyCode == 67)) {
@@ -26,15 +26,18 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }, 15);
 
-    // 2. KINETIC CURSOR & IMAGE REVEAL
+    // 2. KINETIC CURSOR & IMAGE REVEAL (Safe Windows Touch Fix)
     const cursorTracker = document.getElementById('cursor-tracker');
     const globalReveal = document.getElementById('image-tracker');
     const globalRevealImg = document.getElementById('global-reveal-img');
     const hoverLinks = document.querySelectorAll('.link-hover');
     const projects = document.querySelectorAll('.project-item');
 
-    if (window.matchMedia("(hover: hover) and (pointer: fine)").matches) {
+    if (window.innerWidth >= 768) {
         
+        if (cursorTracker) cursorTracker.style.display = 'block';
+        if (globalReveal) globalReveal.style.display = 'block';
+
         let mouseX = window.innerWidth / 2, mouseY = window.innerHeight / 2;
         let dotX = mouseX, dotY = mouseY;
         let revX = mouseX, revY = mouseY;
@@ -46,13 +49,41 @@ document.addEventListener("DOMContentLoaded", () => {
         });
 
         function renderPhysics() {
-            dotX += (mouseX - dotX) * 0.25;
-            dotY += (mouseY - dotY) * 0.25;
+            // Liquid Cursor Stretch Logic
+            let velX = mouseX - dotX;
+            let velY = mouseY - dotY;
+            let distance = Math.sqrt(velX * velX + velY * velY);
             
-            if (cursorTracker) {
-                cursorTracker.style.transform = `translate3d(${dotX}px, ${dotY}px, 0)`;
+            dotX += velX * 0.25;
+            dotY += velY * 0.25;
+            
+            let isHovering = cursorTracker && (cursorTracker.classList.contains('hovered') || cursorTracker.classList.contains('view-mode'));
+            let scaleX = 1, scaleY = 1, angle = 0;
+
+            if (!isHovering) {
+                scaleX = Math.min(1.8, 1 + distance * 0.005);
+                scaleY = Math.max(0.5, 1 - distance * 0.002);
+                angle = Math.atan2(velY, velX) * (180 / Math.PI);
             }
 
+            if (cursorTracker) {
+                const cursorDot = cursorTracker.querySelector('.cursor-dot');
+                cursorTracker.style.transform = `translate3d(${dotX}px, ${dotY}px, 0)`;
+                if (cursorDot) {
+                    cursorDot.style.transform = `translate(-50%, -50%) rotate(${angle}deg) scale(${scaleX}, ${scaleY})`;
+                }
+
+                const cursorText = cursorTracker.querySelector('.cursor-text');
+                if (cursorText && cursorTracker.classList.contains('view-mode')) {
+                    const textOffsetX = (mouseX - dotX) * -0.15;
+                    const textOffsetY = (mouseY - dotY) * -0.15;
+                    cursorText.style.transform = `translate3d(${textOffsetX}px, ${textOffsetY}px, 0)`;
+                } else if (cursorText) {
+                    cursorText.style.transform = `translate3d(0px, 0px, 0)`;
+                }
+            }
+
+            // Image Reveal Logic
             revX += (mouseX - revX) * 0.1;
             revY += (mouseY - revY) * 0.1;
             
@@ -62,7 +93,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
             if (globalReveal) {
                 const isActive = globalReveal.classList.contains('active');
-                globalReveal.style.transform = `translate(-50%, -50%) scale(${isActive ? 1 : 0.8}) rotate(${tilt}deg)`;
+                globalReveal.style.transform = `translate3d(-50%, -50%, 0) translate3d(${revX}px, ${revY}px, 0) scale(${isActive ? 1 : 0.8}) rotate(${tilt}deg)`;
                 globalReveal.style.left = `${revX}px`; 
                 globalReveal.style.top = `${revY}px`;
             }
@@ -71,14 +102,18 @@ document.addEventListener("DOMContentLoaded", () => {
         }
         renderPhysics();
 
+        // Standard link hovering (The Archival Scanner brackets)
         hoverLinks.forEach(el => {
             el.addEventListener('mouseenter', () => { if (cursorTracker) cursorTracker.classList.add('hovered'); });
             el.addEventListener('mouseleave', () => { if (cursorTracker) cursorTracker.classList.remove('hovered'); });
         });
 
+        // Projects Table Hovering (Depth of field blur + VIEW cursor + Image reveal)
         projects.forEach(project => {
             project.addEventListener('mouseenter', function() {
                 if (cursorTracker) cursorTracker.classList.add('view-mode');
+                document.body.classList.add('project-viewing'); // Blurs the background
+                
                 const imgSrc = this.getAttribute('data-image');
                 if (imgSrc && globalRevealImg) {
                     globalRevealImg.src = imgSrc;
@@ -87,6 +122,7 @@ document.addEventListener("DOMContentLoaded", () => {
             });
             project.addEventListener('mouseleave', () => {
                 if (cursorTracker) cursorTracker.classList.remove('view-mode');
+                document.body.classList.remove('project-viewing');
                 if (globalReveal) globalReveal.classList.remove('active');
             });
         });
@@ -111,7 +147,7 @@ document.addEventListener("DOMContentLoaded", () => {
         scrollObserver.observe(el);
     });
 
-    // 4. SCROLL PHYSICS
+    // 4. SCROLL PHYSICS (Badge Spin, Skew, Parallax)
     const spinningBadge = document.querySelector('.badge-inner');
     const velocityContainer = document.getElementById('velocity-container');
     const parallaxElements = document.querySelectorAll('[data-parallax]');
