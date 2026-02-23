@@ -1,259 +1,410 @@
+/**
+ * SEFIN GWACHHA — Portfolio Script
+ * Every getElementById matches index.html exactly.
+ * Preloader IDs:  pre-fill, pre-num, pre-wipe
+ * Panel IDs:      img-panel, img-panel-inner, img-panel-src, img-panel-title, img-panel-year
+ * Body class for ready state: page-ready
+ */
+
 (function () {
-  "use strict";
+  'use strict';
 
-  // 1. SECURITY
-  document.addEventListener("contextmenu", function (e) { e.preventDefault(); });
-  document.addEventListener("keydown", function (e) {
-    if (e.keyCode === 123 || (e.ctrlKey && e.shiftKey && e.keyCode === 73) || (e.ctrlKey && e.shiftKey && e.keyCode === 74) || (e.ctrlKey && e.keyCode === 85)) {
-      e.preventDefault();
-    }
-  });
-
-  // 2. CONSOLE SIGNATURE
-  console.log("%c// TRANSMISSION INTERCEPTED: sefin.com.np", "color:#e8e4de; font-family:monospace; font-size:14px; padding:4px 0;");
-  console.log("%c// ARCHIVE AUTHOR: Sefin Gwachha — Creative Developer\\n// ENGINEERED WITH: WebGL · Three.js r128 · Vanilla JS", "color:#666; font-family:monospace; font-size:11px;");
-
-  function el(id) { return document.getElementById(id); }
-
-  // 3. PRELOADER
-  var pct = 0;
-  var pnum = el('pnum');
-  var pfill = el('pfill');
-  var pwipe = el('pwipe');
-
-  function finishLoader() {
-    if (pwipe) pwipe.style.transform = 'scaleY(1)';
-    setTimeout(function () {
-      document.body.classList.remove("loading");
-      document.body.classList.add('loaded'); // Fixed classname here
-    }, pwipe ? 700 : 50);
-  }
-
-  var loaderInterval = setInterval(function () {
-    pct = Math.min(100, pct + Math.floor(Math.random() * 16) + 5);
-    if (pnum) pnum.textContent = pct;
-    if (pfill) pfill.style.width = pct + '%';
-    if (pct >= 100) {
-      clearInterval(loaderInterval);
-      setTimeout(finishLoader, 120);
-    }
-  }, 22);
-
-  // 4. THREE.JS — TEMPORAL PRISM
-  function initPrism() {
-    var canvas = el("prism-canvas");
-    if (!canvas || typeof THREE === "undefined") return;
-
-    var vW = window.innerWidth;
-    var vH = window.innerHeight;
-    var isMobile = vW < 768;
-    var DPR = isMobile ? 1 : Math.min(window.devicePixelRatio || 1, 2);
-
-    var renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true, antialias: !isMobile, powerPreference: "high-performance" });
-    renderer.setPixelRatio(DPR);
-    renderer.setSize(vW, vH);
-    renderer.setClearColor(0x000000, 0);
-    renderer.outputEncoding = THREE.sRGBEncoding;
-
-    var scene = new THREE.Scene();
-    var camera = new THREE.PerspectiveCamera(45, vW / vH, 0.1, 200);
-    camera.position.set(0, 0, 9);
-
-    scene.add(new THREE.AmbientLight(0xffffff, 0.25));
-    var dirLight1 = new THREE.DirectionalLight(0xfaf6f0, 2.0); dirLight1.position.set(4, 6, 5); scene.add(dirLight1);
-    var dirLight2 = new THREE.DirectionalLight(0xc8c8c8, 0.7); dirLight2.position.set(-5, -2, 2); scene.add(dirLight2);
-
-    var cubeRT = new THREE.WebGLCubeRenderTarget(128, { format: THREE.RGBAFormat, generateMipmaps: true, minFilter: THREE.LinearMipmapLinearFilter });
-    var cubeCamera = new THREE.CubeCamera(0.1, 100, cubeRT);
-    scene.add(cubeCamera);
-
-    var prismGeo = new THREE.OctahedronGeometry(2.0, 0);
-    var prismMat = new THREE.MeshPhysicalMaterial({ color: 0xffffff, metalness: 0.0, roughness: 0.0, transmission: 0.92, thickness: 2.5, ior: 1.5, envMap: cubeRT.texture, envMapIntensity: 2.2, transparent: true, side: THREE.FrontSide });
-    var prism = new THREE.Mesh(prismGeo, prismMat);
-    scene.add(prism);
-
-    var wireGeo = new THREE.WireframeGeometry(prismGeo);
-    var wireMat = new THREE.LineBasicMaterial({ color: 0xe8e4de, opacity: 0.07, transparent: true });
-    prism.add(new THREE.LineSegments(wireGeo, wireMat));
-
-    var ptCount = isMobile ? 350 : 850;
-    var pPos = new Float32Array(ptCount * 3), pAlpha = new Float32Array(ptCount);
-    for (var i = 0; i < ptCount; i++) {
-      var i3 = i * 3;
-      pPos[i3] = (Math.random() - 0.5) * 26; pPos[i3 + 1] = (Math.random() - 0.5) * 16; pPos[i3 + 2] = (Math.random() - 0.5) * 12 - 4;
-      pAlpha[i] = Math.random();
-    }
-    var pGeo = new THREE.BufferGeometry();
-    pGeo.setAttribute("position", new THREE.BufferAttribute(pPos, 3));
-    pGeo.setAttribute("alpha", new THREE.BufferAttribute(pAlpha, 1));
-    var pMat = new THREE.ShaderMaterial({ transparent: true, depthWrite: false, uniforms: { uTime: { value: 0.0 } }, vertexShader: "attribute float alpha; varying float vAlpha; uniform float uTime; void main() { vAlpha = alpha; vec3 p = position; p.y += sin(uTime * 0.4 + position.x * 0.55) * 0.15; vec4 mv = modelViewMatrix * vec4(p, 1.0); gl_PointSize = clamp(1.2 * (7.0 / -mv.z), 0.5, 3.0); gl_Position = projectionMatrix * mv; }", fragmentShader: "varying float vAlpha; void main() { vec2 uv = gl_PointCoord - 0.5; if (length(uv) > 0.5) discard; gl_FragColor = vec4(0.91, 0.89, 0.87, (1.0 - length(uv) * 2.0) * vAlpha * 0.4); }" });
-    var particles = new THREE.Points(pGeo, pMat);
-    scene.add(particles);
-
-    var mTargetX = 0, mTargetY = 0, mCurrX = 0, mCurrY = 0;
-    window.addEventListener("mousemove", function (e) { mTargetX = (e.clientX / window.innerWidth - 0.5) * 1.8; mTargetY = -(e.clientY / window.innerHeight - 0.5) * 1.0; });
-
-    window.addEventListener("resize", function () { vW = window.innerWidth; vH = window.innerHeight; camera.aspect = vW / vH; camera.updateProjectionMatrix(); renderer.setSize(vW, vH); });
-
-    var clock = 0;
-    function animate() {
-      requestAnimationFrame(animate);
-      clock += 0.003;
-      mCurrX += (mTargetX - mCurrX) * 0.028; mCurrY += (mTargetY - mCurrY) * 0.028;
-      prism.rotation.y = clock * 0.18 + mCurrX * 0.45; prism.rotation.x = Math.sin(clock * 0.42) * 0.12 + mCurrY * 0.28; prism.rotation.z = Math.cos(clock * 0.26) * 0.055;
-      particles.rotation.y = clock * 0.035; pMat.uniforms.uTime.value = clock;
-      prism.visible = false; cubeCamera.update(renderer, scene); prism.visible = true;
-      renderer.render(scene, camera);
-    }
-    animate();
-  }
-
-  if (document.readyState === "loading") { document.addEventListener("DOMContentLoaded", initPrism); } else { initPrism(); }
-
-  // 5. MOUSE, CURSOR & IMAGE REVEAL
+  /* ─────────────────────────────────────────
+     HELPERS
+  ───────────────────────────────────────── */
   function lerp(a, b, t) { return a + (b - a) * t; }
   function clamp(v, lo, hi) { return Math.min(Math.max(v, lo), hi); }
-  var isMouse = window.matchMedia('(hover: hover) and (pointer: fine)').matches && window.innerWidth >= 768;
 
-  // Split characters for Hero Title
-  document.querySelectorAll('.big-word').forEach(function (el) {
-    var w = el.getAttribute('data-word') || el.textContent.trim();
-    el.setAttribute('aria-label', w);
-    el.innerHTML = w.split('').map(function (c, i) { return '<span class="ch" style="--ci:' + i + '">' + (c === ' ' ? '&nbsp;' : c) + '</span>'; }).join('');
+  var IS_MOUSE = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+
+  /* ─────────────────────────────────────────
+     GLOBAL MOUSE POSITION
+  ───────────────────────────────────────── */
+  var mouseX = window.innerWidth / 2;
+  var mouseY = window.innerHeight / 2;
+  document.addEventListener('mousemove', function (e) {
+    mouseX = e.clientX;
+    mouseY = e.clientY;
+  }, { passive: true });
+
+  /* ─────────────────────────────────────────
+     1. PRELOADER
+     Uses: #pre-num, #pre-fill, #pre-wipe
+     Adds: body.page-ready when done
+  ───────────────────────────────────────── */
+  var preNum  = document.getElementById('pre-num');
+  var preFill = document.getElementById('pre-fill');
+  var preWipe = document.getElementById('pre-wipe');
+  var pct = 0;
+
+  function showPage() {
+    document.body.classList.add('page-ready');
+    // Preload archive images after page is visible
+    preloadArchiveImages();
+  }
+
+  if (!preNum || !preFill) {
+    // Safety: if elements missing just show page
+    showPage();
+  } else {
+    var loaderTimer = setInterval(function () {
+      pct = Math.min(100, pct + Math.floor(Math.random() * 15) + 5);
+      preNum.textContent  = pct;
+      preFill.style.width = pct + '%';
+
+      if (pct >= 100) {
+        clearInterval(loaderTimer);
+        setTimeout(function () {
+          if (preWipe) preWipe.style.transform = 'scaleY(1)';
+          setTimeout(showPage, preWipe ? 680 : 50);
+        }, 120);
+      }
+    }, 24);
+  }
+
+  /* ─────────────────────────────────────────
+     2. CHAR SPLITTING
+     Targets: .h-word[data-word]
+  ───────────────────────────────────────── */
+  document.querySelectorAll('.h-word').forEach(function (el) {
+    var word = el.getAttribute('data-word') || el.textContent.trim();
+    el.setAttribute('aria-label', word);
+    el.innerHTML = word.split('').map(function (ch, i) {
+      return '<span class="h-char" aria-hidden="true" style="--ci:' + i + '">' +
+             (ch === ' ' ? '&nbsp;' : ch) + '</span>';
+    }).join('');
   });
 
-  var mx = window.innerWidth / 2, my = window.innerHeight / 2;
-  window.addEventListener('mousemove', function (e) { mx = e.clientX; my = e.clientY; }, { passive: true });
+  /* ─────────────────────────────────────────
+     3. CUSTOM CURSOR
+     ID: cursor
+  ───────────────────────────────────────── */
+  var cursorEl = document.getElementById('cursor');
 
-  var cur = el('cursor');
-  var rev = el('reveal'), rinn = el('rev-inner'), rimg = el('rimg'), rname = el('rname'), rrole = el('rrole');
+  if (IS_MOUSE && cursorEl) {
+    var cx = mouseX, cy = mouseY;
 
-  if (isMouse) {
-    var cx = mx, cy = my, rx = mx, ry = my, tilt = 0, pmx = mx, isOn = false;
-
-    (function loop() {
-      cx = lerp(cx, mx, 0.15); cy = lerp(cy, my, 0.15);
-      if (cur) cur.style.transform = 'translate3d(' + cx + 'px,' + cy + 'px,0)';
-
-      if (rev && rinn) {
-        rx = lerp(rx, mx, 0.075); ry = lerp(ry, my, 0.075);
-        tilt = lerp(tilt, clamp((mx - pmx) * 0.45, -10, 10), 0.09); pmx = mx;
-        rev.style.left = rx + 'px'; rev.style.top = ry + 'px';
-        rinn.style.transform = isOn ? 'translate(-50%,-50%) scale(1) rotate(' + (tilt * 0.35) + 'deg)' : 'translate(-50%,-50%) scale(0.85) rotate(' + (-5 + tilt * 0.1) + 'deg)';
-      }
-      requestAnimationFrame(loop);
+    (function cursorLoop() {
+      cx = lerp(cx, mouseX, 0.15);
+      cy = lerp(cy, mouseY, 0.15);
+      cursorEl.style.transform = 'translate3d(' + cx + 'px,' + cy + 'px,0)';
+      requestAnimationFrame(cursorLoop);
     }());
 
+    // Standard links → ring grows
     document.querySelectorAll('a, button').forEach(function (el) {
-      el.addEventListener('mouseenter', function () { if(cur) cur.classList.add('lnk'); });
-      el.addEventListener('mouseleave', function () { if(cur) cur.classList.remove('lnk'); });
+      el.addEventListener('mouseenter', function () { cursorEl.classList.add('is-link'); });
+      el.addEventListener('mouseleave', function () { cursorEl.classList.remove('is-link'); });
     });
+  } else {
+    if (cursorEl) cursorEl.style.display = 'none';
+  }
 
-    document.querySelectorAll('.proj').forEach(function (row) {
+  /* ─────────────────────────────────────────
+     4. IMAGE HOVER PANEL  ← the key feature
+     Panel ID:    img-panel
+     Inner ID:    img-panel-inner
+     Image ID:    img-panel-src
+     Title ID:    img-panel-title
+     Year  ID:    img-panel-year
+     Active class: is-on  (added to #img-panel)
+  ───────────────────────────────────────── */
+  var panel      = document.getElementById('img-panel');
+  var panelImg   = document.getElementById('img-panel-src');
+  var panelTitle = document.getElementById('img-panel-title');
+  var panelYear  = document.getElementById('img-panel-year');
+
+  if (IS_MOUSE && panel && panelImg) {
+    var px = mouseX, py = mouseY;  // panel position (lerped)
+    var tilt = 0, prevMX = mouseX; // velocity tilt
+    var panelOn = false;
+    var panelInner = document.getElementById('img-panel-inner');
+
+    /* Slow lerp loop — panel lags behind cursor */
+    (function panelLoop() {
+      px    = lerp(px, mouseX, 0.08);
+      py    = lerp(py, mouseY, 0.08);
+      tilt  = lerp(tilt, clamp((mouseX - prevMX) * 0.4, -10, 10), 0.09);
+      prevMX = mouseX;
+
+      panel.style.left = px + 'px';
+      panel.style.top  = py + 'px';
+
+      /* Override CSS rotate with velocity tilt (JS is more precise here) */
+      if (panelInner) {
+        if (panelOn) {
+          panelInner.style.transform = 'translate(-50%,-60%) scale(1) rotate(' + (tilt * 0.35) + 'deg)';
+        } else {
+          panelInner.style.transform = 'translate(-50%,-60%) scale(0.82) rotate(-5deg)';
+        }
+      }
+
+      requestAnimationFrame(panelLoop);
+    }());
+
+    /* Preload images for instant display */
+    function preloadArchiveImages() {
+      document.querySelectorAll('.archive-row[data-img]').forEach(function (row) {
+        var src = row.getAttribute('data-img');
+        if (src) { var img = new Image(); img.src = src; }
+      });
+    }
+    window.preloadArchiveImages = preloadArchiveImages;
+
+    /* Hook up each archive row */
+    document.querySelectorAll('.archive-row').forEach(function (row) {
+
       row.addEventListener('mouseenter', function () {
-        var src = this.getAttribute('data-image');
-        if (src && rimg) rimg.src = src;
-        if (rname) rname.textContent = (this.querySelector('.wnm') || {}).textContent || '';
-        if (rrole) rrole.textContent = (this.querySelector('.wrl') || {}).textContent || '';
-        isOn = true; if(rev) rev.classList.add('on');
-        if(cur) cur.classList.add('viw');
+        var src   = this.getAttribute('data-img')   || '';
+        var title = this.getAttribute('data-title') || '';
+        var year  = this.getAttribute('data-year')  || '';
+
+        /* Set image source — browser cache makes repeats instant */
+        if (src) panelImg.src = src;
+
+        /* Update info text */
+        if (panelTitle) panelTitle.textContent = title;
+        if (panelYear)  panelYear.textContent  = year;
+
+        /* Snap panel position to current mouse before animating in */
+        px = mouseX; py = mouseY;
+        panel.style.left = px + 'px';
+        panel.style.top  = py + 'px';
+
+        /* Show panel */
+        panelOn = true;
+        panel.classList.add('is-on');
+
+        /* Cursor → VIEW mode */
+        if (cursorEl) { cursorEl.classList.remove('is-link'); cursorEl.classList.add('is-view'); }
       });
+
       row.addEventListener('mouseleave', function () {
-        isOn = false; if(rev) rev.classList.remove('on');
-        if(cur) cur.classList.remove('viw');
+        panelOn = false;
+        panel.classList.remove('is-on');
+        if (cursorEl) { cursorEl.classList.remove('is-view'); cursorEl.classList.add('is-link'); }
       });
-      // 3D Tilt on Row Hover
+
+      row.addEventListener('mouseleave', function () {
+        // Reset cursor fully after leaving
+        if (cursorEl) cursorEl.classList.remove('is-link');
+      });
+
+      /* 3-D perspective tilt per row */
       row.addEventListener('mousemove', function (e) {
-        var r = this.getBoundingClientRect();
-        this.style.transform = 'perspective(1400px) rotateX(' + (-(e.clientY - r.top - r.height / 2) / r.height * 2.5) + 'deg) rotateY(' + ((e.clientX - r.left - r.width / 2) / r.width * 2.5) + 'deg)';
+        var r   = this.getBoundingClientRect();
+        var ry  = (e.clientX - r.left  - r.width  / 2) / r.width;
+        var rx  = (e.clientY - r.top   - r.height / 2) / r.height;
+        this.style.transform = 'perspective(1400px) rotateX(' + (-rx * 2.5) + 'deg) rotateY(' + (ry * 2.5) + 'deg)';
       });
       row.addEventListener('mouseleave', function () { this.style.transform = ''; });
     });
 
-    // Magnetic buttons
-    document.querySelectorAll('[data-mag]').forEach(function (el) {
-      var s = parseFloat(el.getAttribute('data-mag') || '0.3');
-      el.addEventListener('mousemove', function (e) {
-        var r = this.getBoundingClientRect();
-        this.style.transform = 'translate(' + ((e.clientX - r.left - r.width / 2) * s) + 'px,' + ((e.clientY - r.top - r.height / 2) * s) + 'px)';
-      });
-      el.addEventListener('mouseleave', function () {
-        this.style.transition = 'transform .85s cubic-bezier(.16,1,.3,1)';
-        this.style.transform = '';
-        setTimeout(() => { this.style.transition = ''; }, 850);
-      });
-    });
-
-    // Hero Parallax text
-    var ht = document.querySelector('.htitle'), he = document.querySelector('.hero-eye');
-    var hx = 0, hy = 0;
-    (function hp() {
-      hx = lerp(hx, (mx / window.innerWidth - 0.5) * 20, 0.055);
-      hy = lerp(hy, (my / window.innerHeight - 0.5) * 11, 0.055);
-      if (ht) ht.style.transform = 'translate(' + hx + 'px,' + hy + 'px)';
-      if (he) he.style.transform = 'translate(' + (hx * 0.4) + 'px,' + (hy * 0.4) + 'px)';
-      requestAnimationFrame(hp);
-    })();
+  } else {
+    // On touch devices: hide panel
+    if (panel) panel.style.display = 'none';
   }
 
-  // 6. SCROLL REVEALS
-  var io = new IntersectionObserver(function (entries, obs) {
-    entries.forEach(function (e) {
-      if (!e.isIntersecting) return;
-      var el = e.target;
-      if (el.classList.contains('ahead')) {
-        el.querySelectorAll('.lm').forEach(function (lm, i) { lm.style.transitionDelay = (i * 0.085) + 's'; lm.classList.add('vis'); });
+  function preloadArchiveImages() {
+    document.querySelectorAll('.archive-row[data-img]').forEach(function (row) {
+      var src = row.getAttribute('data-img');
+      if (src) { var img = new Image(); img.src = src; }
+    });
+  }
+
+  /* ─────────────────────────────────────────
+     5. MAGNETIC ELEMENTS
+     Targets: [data-mag]
+  ───────────────────────────────────────── */
+  if (IS_MOUSE) {
+    document.querySelectorAll('[data-mag]').forEach(function (el) {
+      var strength = parseFloat(el.getAttribute('data-mag') || '0.3');
+      el.addEventListener('mousemove', function (e) {
+        var r  = this.getBoundingClientRect();
+        var dx = (e.clientX - r.left - r.width  / 2) * strength;
+        var dy = (e.clientY - r.top  - r.height / 2) * strength;
+        this.style.transform = 'translate(' + dx + 'px,' + dy + 'px)';
+      });
+      el.addEventListener('mouseleave', function () {
+        this.style.transition = 'transform 0.8s cubic-bezier(0.16,1,0.3,1)';
+        this.style.transform = '';
+        var self = this;
+        setTimeout(function () { self.style.transition = ''; }, 800);
+      });
+    });
+  }
+
+  /* ─────────────────────────────────────────
+     6. SCROLL REVEALS
+     Classes: .mask (text lines), .reveal-up, .reveal-lines, .footer-eyebrow
+     JS adds: .visible
+  ───────────────────────────────────────── */
+  var revealObserver = new IntersectionObserver(function (entries, obs) {
+    entries.forEach(function (entry) {
+      if (!entry.isIntersecting) return;
+      var el = entry.target;
+
+      /* Headline: stagger each .mask child */
+      if (el.classList.contains('reveal-lines')) {
+        el.querySelectorAll('.mask').forEach(function (m, i) {
+          m.style.transitionDelay = (i * 0.085) + 's';
+          m.classList.add('visible');
+        });
       }
-      if (el.classList.contains('wlist')) {
-        el.querySelectorAll('.ru').forEach(function (r, i) { r.style.transitionDelay = (i * 0.1) + 's'; r.classList.add('vis'); });
+
+      /* Individual mask line */
+      if (el.classList.contains('mask')) el.classList.add('visible');
+
+      /* Generic up-reveal */
+      if (el.classList.contains('reveal-up')) el.classList.add('visible');
+
+      /* Footer eyebrow */
+      if (el.classList.contains('footer-eyebrow')) el.classList.add('visible');
+
+      /* Stagger archive rows */
+      if (el.classList.contains('archive')) {
+        el.querySelectorAll('.reveal-up').forEach(function (row, i) {
+          row.style.transitionDelay = (i * 0.1) + 's';
+          row.classList.add('visible');
+        });
       }
-      el.classList.add('vis');
+
       obs.unobserve(el);
     });
   }, { rootMargin: '0px 0px -5% 0px', threshold: 0 });
 
-  document.querySelectorAll('.ru, .lm, .feye, .ahead, .wlist').forEach(function (el) { io.observe(el); });
+  document.querySelectorAll('.mask, .reveal-up, .reveal-lines, .footer-eyebrow, .archive').forEach(function (el) {
+    revealObserver.observe(el);
+  });
 
-  var fcta = document.querySelector('.fcta');
-  if (fcta) {
+  /* Footer CTA lines */
+  var footerCta = document.querySelector('.footer-cta');
+  if (footerCta) {
     new IntersectionObserver(function (entries) {
-      entries.forEach(function (e) {
-        if (e.isIntersecting) { fcta.querySelectorAll('.fl').forEach(function (f, i) { setTimeout(function () { f.classList.add('vis'); }, i * 150); }); }
+      entries.forEach(function (entry) {
+        if (!entry.isIntersecting) return;
+        footerCta.querySelectorAll('.cta-line').forEach(function (line, i) {
+          setTimeout(function () { line.classList.add('visible'); }, i * 150);
+        });
       });
-    }, { threshold: 0.2 }).observe(fcta);
+    }, { threshold: 0.2 }).observe(footerCta);
   }
 
-  // 7. SCROLL PHYSICS
-  var lastY = window.pageYOffset, bdeg = 0, skv = 0, nhid = false, stmr;
-  var bdg = el('bdg'), nav = el('nav'), wlist = el('wlist');
+  /* ─────────────────────────────────────────
+     7. SCROLL PHYSICS
+     Badge spin, nav hide/show, archive skew
+  ───────────────────────────────────────── */
+  var lastScrollY = window.pageYOffset;
+  var badgeDeg    = 0;
+  var skewVal     = 0;
+  var navHidden   = false;
+  var skewTimer;
+
+  var badgeWheel = document.getElementById('badge-wheel');
+  var navEl      = document.getElementById('nav');
+  var archiveEl  = document.getElementById('archive');
 
   window.addEventListener('scroll', function () {
     requestAnimationFrame(function () {
-      var y = window.pageYOffset, dy = y - lastY;
-      if (bdg) { bdeg += dy * 0.13; bdg.style.transform = 'rotate(' + bdeg + 'deg)'; }
-      if (dy > 6 && y > 100 && !nhid) { if (nav) nav.classList.add('off'); nhid = true; }
-      else if (dy < -4 && nhid) { if (nav) nav.classList.remove('off'); nhid = false; }
-      
-      if (wlist && window.innerWidth >= 768) {
-        skv = lerp(skv, clamp(dy * 0.05, -4, 4), 0.2);
-        wlist.style.transform = 'skewY(' + skv + 'deg)';
-        clearTimeout(stmr); stmr = setTimeout(function () { skv = 0; wlist.style.transform = ''; }, 200);
+      var y  = window.pageYOffset;
+      var dy = y - lastScrollY;
+
+      /* Badge spin */
+      if (badgeWheel) {
+        badgeDeg += dy * 0.13;
+        badgeWheel.style.transform = 'rotate(' + badgeDeg + 'deg)';
       }
-      lastY = y;
+
+      /* Nav: hide on scroll down, show on scroll up */
+      if (dy > 6 && y > 100 && !navHidden) {
+        if (navEl) navEl.classList.add('nav-up');
+        navHidden = true;
+      } else if (dy < -4 && navHidden) {
+        if (navEl) navEl.classList.remove('nav-up');
+        navHidden = false;
+      }
+
+      /* Archive list: subtle skew on scroll */
+      if (archiveEl && window.innerWidth >= 768) {
+        skewVal = lerp(skewVal, clamp(dy * 0.05, -3.5, 3.5), 0.2);
+        archiveEl.style.transform = 'skewY(' + skewVal + 'deg)';
+        clearTimeout(skewTimer);
+        skewTimer = setTimeout(function () {
+          skewVal = 0;
+          archiveEl.style.transform = '';
+        }, 200);
+      }
+
+      lastScrollY = y;
     });
   }, { passive: true });
 
-  // 8. MARQUEE
-  var mq = document.querySelector('.mq');
-  if (mq) {
-    mq.addEventListener('mouseenter', function () { this.querySelectorAll('.mqr').forEach(function (r) { r.style.animationDirection = 'reverse'; r.style.animationDuration = '13s'; }); });
-    mq.addEventListener('mouseleave', function () { this.querySelectorAll('.mqr').forEach(function (r) { r.style.animationDirection = 'normal'; r.style.animationDuration = '26s'; }); });
+  /* ─────────────────────────────────────────
+     8. HERO MOUSE PARALLAX
+  ───────────────────────────────────────── */
+  if (IS_MOUSE) {
+    var heroTitle = document.querySelector('.hero-title');
+    var heroEye   = document.querySelector('.hero-eyebrow');
+
+    if (heroTitle) {
+      var hx = 0, hy = 0;
+      (function heroLoop() {
+        var nx = mouseX / window.innerWidth  - 0.5;
+        var ny = mouseY / window.innerHeight - 0.5;
+        hx = lerp(hx, nx * 20, 0.055);
+        hy = lerp(hy, ny * 11, 0.055);
+        heroTitle.style.transform = 'translate(' + hx + 'px,' + hy + 'px)';
+        if (heroEye) heroEye.style.transform = 'translate(' + (hx * 0.4) + 'px,' + (hy * 0.4) + 'px)';
+        requestAnimationFrame(heroLoop);
+      }());
+    }
   }
 
-  // 9. LOCAL TIME
-  var td = el('tdisp');
-  if (td) {
-    var fmt = new Intl.DateTimeFormat('en-US', { timeZone: 'Asia/Kathmandu', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false });
-    function ut() { td.textContent = fmt.format(new Date()) + ' NPT'; } ut(); setInterval(ut, 1000);
+  /* ─────────────────────────────────────────
+     9. MARQUEE: pause / reverse on hover
+  ───────────────────────────────────────── */
+  var marqueeEl = document.querySelector('.marquee');
+  if (marqueeEl) {
+    marqueeEl.addEventListener('mouseenter', function () {
+      this.querySelectorAll('.marquee-row').forEach(function (r) {
+        r.style.animationDirection = 'reverse';
+        r.style.animationDuration  = '13s';
+      });
+    });
+    marqueeEl.addEventListener('mouseleave', function () {
+      this.querySelectorAll('.marquee-row').forEach(function (r) {
+        r.style.animationDirection = 'normal';
+        r.style.animationDuration  = '26s';
+      });
+    });
   }
-})();
+
+  /* ─────────────────────────────────────────
+     10. LIVE NEPAL TIME
+     ID: live-time
+  ───────────────────────────────────────── */
+  var timeEl = document.getElementById('live-time');
+  if (timeEl) {
+    var timeFmt = new Intl.DateTimeFormat('en-US', {
+      timeZone: 'Asia/Kathmandu',
+      hour: '2-digit', minute: '2-digit', second: '2-digit',
+      hour12: false
+    });
+    function updateTime() { timeEl.textContent = timeFmt.format(new Date()) + ' NPT'; }
+    updateTime();
+    setInterval(updateTime, 1000);
+  }
+
+  /* ─────────────────────────────────────────
+     11. SECURITY (right-click / devtools)
+  ───────────────────────────────────────── */
+  document.addEventListener('contextmenu', function (e) { e.preventDefault(); });
+  document.addEventListener('keydown', function (e) {
+    if (e.keyCode === 123 ||
+       (e.ctrlKey && e.shiftKey && e.keyCode === 73) ||
+       (e.ctrlKey && e.keyCode === 85)) {
+      e.preventDefault();
+    }
+  });
+
+}());
