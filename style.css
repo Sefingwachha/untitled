@@ -114,66 +114,123 @@ a { text-decoration:none; color:inherit; }
    PROJECT IMAGE REVEAL
 ═══════════════════════════════════════════ */
 .img-reveal {
-  position:fixed; top:0; left:0;
-  z-index:200; pointer-events:none;
-  opacity:0;
-  /* no translate here — JS drives left/top */
-  transition:opacity .45s var(--ease);
-  will-change:opacity,left,top;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 200;
+  pointer-events: none;
+  /* JS sets left/top — translate centers on cursor */
+  will-change: transform, left, top;
 }
+
 .img-reveal-inner {
-  width:340px; height:430px;
-  overflow:hidden; border-radius:4px;
-  position:relative;
-  /* JS also animates transform for tilt */
-  transform:translate(-50%,-50%) rotate(0deg);
-  transition:transform .6s var(--ease);
-  box-shadow:0 40px 100px rgba(0,0,0,0.7);
+  width: 360px;
+  height: 460px;
+  overflow: hidden;
+  border-radius: 6px;
+  position: relative;
+  /* centered on cursor point, JS adds tilt via inline style */
+  transform: translate(-50%, -50%) scale(0.88) rotate(-4deg);
+  opacity: 0;
+  transition:
+    transform 0.65s cubic-bezier(0.16,1,0.3,1),
+    opacity   0.45s cubic-bezier(0.16,1,0.3,1);
+  box-shadow:
+    0 30px 80px rgba(0,0,0,0.75),
+    0 0 0 1px rgba(240,237,232,0.08);
+  will-change: transform, opacity;
 }
 
-/* clip-path wipe — closed by default */
+/* Active state — CSS drives the entrance, no JS needed for opacity */
+.img-reveal.active .img-reveal-inner {
+  transform: translate(-50%, -50%) scale(1) rotate(0deg);
+  opacity: 1;
+}
+
+/* clip container for the wipe-in effect */
 .img-reveal-clip {
-  position:absolute; inset:0;
-  clip-path:polygon(0 0, 100% 0, 100% 0%, 0 0%);
-  transition:clip-path .7s var(--ease);
-  overflow:hidden;
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
 }
-.img-reveal.active .img-reveal-clip {
-  clip-path:polygon(0 0, 100% 0, 100% 100%, 0 100%);
-}
-.img-reveal.active { opacity:1; }
 
-/* inner overlay gradient */
+/* the wipe curtain — covers image, slides up on reveal */
+.img-reveal-clip::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--bg);
+  z-index: 1;
+  transform: translateY(0%);
+  transform-origin: top;
+  transition: transform 0.7s cubic-bezier(0.76,0,0.24,1) 0.05s;
+}
+.img-reveal.active .img-reveal-clip::before {
+  transform: translateY(-101%);
+}
+
+/* dark gradient overlay on image */
 .img-reveal-clip::after {
-  content:'';
-  position:absolute; inset:0; z-index:2;
-  background:linear-gradient(160deg, rgba(6,5,4,.25) 0%, transparent 55%);
-  pointer-events:none;
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  background: linear-gradient(
+    to top,
+    rgba(6,5,4,0.55) 0%,
+    rgba(6,5,4,0.1)  40%,
+    transparent      70%
+  );
+  pointer-events: none;
 }
 
 #reveal-img {
-  width:100%; height:100%; object-fit:cover;
-  display:block;
-  opacity:0;
-  transform:scale(1.06);
-  transition:opacity .55s var(--ease), transform .55s var(--ease);
-  will-change:opacity,transform;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transform: scale(1.12);
+  transition: transform 0.65s cubic-bezier(0.16,1,0.3,1);
+  will-change: transform;
 }
 .img-reveal.active #reveal-img {
-  /* image opacity driven by JS .onload */
+  transform: scale(1.0);
 }
 
-/* Project number badge on reveal */
+/* Project label badge */
 .reveal-badge {
-  position:absolute; bottom:1.2rem; left:1.4rem;
-  z-index:3;
-  font-family:'Bebas Neue', sans-serif;
-  font-size:.7rem; letter-spacing:.2em;
-  color:rgba(240,237,232,.6);
-  opacity:0; transform:translateY(6px);
-  transition:opacity .4s .3s, transform .4s .3s var(--ease);
+  position: absolute;
+  bottom: 1.4rem;
+  left: 1.5rem;
+  right: 1.5rem;
+  z-index: 3;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
 }
-.img-reveal.active .reveal-badge { opacity:1; transform:translateY(0); }
+.reveal-badge-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.1rem;
+  letter-spacing: 0.12em;
+  color: var(--text);
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.4s var(--ease) 0.25s, transform 0.5s var(--ease) 0.25s;
+}
+.reveal-badge-role {
+  font-size: 0.62rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--accent);
+  opacity: 0;
+  transform: translateY(6px);
+  transition: opacity 0.4s var(--ease) 0.35s, transform 0.5s var(--ease) 0.35s;
+}
+.img-reveal.active .reveal-badge-title,
+.img-reveal.active .reveal-badge-role {
+  opacity: 1;
+  transform: translateY(0);
+}
 
 /* ═══════════════════════════════════════════
    HIRE BADGE
