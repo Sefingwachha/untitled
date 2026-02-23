@@ -150,13 +150,13 @@ document.addEventListener("DOMContentLoaded", () => {
         window.requestAnimationFrame(handleScrollAnimations);
     }, { passive: true });
 
-    // 5. LIVE LOCAL TIME (Updated to Paris Timezone)
+    // 5. LIVE LOCAL TIME
     function updateTime() {
         const timeEl = document.getElementById('time-display');
         if (!timeEl) return;
         const now = new Date();
-        const options = { timeZone: 'Europe/Paris', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false };
-        timeEl.textContent = `${new Intl.DateTimeFormat('en-US', options).format(now)} CET`;
+        const options = { timeZone: 'Asia/Kathmandu', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false };
+        timeEl.textContent = `${new Intl.DateTimeFormat('en-US', options).format(now)} NPT`;
     }
     setInterval(updateTime, 1000);
     updateTime();
