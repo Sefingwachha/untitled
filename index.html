@@ -3,254 +3,188 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  
   <title>Sefin | Creative Developer & Software Engineer</title>
-  <meta name="title" content="Sefin | Creative Developer & Software Engineer" />
   <meta name="description" content="Sefin is an independent Creative Developer and Computer Science student from Nepal, specializing in WebGL, React, and award-winning digital experiences." />
-  <meta name="keywords" content="Sefin, Sefin Gwachha, Creative Developer, Web Developer Nepal, Frontend Engineer, React, WebGL, GSAP, UI/UX" />
   <meta name="author" content="Sefin Gwachha" />
   <meta name="theme-color" content="#060504" />
-  
   <meta name="google-site-verification" content="googlea10c10595baf5ec6" />
   <link rel="canonical" href="https://sefin.com.np/" />
-  <meta name="robots" content="index, follow, max-image-preview:large" />
-
+  <meta name="robots" content="index, follow" />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://sefin.com.np/" />
   <meta property="og:title" content="Sefin | Creative Developer" />
-  <meta property="og:description" content="Explore the digital archive of Sefin, a creative engineer and CS student building bespoke web experiences." />
+  <meta property="og:description" content="Explore the digital archive of Sefin — creative engineer building bespoke web experiences." />
   <meta property="og:image" content="https://sefin.com.np/og-image.jpg" />
-
   <meta property="twitter:card" content="summary_large_image" />
-  <meta property="twitter:url" content="https://sefin.com.np/" />
   <meta property="twitter:title" content="Sefin | Creative Developer" />
-  <meta property="twitter:description" content="Explore the digital archive of Sefin, a creative engineer and CS student building bespoke web experiences." />
   <meta property="twitter:image" content="https://sefin.com.np/og-image.jpg" />
-
-  <link rel="icon" type="image/png" href="logo.png?v=2" sizes="192x192" />
-  <link rel="apple-touch-icon" href="logo.png?v=2" sizes="180x180" />
-  
+  <link rel="icon" type="image/png" href="logo.png" sizes="192x192" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
-  
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="style.css" />
-
   <script type="application/ld+json">
-  {
-    "@context": "https://schema.org/",
-    "@type": "Person",
-    "name": "Sefin Gwachha",
-    "alternateName": "Sefin",
-    "url": "https://sefin.com.np/",
-    "image": "https://sefin.com.np/logo.png",
-    "jobTitle": "Creative Developer",
-    "description": "Sefin is a Frontend Developer, UI/UX Designer, and Computer Science student based in Nepal.",
-    "knowsAbout": ["Web Development", "React.js", "WebGL", "User Experience Design", "Computer Science"],
-    "address": {
-      "@type": "PostalAddress",
-      "addressLocality": "Bhaktapur",
-      "addressCountry": "NP"
-    },
-    "sameAs": [
-      "https://www.linkedin.com/in/sefin-gwachha/",
-      "https://github.com/Sefingwachha",
-      "https://instagram.com/___sefin"
-    ]
-  }
+  {"@context":"https://schema.org/","@type":"Person","name":"Sefin Gwachha","url":"https://sefin.com.np/","jobTitle":"Creative Developer","address":{"@type":"PostalAddress","addressLocality":"Bhaktapur","addressCountry":"NP"},"sameAs":["https://www.linkedin.com/in/sefin-gwachha/","https://github.com/Sefingwachha"]}
   </script>
-
-  <noscript>
-    <style>
-      .preloader, .cursor-tracker, .global-image-reveal, .hire-badge { display: none !important; }
-      .char, .word-mask span { transform: none !important; opacity: 1 !important; }
-      body.loading { overflow: auto; }
-    </style>
-  </noscript>
+  <noscript><style>.preloader{display:none!important}.char,.word-mask span{transform:none!important;opacity:1!important}body.loading{overflow:auto}</style></noscript>
 </head>
 <body class="loading no-select">
 
-  <!-- Cinematic overlays -->
-  <div class="noise-overlay" aria-hidden="true"></div>
-  <div class="vignette-overlay" aria-hidden="true"></div>
+  <!-- Film grain + vignette -->
+  <div class="noise" aria-hidden="true"></div>
+  <div class="vignette" aria-hidden="true"></div>
 
   <!-- Custom cursor -->
   <div class="cursor" id="cursor" aria-hidden="true">
     <div class="cursor-ring"></div>
     <div class="cursor-dot"></div>
-    <div class="cursor-label">VIEW</div>
+    <span class="cursor-text">VIEW</span>
   </div>
 
-  <!-- Image reveal on hover -->
+  <!-- Project image reveal panel -->
   <div class="img-reveal" id="img-reveal" aria-hidden="true">
-    <div class="img-reveal-inner">
-      <div class="img-reveal-clip">
-        <img src="" alt="Project Preview" id="reveal-img" decoding="async" loading="eager" draggable="false" />
-      </div>
-      <div class="reveal-badge">
-        <span class="reveal-badge-title"></span>
-        <span class="reveal-badge-role"></span>
+    <div class="img-reveal-inner" id="img-reveal-inner">
+      <img id="reveal-img" src="" alt="Project preview" draggable="false" />
+      <div class="reveal-info">
+        <span class="reveal-name" id="reveal-name"></span>
+        <span class="reveal-role" id="reveal-role"></span>
       </div>
     </div>
   </div>
 
-  <!-- Hire badge -->
-  <a href="/cdn-cgi/l/email-protection#88fbedeee1e6efffe9ebe0e0e9c8efe5e9e1e4a6ebe7e5" class="hire-badge" aria-label="Hire Me">
-    <div class="badge-wheel">
+  <!-- Spinning hire badge -->
+  <a href="mailto:sefingwachha@gmail.com" class="hire-badge" aria-label="Hire Me — Send Email">
+    <div class="badge-wheel" id="badge-wheel">
       <svg viewBox="0 0 100 100" width="120" height="120" aria-hidden="true">
-        <defs><path id="tp" d="M 50,50 m -38,0 a 38,38 0 1,1 76,0 a 38,38 0 1,1 -76,0"/></defs>
-        <text font-size="10.5" fill="currentColor" letter-spacing="2">
-          <textPath href="#tp">AVAILABLE FOR WORK ✦ LET'S TALK ✦ </textPath>
-        </text>
+        <defs><path id="tp" d="M50,50 m-38,0 a38,38 0 1,1 76,0 a38,38 0 1,1 -76,0"/></defs>
+        <text font-size="10.5" fill="currentColor" letter-spacing="2"><textPath href="#tp">AVAILABLE FOR WORK ✦ LET'S TALK ✦ </textPath></text>
       </svg>
-      <div class="badge-dot"></div>
+      <div class="badge-center"></div>
     </div>
   </a>
 
-  <!-- Architectural grid lines -->
-  <div class="arch-grid" aria-hidden="true">
+  <!-- Grid lines -->
+  <div class="grid-lines" aria-hidden="true">
     <span></span><span></span><span></span><span></span>
   </div>
 
-  <!-- Preloader -->
+  <!-- PRELOADER -->
   <div class="preloader" id="preloader" aria-hidden="true">
-    <div class="pre-content">
+    <div class="pre-inner">
       <div class="pre-logo">SG</div>
       <div class="pre-bar"><div class="pre-fill" id="pre-fill"></div></div>
-      <div class="pre-count"><span id="pre-num">0</span><span class="pre-pct">%</span></div>
+      <div class="pre-pct"><span id="pre-num">0</span>%</div>
     </div>
-    <div id="pre-wipe"></div>
+    <div class="pre-wipe" id="pre-wipe"></div>
   </div>
 
-  <!-- Header -->
+  <!-- NAV -->
   <header class="nav" id="nav">
-    <a href="#home" class="nav-brand magnetic" data-strength="0.3">SEFIN<sup>©</sup></a>
-    <div class="nav-center hidden-m">
-      <div class="pulse-dot"></div>
+    <a href="#home" class="nav-brand magnetic" data-mag="0.3">SEFIN<sup>©</sup></a>
+    <div class="nav-mid hidden-m">
+      <span class="pulse-dot"></span>
       <span>ACCEPTING CLIENTS — 2026</span>
     </div>
     <nav class="nav-right">
-      <a href="#about" class="nav-link hover-line hidden-m magnetic" data-strength="0.2">About</a>
-      <a href="#works" class="nav-link hover-line hidden-m magnetic" data-strength="0.2">Archive</a>
-      <a href="/cdn-cgi/l/email-protection#d5a6b0b3bcbbb2a2b4b6bdbdb495b2b8b4bcb9fbb6bab8" class="nav-cta magnetic" data-strength="0.4">
+      <a href="#about" class="nav-link hover-line hidden-m magnetic" data-mag="0.2">About</a>
+      <a href="#works" class="nav-link hover-line hidden-m magnetic" data-mag="0.2">Archive</a>
+      <a href="mailto:sefingwachha@gmail.com" class="nav-cta magnetic" data-mag="0.4">
         <span>LET'S TALK</span>
-        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 8h12M9 3l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M1 7h12M8 2l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </a>
     </nav>
   </header>
 
-  <main id="main-content">
+  <main id="main">
 
-    <!-- ═══ HERO ═══ -->
+    <!-- ══ HERO ══ -->
     <section class="hero" id="home">
-      <div class="hero-eyebrow word-mask">
+      <div class="hero-eyebrow">
         <span>CREATIVE ENGINEER</span>
-        <span class="sep hidden-m">✦</span>
+        <span class="dot hidden-m">✦</span>
         <span class="hidden-m">NEPAL-BASED</span>
-        <span class="sep hidden-m">✦</span>
+        <span class="dot hidden-m">✦</span>
         <span class="hidden-m">ELEVATING BRANDS GLOBALLY</span>
       </div>
 
       <h1 class="hero-title" aria-label="Crafting digital legacies">
         <div class="hero-row">
-          <span class="big-text split-chars" data-text="CRAFTING">CRAFTING</span>
+          <span class="big-word split-word" data-word="CRAFTING">CRAFTING</span>
         </div>
-        <div class="hero-row hero-row--indent">
-          <em class="italic-word">digital</em>
-          <span class="big-text split-chars" data-text="LEGACIES">LEGACIES</span>
+        <div class="hero-row row-indent">
+          <em class="hero-serif">digital</em>
+          <span class="big-word split-word" data-word="LEGACIES">LEGACIES</span>
         </div>
       </h1>
 
       <div class="hero-foot">
-        <div class="hero-scroll word-mask">
-          <span>SCROLL TO EXPLORE</span>
-          <div class="scroll-line"><div class="scroll-progress"></div></div>
+        <div class="hero-scroll">
+          <span>SCROLL</span>
+          <div class="scroll-track"><div class="scroll-line"></div></div>
         </div>
-        <div class="hero-index">
-          <span class="word-mask"><span>( 00 )</span></span>
-          <span class="hero-sub word-mask hidden-m"><span>INDEPENDENT CREATIVE DIRECTOR</span></span>
-        </div>
+        <span class="hero-num hidden-m">( 00 )</span>
       </div>
     </section>
 
-    <!-- ═══ MARQUEE STRIP ═══ -->
-    <div class="marquee-strip border-top border-bottom">
+    <!-- ══ MARQUEE ══ -->
+    <div class="marquee b-top b-bottom">
       <div class="marquee-track">
-        <div class="marquee-inner">
-          <span>CREATIVE DEVELOPMENT</span>
-          <span class="marquee-icon">✦</span>
-          <span>MOTION DESIGN</span>
-          <span class="marquee-icon">✦</span>
-          <span>WEBGL EXPERIENCES</span>
-          <span class="marquee-icon">✦</span>
-          <span>REACT &amp; NEXT.JS</span>
-          <span class="marquee-icon">✦</span>
-          <span>ART DIRECTION</span>
-          <span class="marquee-icon">✦</span>
-          <span>GSAP ANIMATION</span>
-          <span class="marquee-icon">✦</span>
-          <span>UI/UX DESIGN</span>
-          <span class="marquee-icon">✦</span>
-          <span>FRONTEND ARCHITECTURE</span>
-          <span class="marquee-icon">✦</span>
+        <div class="marquee-row">
+          <span>CREATIVE DEVELOPMENT</span><span class="star">✦</span>
+          <span>MOTION DESIGN</span><span class="star">✦</span>
+          <span>WEBGL EXPERIENCES</span><span class="star">✦</span>
+          <span>REACT & NEXT.JS</span><span class="star">✦</span>
+          <span>ART DIRECTION</span><span class="star">✦</span>
+          <span>UI/UX DESIGN</span><span class="star">✦</span>
+          <span>GSAP ANIMATION</span><span class="star">✦</span>
         </div>
-        <div class="marquee-inner" aria-hidden="true">
-          <span>CREATIVE DEVELOPMENT</span>
-          <span class="marquee-icon">✦</span>
-          <span>MOTION DESIGN</span>
-          <span class="marquee-icon">✦</span>
-          <span>WEBGL EXPERIENCES</span>
-          <span class="marquee-icon">✦</span>
-          <span>REACT &amp; NEXT.JS</span>
-          <span class="marquee-icon">✦</span>
-          <span>ART DIRECTION</span>
-          <span class="marquee-icon">✦</span>
-          <span>GSAP ANIMATION</span>
-          <span class="marquee-icon">✦</span>
-          <span>UI/UX DESIGN</span>
-          <span class="marquee-icon">✦</span>
-          <span>FRONTEND ARCHITECTURE</span>
-          <span class="marquee-icon">✦</span>
+        <div class="marquee-row" aria-hidden="true">
+          <span>CREATIVE DEVELOPMENT</span><span class="star">✦</span>
+          <span>MOTION DESIGN</span><span class="star">✦</span>
+          <span>WEBGL EXPERIENCES</span><span class="star">✦</span>
+          <span>REACT & NEXT.JS</span><span class="star">✦</span>
+          <span>ART DIRECTION</span><span class="star">✦</span>
+          <span>UI/UX DESIGN</span><span class="star">✦</span>
+          <span>GSAP ANIMATION</span><span class="star">✦</span>
         </div>
       </div>
     </div>
 
-    <!-- ═══ ABOUT ═══ -->
-    <section class="about section-pad border-top" id="about">
-      <div class="container">
-        <div class="side-label reveal-up">
+    <!-- ══ ABOUT ══ -->
+    <section class="about s-pad b-top" id="about">
+      <div class="wrap">
+        <div class="col-side js-reveal">
           <span class="sec-num">( 01 )</span>
-          <h2 class="sec-title">MANIFESTO</h2>
+          <h2 class="sec-label">MANIFESTO</h2>
         </div>
-        <div class="main-col">
-          <h3 class="about-headline">
-            <div class="word-mask reveal-line"><span>I engineer digital experiences</span></div>
-            <div class="word-mask reveal-line"><span>where performant code meets</span></div>
-            <div class="word-mask reveal-line"><span>cinematic motion. Fusing</span></div>
-            <div class="word-mask reveal-line"><span>robust architecture with</span></div>
-            <div class="word-mask reveal-line"><span><em class="italic-word">immersive design.</em></span></div>
+        <div class="col-main">
+          <h3 class="about-head js-lines">
+            <div class="line"><span>I engineer digital experiences</span></div>
+            <div class="line"><span>where performant code meets</span></div>
+            <div class="line"><span>cinematic motion. Fusing</span></div>
+            <div class="line"><span>robust architecture with</span></div>
+            <div class="line"><span><em class="serif-em">immersive design.</em></span></div>
           </h3>
-
-          <div class="services reveal-up">
-            <article class="svc-card border-top">
-              <div class="svc-num">01</div>
+          <div class="services js-reveal">
+            <article class="svc b-top">
+              <div class="svc-n">01</div>
               <div class="svc-body">
                 <h4>DEVELOPMENT</h4>
                 <p>React, Next.js, TypeScript. Architecting scalable, robust infrastructures engineered for absolute performance and longevity.</p>
               </div>
             </article>
-            <article class="svc-card border-top">
-              <div class="svc-num">02</div>
+            <article class="svc b-top">
+              <div class="svc-n">02</div>
               <div class="svc-body">
-                <h4>MOTION &amp; WEBGL</h4>
+                <h4>MOTION & WEBGL</h4>
                 <p>GSAP, Three.js, Canvas API. Forging fluid, hardware-accelerated interactions that elevate digital products to premium status.</p>
               </div>
             </article>
-            <article class="svc-card border-top">
-              <div class="svc-num">03</div>
+            <article class="svc b-top">
+              <div class="svc-n">03</div>
               <div class="svc-body">
                 <h4>ART DIRECTION</h4>
-                <p>UI/UX, Typography, Grid Systems. Designing intuitive, brutalist interfaces governed by strict mathematics and intentional whitespace.</p>
+                <p>UI/UX, Typography, Grid Systems. Designing brutalist interfaces governed by strict mathematics and intentional whitespace.</p>
               </div>
             </article>
           </div>
@@ -258,107 +192,110 @@
       </div>
     </section>
 
-    <!-- ═══ WORKS ═══ -->
-    <section class="works section-pad border-top" id="works">
-      <div class="container">
-        <div class="side-label reveal-up">
+    <!-- ══ WORKS ══ -->
+    <section class="works s-pad b-top" id="works">
+      <div class="wrap">
+        <div class="col-side js-reveal">
           <span class="sec-num">( 02 )</span>
-          <h2 class="sec-title">ARCHIVE</h2>
+          <h2 class="sec-label">ARCHIVE</h2>
         </div>
-        <div class="main-col">
-          
+        <div class="col-main">
           <div class="works-list" id="works-list">
-            <div class="works-header hidden-m reveal-up">
+
+            <div class="works-head hidden-m js-reveal">
               <span>CLIENT / PROJECT</span>
               <span>ROLE</span>
-              <span class="align-r">YEAR</span>
+              <span class="r">YEAR</span>
             </div>
 
-            <a href="javascript:void(0);" class="work-row project-item reveal-up" data-image="Main_Frame.webp" aria-label="Euphoria Fashion">
-              <div class="work-num">01</div>
-              <div class="work-name">
-                <span class="work-title">EUPHORIA</span>
-                <span class="work-tag hidden-m">Platform Architecture</span>
+            <a href="javascript:void(0);" class="work-row project-item js-reveal"
+               data-image="Main_Frame.webp" aria-label="Euphoria Fashion">
+              <div class="w-num">01</div>
+              <div class="w-info">
+                <span class="w-name">EUPHORIA</span>
+                <span class="w-role hidden-m">Platform Architecture</span>
               </div>
-              <div class="work-year align-r">2024</div>
-              <div class="work-arrow">
-                <svg width="20" height="20" viewBox="0 0 20 20"><path d="M4 10h12M11 5l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
-              </div>
-            </a>
-
-            <a href="javascript:void(0);" class="work-row project-item reveal-up" data-image="hero_banner.webp" aria-label="Cherished Photography">
-              <div class="work-num">02</div>
-              <div class="work-name">
-                <span class="work-title">CHERISHED</span>
-                <span class="work-tag hidden-m">UI/UX & Engineering</span>
-              </div>
-              <div class="work-year align-r">2024</div>
-              <div class="work-arrow">
-                <svg width="20" height="20" viewBox="0 0 20 20"><path d="M4 10h12M11 5l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
+              <div class="w-year r">2024</div>
+              <div class="w-arr">
+                <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M3 9h12M10 4l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
               </div>
             </a>
 
-            <a href="https://www.expertservicehub.com/" target="_blank" rel="noopener noreferrer" class="work-row project-item reveal-up" data-image="site.webp" aria-label="Expert Hub">
-              <div class="work-num">03</div>
-              <div class="work-name">
-                <span class="work-title">EXPERT HUB</span>
-                <span class="work-tag hidden-m">Fullstack Development</span>
+            <a href="javascript:void(0);" class="work-row project-item js-reveal"
+               data-image="hero_banner.webp" aria-label="Cherished Photography">
+              <div class="w-num">02</div>
+              <div class="w-info">
+                <span class="w-name">CHERISHED</span>
+                <span class="w-role hidden-m">UI/UX & Engineering</span>
               </div>
-              <div class="work-year align-r">2023</div>
-              <div class="work-arrow">
-                <svg width="20" height="20" viewBox="0 0 20 20"><path d="M4 10h12M11 5l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
+              <div class="w-year r">2024</div>
+              <div class="w-arr">
+                <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M3 9h12M10 4l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
               </div>
             </a>
 
-            <a href="javascript:void(0);" class="work-row project-item reveal-up" data-image="Hero_Banner_UI.webp" aria-label="Ultimate">
-              <div class="work-num">04</div>
-              <div class="work-name">
-                <span class="work-title">ULTIMATE</span>
-                <span class="work-tag hidden-m">Generative WebGL</span>
+            <a href="https://www.expertservicehub.com/" target="_blank" rel="noopener noreferrer"
+               class="work-row project-item js-reveal" data-image="site.webp" aria-label="Expert Hub">
+              <div class="w-num">03</div>
+              <div class="w-info">
+                <span class="w-name">EXPERT HUB</span>
+                <span class="w-role hidden-m">Fullstack Development</span>
               </div>
-              <div class="work-year align-r">2023</div>
-              <div class="work-arrow">
-                <svg width="20" height="20" viewBox="0 0 20 20"><path d="M4 10h12M11 5l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
+              <div class="w-year r">2023</div>
+              <div class="w-arr">
+                <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M3 9h12M10 4l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
               </div>
             </a>
+
+            <a href="javascript:void(0);" class="work-row project-item js-reveal"
+               data-image="Hero_Banner_UI.webp" aria-label="Ultimate Canvas">
+              <div class="w-num">04</div>
+              <div class="w-info">
+                <span class="w-name">ULTIMATE</span>
+                <span class="w-role hidden-m">Generative WebGL</span>
+              </div>
+              <div class="w-year r">2023</div>
+              <div class="w-arr">
+                <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M3 9h12M10 4l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </div>
+            </a>
+
           </div>
-
         </div>
       </div>
     </section>
 
   </main>
 
-  <!-- ═══ FOOTER ═══ -->
+  <!-- ══ FOOTER ══ -->
   <footer class="footer" id="contact">
-    <div class="footer-top container">
-      <div class="footer-eyebrow reveal-up">READY TO ELEVATE YOUR BRAND?</div>
-      <a href="/cdn-cgi/l/email-protection#463523202f28213127252e2e2706212b272f2a6825292b" class="cta-massive magnetic" data-strength="0.08" aria-label="Send an email">
-        <div class="cta-line word-mask"><span>LET'S</span></div>
-        <div class="cta-line word-mask"><span><em class="italic-word">create</em> TOGETHER</span></div>
-        <div class="cta-arrow">
-          <svg width="80" height="80" viewBox="0 0 80 80" fill="none">
-            <circle cx="40" cy="40" r="39" stroke="currentColor" stroke-opacity="0.3"/>
-            <path d="M24 40h32M42 24l16 16-16 16" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </div>
+    <div class="footer-top">
+      <div class="foot-eyebrow js-reveal">READY TO ELEVATE YOUR BRAND?</div>
+      <a href="mailto:sefingwachha@gmail.com" class="foot-cta magnetic" data-mag="0.06" aria-label="Email Sefin">
+        <div class="foot-line line-mask js-line-mask"><span>LET'S</span></div>
+        <div class="foot-line line-mask js-line-mask"><span><em class="serif-em">create</em> TOGETHER &rarr;</span></div>
       </a>
     </div>
-
-    <div class="footer-bottom border-top">
-      <div class="ft-col reveal-up">
-        <span class="ft-label">STATUS</span>
+    <div class="footer-bot b-top">
+      <div class="ft-col js-reveal">
+        <span class="ft-lbl">STATUS</span>
         <p>ACCEPTING NEW CLIENTS '26</p>
       </div>
-      <div class="ft-col hidden-m reveal-up">
-        <span class="ft-label">LOCAL TIME</span>
-        <p id="time-display">00:00:00 NPT</p>
+      <div class="ft-col hidden-m js-reveal">
+        <span class="ft-lbl">LOCAL TIME</span>
+        <p id="time-display">--:--:-- NPT</p>
       </div>
-      <div class="ft-col reveal-up">
-        <span class="ft-label">SOCIALS</span>
+      <div class="ft-col js-reveal">
+        <span class="ft-lbl">SOCIALS</span>
         <div class="ft-links">
           <a href="https://linkedin.com/in/sefin-gwachha/" target="_blank" rel="noopener noreferrer" class="hover-line">LinkedIn</a>
           <a href="https://github.com/Sefingwachha" target="_blank" rel="noopener noreferrer" class="hover-line">GitHub</a>
         </div>
       </div>
-      <div class="ft-copy hidden-m
+      <div class="ft-copy hidden-m">© SEFIN GWACHHA 2026</div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
