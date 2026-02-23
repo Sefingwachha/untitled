@@ -2,288 +2,233 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Sefin Gwachha | Creative Developer</title>
-  <meta name="description" content="Sefin Gwachha — Creative Developer & CS Student from Bhaktapur, Nepal." />
-  <link rel="icon" href="logo.png" type="image/png" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  
+  <!-- Primary SEO Meta Tags -->
+  <title>Bajgart Office | Paris Design Studio</title>
+  <meta name="title" content="Bajgart Office | Paris Design Studio" />
+  <meta name="description" content="Bajgart Office is a design studio based in Paris specializing in creating brand identities for early-stage tech startups." />
+  <meta name="keywords" content="Bajgart Office, Design Studio, Paris, Brand Identity, Tech Startups, Fintech, AI" />
+  
+  <!-- Canonical & Crawler Directives -->
+  <link rel="canonical" href="https://bajgartoffice.com/" />
+  <meta name="robots" content="index, follow, max-image-preview:large" />
+
+  <!-- Preconnect to Font Servers -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Syncopate:wght@400;600;700&family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@1,400;1,500;1,600&display=swap" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Syncopate:wght@400;600;700&family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@1,400;1,500;1,600&display=swap" media="print" onload="this.media='all'" />
+  <noscript>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Syncopate:wght@400;600;700&family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@1,400;1,500;1,600&display=swap" />
+  </noscript>
+  
   <link rel="stylesheet" href="style.css" />
+
+  <noscript>
+    <style>
+      .preloader, .cursor-tracker, .global-image-reveal, .floating-hire-badge { display: none !important; }
+      .anim-up, .anim-fade, .mask-up { transform: none !important; opacity: 1 !important; }
+      body.loading { overflow: auto; }
+    </style>
+  </noscript>
 </head>
-<body>
+<body class="loading no-select">
 
-  <!-- Film grain + vignette overlays -->
-  <div class="grain" aria-hidden="true"></div>
-  <div class="vignette" aria-hidden="true"></div>
+  <!-- Cinematic Visual Details -->
+  <div class="noise-overlay" aria-hidden="true"></div>
+  <div class="vignette-overlay" aria-hidden="true"></div>
 
-  <!-- Custom cursor (desktop only) -->
-  <div id="cursor" aria-hidden="true">
-    <div class="cur-ring"></div>
-    <div class="cur-dot"></div>
-    <span class="cur-label">VIEW</span>
+  <!-- Advanced Kinetic Cursor -->
+  <div class="cursor-tracker" id="cursor-tracker" aria-hidden="true">
+    <div class="cursor-dot"><span class="cursor-text">VIEW</span></div>
   </div>
 
-  <!-- =============================================
-       PROJECT IMAGE HOVER PANEL
-       Floats near cursor when hovering archive rows
-  ============================================= -->
-  <div id="img-panel" aria-hidden="true">
-    <div id="img-panel-inner">
-      <img id="img-panel-src" src="" alt="" draggable="false" />
-      <div class="img-panel-wipe"></div>
-      <div class="img-panel-info">
-        <span id="img-panel-title"></span>
-        <span id="img-panel-year"></span>
-      </div>
+  <!-- Global Image Tracker -->
+  <div class="global-image-reveal" id="image-tracker" aria-hidden="true">
+    <div class="reveal-inner">
+      <img src="" alt="Project Preview" id="global-reveal-img" decoding="async" loading="lazy" draggable="false" />
     </div>
   </div>
 
-  <!-- Spinning hire badge -->
-  <a href="mailto:sefingwachha@gmail.com" class="badge" aria-label="Hire me — send email">
-    <div class="badge-wheel" id="badge-wheel">
-      <svg viewBox="0 0 100 100" aria-hidden="true">
-        <defs>
-          <path id="ring-path" d="M50,50 m-37,0 a37,37 0 1,1 74,0 a37,37 0 1,1 -74,0"/>
-        </defs>
-        <text font-size="10.8" letter-spacing="2">
-          <textPath href="#ring-path">AVAILABLE FOR WORK ✦ LET'S TALK ✦ </textPath>
-        </text>
+  <!-- The Conversion Badge -->
+  <a href="mailto:hello@bajgartoffice.com" class="floating-hire-badge" aria-label="Work With Us">
+    <div class="badge-inner">
+      <svg viewBox="0 0 100 100" width="100" height="100" aria-hidden="true">
+        <defs><path id="circle" d="M 50, 50 m -37, 0 a 37,37 0 1,1 74,0 a 37,37 0 1,1 -74,0" /></defs>
+        <text font-size="11.5"><textPath xlink:href="#circle">READY FOR A BRAND SPRINT? • LET'S TALK • </textPath></text>
       </svg>
-      <div class="badge-dot"></div>
+      <div class="badge-center-dot"></div>
     </div>
   </a>
 
-  <!-- Architectural grid lines -->
-  <div class="grid-lines" aria-hidden="true">
-    <span></span><span></span><span></span><span></span>
-  </div>
-
-  <!-- =============================================
-       PRELOADER
-  ============================================= -->
-  <div id="preloader">
-    <div class="pre-content">
-      <p class="pre-logo">SG</p>
-      <div class="pre-bar">
-        <div class="pre-bar-fill" id="pre-fill"></div>
-      </div>
-      <p class="pre-number"><span id="pre-num">0</span>%</p>
+  <!-- Architectural Grid -->
+  <div class="grid-overlay" aria-hidden="true">
+    <div class="grid-container">
+      <div class="grid-col"></div><div class="grid-col"></div><div class="grid-col"></div><div class="grid-col"></div>
     </div>
-    <div class="pre-wipe" id="pre-wipe"></div>
   </div>
 
-  <!-- =============================================
-       NAVIGATION
-  ============================================= -->
-  <header id="nav">
-    <a href="#home" class="nav-brand">SEFIN<sup>©</sup></a>
-    <div class="nav-status d-hide">
-      <span class="pulse-dot"></span>
-      <span>ACCEPTING CLIENTS — 2026</span>
+  <!-- Preloader -->
+  <div class="preloader" aria-hidden="true">
+    <div class="loader-content">
+      <span class="loader-title">BAJGART OFFICE</span>
+      <span id="loader-percent">0%</span>
+    </div>
+  </div>
+
+  <!-- Header -->
+  <header class="navbar">
+    <div class="nav-brand">BAJGART&copy;</div>
+    <div class="nav-status hidden-mobile">
+      <div class="status-dot"></div> ACCEPTING NEW STARTUPS
     </div>
     <nav class="nav-links">
-      <a href="#about"  class="nav-link d-hide">About</a>
-      <a href="#works"  class="nav-link d-hide">Archive</a>
-      <a href="mailto:sefingwachha@gmail.com" class="nav-cta">LET'S TALK</a>
+      <a href="#about" class="hover-underline hidden-mobile link-hover">About</a>
+      <a href="#works" class="hover-underline hidden-mobile link-hover">Work</a>
+      <a href="mailto:hello@bajgartoffice.com" class="nav-cta-btn link-hover">LET'S TALK</a>
     </nav>
   </header>
 
-  <!-- =============================================
-       MAIN CONTENT
-  ============================================= -->
-  <main id="site-main">
-
-    <!-- HERO -->
-    <section id="home" class="hero">
-      <p class="hero-eyebrow">
-        <span class="d-hide">CREATIVE ENGINEER &nbsp;✦&nbsp; NEPAL-BASED &nbsp;✦&nbsp; </span>ELEVATING BRANDS GLOBALLY
-      </p>
-      <h1 class="hero-title" aria-label="Crafting digital legacies">
-        <div class="h-row">
-          <span class="h-word" data-word="CRAFTING">CRAFTING</span>
+  <!-- Main Content Wrapper -->
+  <main id="main-content">
+    
+    <!-- HERO SECTION -->
+    <section class="hero grid-container" id="home">
+      <div class="hero-content" data-parallax="0.15">
+        <div class="hero-top animate-fade">
+          <p>PARIS DESIGN STUDIO</p>
+          <p>BRAND IDENTITIES FOR EARLY-STAGE TECH</p>
         </div>
-        <div class="h-row h-indent">
-          <em class="h-serif">digital</em>
-          <span class="h-word" data-word="LEGACIES">LEGACIES</span>
+        
+        <h1 class="sr-only" style="position:absolute; width:1px; height:1px; overflow:hidden;">Bajgart Office - Paris Design Studio</h1>
+        <h2 class="hero-title" aria-hidden="true">
+          <div class="anim-line"><span class="anim-up">CRAFTING</span></div>
+          <div class="anim-line"><span class="anim-up delay-1"><span class="serif">meaningful</span> BRANDS</span></div>
+        </h2>
+        
+        <div class="hero-meta">
+          <div class="anim-line"><span class="anim-up delay-2">DIRECTOR-LEVEL, HANDS-ON APPROACH</span></div>
+          <div class="anim-line"><span class="anim-up delay-3">DELIVERY IN AS LITTLE AS 2 WEEKS</span></div>
         </div>
-      </h1>
-      <div class="hero-foot">
-        <span class="hero-scroll">
-          SCROLL
-          <span class="scroll-track"><span class="scroll-line"></span></span>
-        </span>
-        <span class="hero-index d-hide">( 00 )</span>
       </div>
     </section>
 
-    <!-- MARQUEE -->
-    <div class="marquee bdr-t bdr-b">
-      <div class="marquee-track">
-        <div class="marquee-row">
-          <span>CREATIVE DEVELOPMENT</span><em>✦</em>
-          <span>MOTION DESIGN</span><em>✦</em>
-          <span>WEBGL &amp; THREE.JS</span><em>✦</em>
-          <span>REACT &amp; NEXT.JS</span><em>✦</em>
-          <span>ART DIRECTION</span><em>✦</em>
-          <span>UI/UX DESIGN</span><em>✦</em>
-          <span>GSAP ANIMATION</span><em>✦</em>
+    <!-- ABOUT SECTION -->
+    <section class="about section-padding border-top" id="about">
+      <div class="grid-container">
+        <div class="col-label trigger" data-parallax="0.05">
+          <span class="section-num anim-fade">( 01 )</span>
+          <h2 class="section-title anim-fade delay-1">APPROACH</h2>
         </div>
-        <div class="marquee-row" aria-hidden="true">
-          <span>CREATIVE DEVELOPMENT</span><em>✦</em>
-          <span>MOTION DESIGN</span><em>✦</em>
-          <span>WEBGL &amp; THREE.JS</span><em>✦</em>
-          <span>REACT &amp; NEXT.JS</span><em>✦</em>
-          <span>ART DIRECTION</span><em>✦</em>
-          <span>UI/UX DESIGN</span><em>✦</em>
-          <span>GSAP ANIMATION</span><em>✦</em>
-        </div>
-      </div>
-    </div>
-
-    <!-- ABOUT -->
-    <section id="about" class="section bdr-t">
-      <div class="sec-grid">
-        <aside class="sec-label reveal-up">
-          <span class="sec-num">( 01 )</span>
-          <h2 class="sec-name">MANIFESTO</h2>
-        </aside>
-        <div class="sec-body">
-          <h3 class="about-headline reveal-lines">
-            <div class="mask"><span>I engineer digital experiences</span></div>
-            <div class="mask"><span>where performant code meets</span></div>
-            <div class="mask"><span>cinematic motion — fusing</span></div>
-            <div class="mask"><span>robust architecture with</span></div>
-            <div class="mask"><span><em class="accent-serif">immersive design.</em></span></div>
+        <div class="col-content">
+          <h3 class="about-text trigger">
+            <span class="anim-line"><span class="anim-up">We connect meaning</span></span>
+            <span class="anim-line"><span class="anim-up delay-1">with feeling. Making</span></span>
+            <span class="anim-line"><span class="anim-up delay-2">startups understandable,</span></span>
+            <span class="anim-line"><span class="anim-up delay-3">trustworthy, and <span class="serif">memorable.</span></span></span>
           </h3>
-          <div class="services reveal-up">
-            <article class="svc bdr-t">
-              <p class="svc-num">01</p>
-              <div>
-                <h4>DEVELOPMENT</h4>
-                <p>React, Next.js, TypeScript. Architecting scalable infrastructures engineered for absolute performance and longevity.</p>
-              </div>
+
+          <div class="services-grid">
+            <article class="service-item border-top trigger">
+              <span class="anim-line"><span class="anim-up">01. BRAND SPRINT</span></span>
+              <p class="anim-fade delay-1">We can deliver a robust, beautiful brand identity in as little as two weeks, engineered for early-stage momentum.</p>
             </article>
-            <article class="svc bdr-t">
-              <p class="svc-num">02</p>
-              <div>
-                <h4>MOTION &amp; WEBGL</h4>
-                <p>GSAP, Three.js, Canvas API. Forging fluid, hardware-accelerated interactions that elevate products to premium status.</p>
-              </div>
+            <article class="service-item border-top trigger">
+              <span class="anim-line"><span class="anim-up">02. CONTINUOUS SUPPORT</span></span>
+              <p class="anim-fade delay-1">With 14+ years of experience, a single director-level point of contact oversees your project for absolute consistency.</p>
             </article>
-            <article class="svc bdr-t">
-              <p class="svc-num">03</p>
-              <div>
-                <h4>ART DIRECTION</h4>
-                <p>UI/UX, Typography, Grid Systems. Brutalist interfaces governed by strict mathematics and intentional whitespace.</p>
-              </div>
+            <article class="service-item border-top trigger">
+              <span class="anim-line"><span class="anim-up">03. PLAYGROUND</span></span>
+              <p class="anim-fade delay-1">Our experimental incubator fusing AI, cutting-edge real-world tests, and creative ideas into the future of branding.</p>
             </article>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- ARCHIVE / WORKS -->
-    <section id="works" class="section bdr-t">
-      <div class="sec-grid">
-        <aside class="sec-label reveal-up">
-          <span class="sec-num">( 02 )</span>
-          <h2 class="sec-name">ARCHIVE</h2>
-        </aside>
-        <div class="sec-body">
-          <div class="archive" id="archive">
-
-            <div class="archive-head d-hide">
-              <span>PROJECT</span>
-              <span>ROLE</span>
-              <span class="tr">YEAR</span>
+    <!-- WORKS SECTION -->
+    <section class="works section-padding border-top" id="works">
+      <div class="grid-container">
+        <div class="col-label trigger" data-parallax="0.05">
+          <span class="section-num anim-fade">( 02 )</span>
+          <h2 class="section-title anim-fade delay-1">SELECTED WORK</h2>
+        </div>
+        
+        <div class="col-content">
+          <div class="works-index" id="velocity-container">
+            
+            <div class="index-header hidden-mobile trigger">
+              <div class="idx-col anim-fade">STARTUP</div>
+              <div class="idx-col anim-fade delay-1">INDUSTRY</div>
+              <div class="idx-col text-right anim-fade delay-2">DELIVERABLE</div>
             </div>
 
-            <!-- Each row: data-img, data-title, data-year drive the hover panel -->
-            <a class="archive-row reveal-up"
-               href="javascript:void(0);"
-               data-img="Main_Frame.webp"
-               data-title="EUPHORIA"
-               data-year="2024">
-              <span class="r-num">01</span>
-              <span class="r-name">EUPHORIA</span>
-              <span class="r-role d-hide">Platform Architecture</span>
-              <span class="r-year tr d-hide">2024</span>
-              <span class="r-arr">&#8599;</span>
+            <a href="javascript:void(0);" class="index-row project-item trigger link-hover" data-image="karman.jpg" aria-label="View Karman Case Study">
+              <div class="idx-col title anim-fade">KARMAN</div>
+              <div class="idx-col hidden-mobile meta anim-fade delay-1">Fintech</div>
+              <div class="idx-col text-right meta anim-fade delay-2">Brand Identity</div>
             </a>
 
-            <a class="archive-row reveal-up"
-               href="javascript:void(0);"
-               data-img="hero_banner.webp"
-               data-title="CHERISHED"
-               data-year="2024">
-              <span class="r-num">02</span>
-              <span class="r-name">CHERISHED</span>
-              <span class="r-role d-hide">UI/UX &amp; Engineering</span>
-              <span class="r-year tr d-hide">2024</span>
-              <span class="r-arr">&#8599;</span>
+            <a href="javascript:void(0);" class="index-row project-item trigger link-hover" data-image="moikka.jpg" aria-label="View Moikka Case Study">
+              <div class="idx-col title anim-fade">MOIKKA</div>
+              <div class="idx-col hidden-mobile meta anim-fade delay-1">E-commerce</div>
+              <div class="idx-col text-right meta anim-fade delay-2">Brand Identity</div>
             </a>
 
-            <a class="archive-row reveal-up"
-               href="https://www.expertservicehub.com/"
-               target="_blank" rel="noopener noreferrer"
-               data-img="site.webp"
-               data-title="EXPERT HUB"
-               data-year="2023">
-              <span class="r-num">03</span>
-              <span class="r-name">EXPERT HUB</span>
-              <span class="r-role d-hide">Fullstack Development</span>
-              <span class="r-year tr d-hide">2023</span>
-              <span class="r-arr">&#8599;</span>
+            <a href="javascript:void(0);" class="index-row project-item trigger link-hover" data-image="eightyseven.jpg" aria-label="View Eightyseven Case Study">
+              <div class="idx-col title anim-fade">EIGHTYSEVEN</div>
+              <div class="idx-col hidden-mobile meta anim-fade delay-1">Real Estate / VC</div>
+              <div class="idx-col text-right meta anim-fade delay-2">Brand Identity</div>
             </a>
 
-            <a class="archive-row reveal-up"
-               href="javascript:void(0);"
-               data-img="Hero_Banner_UI.webp"
-               data-title="ULTIMATE"
-               data-year="2023">
-              <span class="r-num">04</span>
-              <span class="r-name">ULTIMATE</span>
-              <span class="r-role d-hide">Generative WebGL</span>
-              <span class="r-year tr d-hide">2023</span>
-              <span class="r-arr">&#8599;</span>
+            <a href="javascript:void(0);" class="index-row project-item trigger link-hover" data-image="abyssale.jpg" aria-label="View Abyssale Case Study">
+              <div class="idx-col title anim-fade">ABYSSALE</div>
+              <div class="idx-col hidden-mobile meta anim-fade delay-1">Tools / AI</div>
+              <div class="idx-col text-right meta anim-fade delay-2">Brand Identity</div>
             </a>
-
+            
+            <a href="javascript:void(0);" class="index-row project-item trigger link-hover" data-image="girlhood.jpg" aria-label="View Girlhood Case Study">
+              <div class="idx-col title anim-fade">GIRLHOOD</div>
+              <div class="idx-col hidden-mobile meta anim-fade delay-1">Ed / Fun Tech</div>
+              <div class="idx-col text-right meta anim-fade delay-2">Brand Identity</div>
+            </a>
+            
           </div>
         </div>
       </div>
     </section>
 
-  </main><!-- /site-main -->
+  </main>
 
-  <!-- =============================================
-       FOOTER  (fixed behind main, reveals on scroll)
-  ============================================= -->
-  <footer id="footer">
-    <div class="footer-top">
-      <p class="footer-eyebrow reveal-up">READY TO ELEVATE YOUR BRAND?</p>
-      <a href="mailto:sefingwachha@gmail.com" class="footer-cta">
-        <div class="mask cta-line"><span>LET'S</span></div>
-        <div class="mask cta-line"><span><em class="accent-serif">create</em> TOGETHER &rarr;</span></div>
-      </a>
+  <!-- FOOTER -->
+  <footer class="footer border-top" id="contact">
+    <div class="grid-container footer-top trigger">
+      <div class="col-full">
+        <span class="section-num anim-fade">READY TO ELEVATE YOUR BRAND?</span>
+        <a href="mailto:hello@bajgartoffice.com" class="massive-link link-hover">
+          <div class="anim-line"><span class="anim-up delay-1">LET'S INITIATE</span></div>
+          <div class="anim-line"><span class="anim-up delay-2"><span class="serif">a dialogue</span> &rarr;</span></div>
+        </a>
+      </div>
     </div>
-    <div class="footer-bottom bdr-t">
-      <div class="footer-col reveal-up">
-        <span class="footer-label">STATUS</span>
-        <p>ACCEPTING NEW CLIENTS '26</p>
+
+    <div class="grid-container footer-bottom border-top trigger">
+      <div class="footer-col anim-fade">
+        <span class="label">STATUS</span>
+        <p>AVAILABLE WORLDWIDE</p>
       </div>
-      <div class="footer-col d-hide reveal-up">
-        <span class="footer-label">LOCAL TIME</span>
-        <p id="live-time">--:--:-- NPT</p>
+      <div class="footer-col hidden-mobile anim-fade delay-1">
+        <span class="label">PARIS TIME</span>
+        <p id="time-display">00:00 CET</p>
       </div>
-      <div class="footer-col reveal-up">
-        <span class="footer-label">SOCIALS</span>
-        <div class="footer-links">
-          <a href="https://linkedin.com/in/sefin-gwachha/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
-          <a href="https://github.com/Sefingwachha" target="_blank" rel="noopener noreferrer">GitHub</a>
+      <div class="footer-col anim-fade delay-2">
+        <span class="label">CONNECT</span>
+        <div class="social-links">
+          <a href="https://bajgartoffice.com/" target="_blank" rel="noopener noreferrer" class="hover-underline link-hover">Website</a>
+          <a href="#" target="_blank" rel="noopener noreferrer" class="hover-underline link-hover">Playground</a>
         </div>
       </div>
-      <p class="footer-copy d-hide">© SEFIN GWACHHA 2026</p>
     </div>
   </footer>
 
