@@ -4,57 +4,38 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   
-  <!-- Primary SEO Meta Tags -->
   <title>Sefin | Creative Developer & Software Engineer</title>
   <meta name="title" content="Sefin | Creative Developer & Software Engineer" />
   <meta name="description" content="Sefin is an independent Creative Developer and Computer Science student from Nepal, specializing in WebGL, React, and award-winning digital experiences." />
   <meta name="keywords" content="Sefin, Sefin Gwachha, Creative Developer, Web Developer Nepal, Frontend Engineer, React, WebGL, GSAP, UI/UX" />
   <meta name="author" content="Sefin Gwachha" />
-  <meta name="theme-color" content="#050505" />
+  <meta name="theme-color" content="#060504" />
   
-  <!-- Google Site Verification (Hardcoded) -->
   <meta name="google-site-verification" content="googlea10c10595baf5ec6" />
-
-  <!-- Canonical & Crawler Directives -->
   <link rel="canonical" href="https://sefin.com.np/" />
   <meta name="robots" content="index, follow, max-image-preview:large" />
 
-  <!-- Open Graph / LinkedIn / Facebook -->
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://sefin.com.np/" />
   <meta property="og:title" content="Sefin | Creative Developer" />
   <meta property="og:description" content="Explore the digital archive of Sefin, a creative engineer and CS student building bespoke web experiences." />
   <meta property="og:image" content="https://sefin.com.np/og-image.jpg" />
 
-  <!-- Twitter Cards -->
   <meta property="twitter:card" content="summary_large_image" />
   <meta property="twitter:url" content="https://sefin.com.np/" />
   <meta property="twitter:title" content="Sefin | Creative Developer" />
   <meta property="twitter:description" content="Explore the digital archive of Sefin, a creative engineer and CS student building bespoke web experiences." />
   <meta property="twitter:image" content="https://sefin.com.np/og-image.jpg" />
 
-  <!-- Favicon Integration (Absolute URLs & Sizes for Google Favicon Bot) -->
-  <link rel="icon" type="image/png" href="https://sefin.com.np/logo.png" sizes="192x192" />
-  <link rel="apple-touch-icon" href="https://sefin.com.np/logo.png" sizes="180x180" />
+  <link rel="icon" type="image/png" href="logo.png?v=2" sizes="192x192" />
+  <link rel="apple-touch-icon" href="logo.png?v=2" sizes="180x180" />
   
-  <!-- Performance Optimization: Preconnect to Font Servers -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
   
-  <!-- Premium Font Pairing: Syne + Inter + Playfair Display -->
-  <link href="https://fonts.googleapis.com/css2?family=Syncopate:wght@400;600;700&family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@1,400;1,500;1,600&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="style.css" />
 
-  <!-- Google Analytics (GA4) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=YOUR_GA4_ID_HERE"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'YOUR_GA4_ID_HERE'); /* REPLACE WITH YOUR GA4 ID */
-  </script>
-
-  <!-- Advanced Google Structured Data (JSON-LD Entity Mapping) -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org/",
@@ -71,10 +52,6 @@
       "addressLocality": "Bhaktapur",
       "addressCountry": "NP"
     },
-    "alumniOf": {
-      "@type": "CollegeOrUniversity",
-      "name": "Your University Name Here" 
-    },
     "sameAs": [
       "https://www.linkedin.com/in/sefin-gwachha/",
       "https://github.com/Sefingwachha",
@@ -83,208 +60,304 @@
   }
   </script>
 
-  <!-- Fallback for users with JavaScript disabled -->
   <noscript>
     <style>
-      .preloader, .cursor-tracker, .global-image-reveal, .floating-hire-badge { display: none !important; }
-      .anim-up, .anim-fade, .mask-up { transform: none !important; opacity: 1 !important; }
+      .preloader, .cursor-tracker, .global-image-reveal, .hire-badge { display: none !important; }
+      .char, .word-mask span { transform: none !important; opacity: 1 !important; }
       body.loading { overflow: auto; }
     </style>
   </noscript>
 </head>
 <body class="loading no-select">
 
-  <!-- Cinematic SVG Noise Overlay -->
+  <!-- Cinematic overlays -->
   <div class="noise-overlay" aria-hidden="true"></div>
+  <div class="vignette-overlay" aria-hidden="true"></div>
 
-  <!-- Minimal Physics Cursor -->
-  <div class="cursor-tracker" id="cursor-tracker" aria-hidden="true">
-    <div class="cursor-dot"><span class="cursor-text">VIEW</span></div>
+  <!-- Custom cursor -->
+  <div class="cursor" id="cursor" aria-hidden="true">
+    <div class="cursor-ring"></div>
+    <div class="cursor-dot"></div>
+    <div class="cursor-label">VIEW</div>
   </div>
 
-  <!-- Global Image Tracker (Optimized for 60fps scrolling) -->
-  <div class="global-image-reveal" id="image-tracker" aria-hidden="true">
-    <div class="reveal-inner">
-      <img src="" alt="Project Preview" id="global-reveal-img" decoding="async" loading="lazy" draggable="false" />
+  <!-- Image reveal on hover -->
+  <div class="img-reveal" id="img-reveal" aria-hidden="true">
+    <div class="img-reveal-inner">
+      <img src="" alt="Project Preview" id="reveal-img" decoding="async" loading="lazy" draggable="false" />
+      <div class="img-reveal-overlay"></div>
     </div>
   </div>
 
-  <!-- The Conversion Badge -->
-  <a href="mailto:sefingwachha@gmail.com" class="floating-hire-badge" aria-label="Hire Me">
-    <div class="badge-inner">
-      <svg viewBox="0 0 100 100" width="100" height="100" aria-hidden="true">
-        <defs><path id="circle" d="M 50, 50 m -37, 0 a 37,37 0 1,1 74,0 a 37,37 0 1,1 -74,0" /></defs>
-        <text font-size="11.5"><textPath xlink:href="#circle">AVAILABLE FOR WORK • LET'S TALK • </textPath></text>
+  <!-- Hire badge -->
+  <a href="mailto:sefingwachha@gmail.com" class="hire-badge" aria-label="Hire Me">
+    <div class="badge-wheel">
+      <svg viewBox="0 0 100 100" width="120" height="120" aria-hidden="true">
+        <defs><path id="tp" d="M 50,50 m -38,0 a 38,38 0 1,1 76,0 a 38,38 0 1,1 -76,0"/></defs>
+        <text font-size="10.5" fill="currentColor" letter-spacing="2">
+          <textPath href="#tp">AVAILABLE FOR WORK ✦ LET'S TALK ✦ </textPath>
+        </text>
       </svg>
-      <div class="badge-center-dot"></div>
+      <div class="badge-dot"></div>
     </div>
   </a>
 
-  <!-- Architectural Background Grid -->
-  <div class="grid-overlay" aria-hidden="true">
-    <div class="grid-container">
-      <div class="grid-col"></div><div class="grid-col"></div><div class="grid-col"></div><div class="grid-col"></div>
-    </div>
+  <!-- Architectural grid lines -->
+  <div class="arch-grid" aria-hidden="true">
+    <span></span><span></span><span></span><span></span>
   </div>
 
   <!-- Preloader -->
-  <div class="preloader" aria-hidden="true">
-    <div class="loader-content">
-      <span class="loader-title">SEFIN GWACHHA</span>
-      <span id="loader-percent">0%</span>
+  <div class="preloader" id="preloader" aria-hidden="true">
+    <div class="pre-content">
+      <div class="pre-logo">SG</div>
+      <div class="pre-bar"><div class="pre-fill" id="pre-fill"></div></div>
+      <div class="pre-count"><span id="pre-num">0</span><span class="pre-pct">%</span></div>
     </div>
+    <div class="pre-reveal" id="pre-reveal"></div>
   </div>
 
-  <!-- Frosted Glass Header -->
-  <header class="navbar">
-    <div class="nav-brand">SEFIN&copy;</div>
-    <div class="nav-status hidden-mobile">
-      <div class="status-dot"></div> ACCEPTING NEW CLIENTS
+  <!-- Header -->
+  <header class="nav" id="nav">
+    <a href="#home" class="nav-brand magnetic" data-strength="0.3">SEFIN<sup>©</sup></a>
+    <div class="nav-center hidden-m">
+      <div class="pulse-dot"></div>
+      <span>ACCEPTING CLIENTS — 2026</span>
     </div>
-    <nav class="nav-links">
-      <a href="#about" class="hover-underline hidden-mobile link-hover">About</a>
-      <a href="#works" class="hover-underline hidden-mobile link-hover">Archive</a>
-      <a href="mailto:sefingwachha@gmail.com" class="nav-cta-btn link-hover">LET'S TALK</a>
+    <nav class="nav-right">
+      <a href="#about" class="nav-link hover-line hidden-m magnetic" data-strength="0.2">About</a>
+      <a href="#works" class="nav-link hover-line hidden-m magnetic" data-strength="0.2">Archive</a>
+      <a href="mailto:sefingwachha@gmail.com" class="nav-cta magnetic" data-strength="0.4">
+        <span>LET'S TALK</span>
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 8h12M9 3l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
     </nav>
   </header>
 
-  <!-- Main Content Wrapper -->
   <main id="main-content">
-    
-    <!-- HERO SECTION -->
-    <section class="hero grid-container" id="home">
-      <div class="hero-content" data-parallax="0.15">
-        <div class="hero-top animate-fade">
-          <p>CREATIVE ENGINEER</p>
-          <p>ELEVATING BRANDS GLOBALLY</p>
+
+    <!-- ═══ HERO ═══ -->
+    <section class="hero" id="home">
+      <div class="hero-eyebrow word-mask">
+        <span>CREATIVE ENGINEER</span>
+        <span class="sep hidden-m">✦</span>
+        <span class="hidden-m">NEPAL-BASED</span>
+        <span class="sep hidden-m">✦</span>
+        <span class="hidden-m">ELEVATING BRANDS GLOBALLY</span>
+      </div>
+
+      <h1 class="hero-title" aria-label="Crafting digital legacies">
+        <div class="hero-row">
+          <span class="big-text split-chars" data-text="CRAFTING">CRAFTING</span>
         </div>
-        
-        <h1 class="sr-only" style="position:absolute; width:1px; height:1px; overflow:hidden;">Sefin Gwachha - Creative Developer</h1>
-        <h2 class="hero-title" aria-hidden="true">
-          <div class="anim-line"><span class="anim-up">CRAFTING</span></div>
-          <div class="anim-line"><span class="anim-up delay-1"><span class="serif">digital</span> LEGACIES</span></div>
-        </h2>
-        
-        <div class="hero-meta">
-          <div class="anim-line"><span class="anim-up delay-2">INDEPENDENT CREATIVE DIRECTOR</span></div>
-          <div class="anim-line"><span class="anim-up delay-3">BASED IN BHAKTAPUR, NEPAL</span></div>
+        <div class="hero-row hero-row--indent">
+          <em class="italic-word">digital</em>
+          <span class="big-text split-chars" data-text="LEGACIES">LEGACIES</span>
+        </div>
+      </h1>
+
+      <div class="hero-foot">
+        <div class="hero-scroll word-mask">
+          <span>SCROLL TO EXPLORE</span>
+          <div class="scroll-line"><div class="scroll-progress"></div></div>
+        </div>
+        <div class="hero-index">
+          <span class="word-mask"><span>( 00 )</span></span>
+          <span class="hero-sub word-mask hidden-m"><span>INDEPENDENT CREATIVE DIRECTOR</span></span>
         </div>
       </div>
     </section>
 
-    <!-- ABOUT SECTION -->
-    <section class="about section-padding border-top" id="about">
-      <div class="grid-container">
-        
-        <div class="col-label trigger" data-parallax="0.05">
-          <span class="section-num anim-fade">( 01 )</span>
-          <h2 class="section-title anim-fade delay-1">VISION</h2>
+    <!-- ═══ MARQUEE STRIP ═══ -->
+    <div class="marquee-strip border-top border-bottom">
+      <div class="marquee-track">
+        <div class="marquee-inner">
+          <span>CREATIVE DEVELOPMENT</span>
+          <span class="marquee-icon">✦</span>
+          <span>MOTION DESIGN</span>
+          <span class="marquee-icon">✦</span>
+          <span>WEBGL EXPERIENCES</span>
+          <span class="marquee-icon">✦</span>
+          <span>REACT &amp; NEXT.JS</span>
+          <span class="marquee-icon">✦</span>
+          <span>ART DIRECTION</span>
+          <span class="marquee-icon">✦</span>
+          <span>GSAP ANIMATION</span>
+          <span class="marquee-icon">✦</span>
+          <span>UI/UX DESIGN</span>
+          <span class="marquee-icon">✦</span>
+          <span>FRONTEND ARCHITECTURE</span>
+          <span class="marquee-icon">✦</span>
         </div>
-        
-        <div class="col-content">
-          <h3 class="about-text trigger">
-            <span class="anim-line"><span class="anim-up">I partner with forward-thinking brands</span></span>
-            <span class="anim-line"><span class="anim-up delay-1">to architect <span class="serif">bespoke</span> web experiences.</span></span>
-            <span class="anim-line"><span class="anim-up delay-2">Fusing robust engineering with</span></span>
-            <span class="anim-line"><span class="anim-up delay-3">immersion and cinematic motion.</span></span>
+        <div class="marquee-inner" aria-hidden="true">
+          <span>CREATIVE DEVELOPMENT</span>
+          <span class="marquee-icon">✦</span>
+          <span>MOTION DESIGN</span>
+          <span class="marquee-icon">✦</span>
+          <span>WEBGL EXPERIENCES</span>
+          <span class="marquee-icon">✦</span>
+          <span>REACT &amp; NEXT.JS</span>
+          <span class="marquee-icon">✦</span>
+          <span>ART DIRECTION</span>
+          <span class="marquee-icon">✦</span>
+          <span>GSAP ANIMATION</span>
+          <span class="marquee-icon">✦</span>
+          <span>UI/UX DESIGN</span>
+          <span class="marquee-icon">✦</span>
+          <span>FRONTEND ARCHITECTURE</span>
+          <span class="marquee-icon">✦</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ ABOUT ═══ -->
+    <section class="about section-pad border-top" id="about">
+      <div class="container">
+        <div class="side-label reveal-up">
+          <span class="sec-num">( 01 )</span>
+          <h2 class="sec-title">MANIFESTO</h2>
+        </div>
+        <div class="main-col">
+          <h3 class="about-headline">
+            <div class="word-mask reveal-line"><span>I engineer digital experiences</span></div>
+            <div class="word-mask reveal-line"><span>where performant code meets</span></div>
+            <div class="word-mask reveal-line"><span>cinematic motion. Fusing</span></div>
+            <div class="word-mask reveal-line"><span>robust architecture with</span></div>
+            <div class="word-mask reveal-line"><span><em class="italic-word">immersive design.</em></span></div>
           </h3>
 
-          <div class="services-grid">
-            <article class="service-item border-top trigger">
-              <span class="anim-line"><span class="anim-up">01. DEVELOPMENT</span></span>
-              <p class="anim-fade delay-1">React, Next.js, WebGL. Building highly scalable, lightning-fast architectures that drive conversions.</p>
+          <div class="services reveal-up">
+            <article class="svc-card border-top">
+              <div class="svc-num">01</div>
+              <div class="svc-body">
+                <h4>DEVELOPMENT</h4>
+                <p>React, Next.js, TypeScript. Architecting scalable, robust infrastructures engineered for absolute performance and longevity.</p>
+              </div>
             </article>
-            <article class="service-item border-top trigger">
-              <span class="anim-line"><span class="anim-up">02. UI/UX DESIGN</span></span>
-              <p class="anim-fade delay-1">Figma, Wireframing, Prototyping. Designing intuitive interfaces tailored strictly to your target audience.</p>
+            <article class="svc-card border-top">
+              <div class="svc-num">02</div>
+              <div class="svc-body">
+                <h4>MOTION &amp; WEBGL</h4>
+                <p>GSAP, Three.js, Canvas API. Forging fluid, hardware-accelerated interactions that elevate digital products to premium status.</p>
+              </div>
             </article>
-            <article class="service-item border-top trigger">
-              <span class="anim-line"><span class="anim-up">03. MOTION DESIGN</span></span>
-              <p class="anim-fade delay-1">GSAP, Three.js. Crafting fluid, hardware-accelerated interactions that elevate your brand to premium status.</p>
+            <article class="svc-card border-top">
+              <div class="svc-num">03</div>
+              <div class="svc-body">
+                <h4>ART DIRECTION</h4>
+                <p>UI/UX, Typography, Grid Systems. Designing intuitive, brutalist interfaces governed by strict mathematics and intentional whitespace.</p>
+              </div>
             </article>
           </div>
         </div>
-
       </div>
     </section>
 
-    <!-- WORKS SECTION -->
-    <section class="works section-padding border-top" id="works">
-      <div class="grid-container">
-        
-        <div class="col-label trigger" data-parallax="0.05">
-          <span class="section-num anim-fade">( 02 )</span>
-          <h2 class="section-title anim-fade delay-1">ARCHIVE</h2>
+    <!-- ═══ WORKS ═══ -->
+    <section class="works section-pad border-top" id="works">
+      <div class="container">
+        <div class="side-label reveal-up">
+          <span class="sec-num">( 02 )</span>
+          <h2 class="sec-title">ARCHIVE</h2>
         </div>
-        
-        <div class="col-content">
-          <div class="works-index" id="velocity-container">
-            
-            <div class="index-header hidden-mobile trigger">
-              <div class="idx-col anim-fade">CLIENT / PROJECT</div>
-              <div class="idx-col anim-fade delay-1">ROLE</div>
-              <div class="idx-col text-right anim-fade delay-2">YEAR</div>
+        <div class="main-col">
+          
+          <div class="works-list" id="works-list">
+            <div class="works-header hidden-m reveal-up">
+              <span>CLIENT / PROJECT</span>
+              <span>ROLE</span>
+              <span class="align-r">YEAR</span>
             </div>
 
-            <a href="javascript:void(0);" class="index-row project-item trigger link-hover" data-image="Main Frame.webp" aria-label="View Euphoria Fashion Case Study">
-              <div class="idx-col title anim-fade">EUPHORIA</div>
-              <div class="idx-col hidden-mobile meta anim-fade delay-1">Platform Architecture</div>
-              <div class="idx-col text-right meta anim-fade delay-2">2024</div>
+            <a href="javascript:void(0);" class="work-row project-item reveal-up" data-image="Main_Frame.webp" aria-label="Euphoria Fashion">
+              <div class="work-num">01</div>
+              <div class="work-name">
+                <span class="work-title">EUPHORIA</span>
+                <span class="work-tag hidden-m">Platform Architecture</span>
+              </div>
+              <div class="work-year align-r">2024</div>
+              <div class="work-arrow">
+                <svg width="20" height="20" viewBox="0 0 20 20"><path d="M4 10h12M11 5l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
+              </div>
             </a>
 
-            <a href="javascript:void(0);" class="index-row project-item trigger link-hover" data-image="hero banner.webp" aria-label="View Cherished Photography Case Study">
-              <div class="idx-col title anim-fade">CHERISHED</div>
-              <div class="idx-col hidden-mobile meta anim-fade delay-1">UI/UX & Engineering</div>
-              <div class="idx-col text-right meta anim-fade delay-2">2025</div>
+            <a href="javascript:void(0);" class="work-row project-item reveal-up" data-image="hero_banner.webp" aria-label="Cherished Photography">
+              <div class="work-num">02</div>
+              <div class="work-name">
+                <span class="work-title">CHERISHED</span>
+                <span class="work-tag hidden-m">UI/UX & Engineering</span>
+              </div>
+              <div class="work-year align-r">2024</div>
+              <div class="work-arrow">
+                <svg width="20" height="20" viewBox="0 0 20 20"><path d="M4 10h12M11 5l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
+              </div>
             </a>
 
-            <a href="https://www.expertservicehub.com/" target="_blank" rel="noopener noreferrer" class="index-row project-item trigger link-hover" data-image="site.webp" aria-label="Visit Expert Hub Live Site">
-              <div class="idx-col title anim-fade">EXPERT HUB</div>
-              <div class="idx-col hidden-mobile meta anim-fade delay-1">Fullstack Development</div>
-              <div class="idx-col text-right meta anim-fade delay-2">2026</div>
+            <a href="https://www.expertservicehub.com/" target="_blank" rel="noopener noreferrer" class="work-row project-item reveal-up" data-image="site.webp" aria-label="Expert Hub">
+              <div class="work-num">03</div>
+              <div class="work-name">
+                <span class="work-title">EXPERT HUB</span>
+                <span class="work-tag hidden-m">Fullstack Development</span>
+              </div>
+              <div class="work-year align-r">2023</div>
+              <div class="work-arrow">
+                <svg width="20" height="20" viewBox="0 0 20 20"><path d="M4 10h12M11 5l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
+              </div>
             </a>
 
-            <a href="javascript:void(0);" class="index-row project-item trigger link-hover" data-image="Hero Banner UI.webp" aria-label="View Ultimate Canvas Project">
-              <div class="idx-col title anim-fade">ULTIMATE</div>
-              <div class="idx-col hidden-mobile meta anim-fade delay-1">Generative WebGL</div>
-              <div class="idx-col text-right meta anim-fade delay-2">2023</div>
+            <a href="javascript:void(0);" class="work-row project-item reveal-up" data-image="Hero_Banner_UI.webp" aria-label="Ultimate">
+              <div class="work-num">04</div>
+              <div class="work-name">
+                <span class="work-title">ULTIMATE</span>
+                <span class="work-tag hidden-m">Generative WebGL</span>
+              </div>
+              <div class="work-year align-r">2023</div>
+              <div class="work-arrow">
+                <svg width="20" height="20" viewBox="0 0 20 20"><path d="M4 10h12M11 5l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
+              </div>
             </a>
-            
           </div>
-        </div>
 
+        </div>
       </div>
     </section>
 
   </main>
 
-  <!-- FOOTER -->
-  <footer class="footer border-top" id="contact">
-    <div class="grid-container footer-top trigger">
-      <div class="col-full">
-        <span class="section-num anim-fade">HAVE A PROJECT IN MIND?</span>
-        <a href="mailto:sefingwachha@gmail.com" class="massive-link link-hover">
-          <div class="anim-line"><span class="anim-up delay-1">LET'S INITIATE</span></div>
-          <div class="anim-line"><span class="anim-up delay-2"><span class="serif">a dialogue</span> &rarr;</span></div>
-        </a>
-      </div>
+  <!-- ═══ FOOTER ═══ -->
+  <footer class="footer" id="contact">
+    <div class="footer-top container">
+      <div class="footer-eyebrow reveal-up">READY TO ELEVATE YOUR BRAND?</div>
+      <a href="mailto:sefingwachha@gmail.com" class="cta-massive magnetic" data-strength="0.08" aria-label="Send an email">
+        <div class="cta-line word-mask"><span>LET'S</span></div>
+        <div class="cta-line word-mask"><span><em class="italic-word">create</em> TOGETHER</span></div>
+        <div class="cta-arrow">
+          <svg width="80" height="80" viewBox="0 0 80 80" fill="none">
+            <circle cx="40" cy="40" r="39" stroke="currentColor" stroke-opacity="0.3"/>
+            <path d="M24 40h32M42 24l16 16-16 16" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+      </a>
     </div>
 
-    <div class="grid-container footer-bottom border-top trigger">
-      <div class="footer-col anim-fade">
-        <span class="label">VERSION</span>
-        <p>1.0 &copy; 2026</p>
+    <div class="footer-bottom border-top">
+      <div class="ft-col reveal-up">
+        <span class="ft-label">STATUS</span>
+        <p>ACCEPTING NEW CLIENTS '26</p>
       </div>
-      <div class="footer-col hidden-mobile anim-fade delay-1">
-        <span class="label">LOCAL TIME</span>
-        <p id="time-display">00:00 NPT</p>
+      <div class="ft-col hidden-m reveal-up">
+        <span class="ft-label">LOCAL TIME</span>
+        <p id="time-display">00:00:00 NPT</p>
       </div>
-      <div class="footer-col anim-fade delay-2">
-        <span class="label">SOCIALS</span>
-        <div class="social-links">
-          <a href="https://linkedin.com/in/sefin-gwachha/" target="_blank" rel="noopener noreferrer" class="hover-underline link-hover">LinkedIn</a>
-          <a href="https://github.com/Sefingwachha" target="_blank" rel="noopener noreferrer" class="hover-underline link-hover">GitHub</a>
+      <div class="ft-col reveal-up">
+        <span class="ft-label">SOCIALS</span>
+        <div class="ft-links">
+          <a href="https://linkedin.com/in/sefin-gwachha/" target="_blank" rel="noopener noreferrer" class="hover-line">LinkedIn</a>
+          <a href="https://github.com/Sefingwachha" target="_blank" rel="noopener noreferrer" class="hover-line">GitHub</a>
         </div>
+      </div>
+      <div class="ft-copy hidden-m">
+        <span>© SEFIN GWACHHA 2026</span>
       </div>
     </div>
   </footer>
