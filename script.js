@@ -121,7 +121,8 @@ document.addEventListener("DOMContentLoaded", () => {
     euphoria: {
       title: 'EUPHORIA', client: 'Confidential', role: 'Lead Engineer', duration: '4 Months',
       tags: ['Platform Architecture', 'WebGL', 'React', 'GSAP'],
-      img: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=2564&auto=format&fit=crop',
+      // UPDATED TO YOUR IMAGE
+      img: 'image.png',
       overview: 'Euphoria is an immersive digital platform redefining how audiences discover and experience contemporary music. The brief demanded a site that felt less like a product and more like an environment.',
       challenge: 'The core tension was performance versus expressivity. WebGL shaders and real-time audio visualisations needed to coexist with a sub-100ms LCP.',
       execution: 'We built a bespoke rendering pipeline prioritising perceptual performance. Architecture separates presentation from data using a headless CMS feeding typed Next.js App Router routes. WebGL is isolated in a Web Worker.'
@@ -129,7 +130,8 @@ document.addEventListener("DOMContentLoaded", () => {
     cherished: {
       title: 'CHERISHED', client: 'Cherished Memories Ltd.', role: 'Full-Stack Engineer', duration: '3 Months',
       tags: ['UI/UX Design', 'Next.js', 'PostgreSQL'],
-      img: 'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=2670&auto=format&fit=crop',
+      // UPDATED TO YOUR IMAGE
+      img: 'image.png',
       overview: 'A platform for preserving family histories through interactive timelines, media galleries, and AI-assisted narrative generation.',
       challenge: 'Balancing feature density with emotional clarity. Every interaction had to be intuitive and warm — even for users unfamiliar with digital archives.',
       execution: 'Next.js App Router with React Server Components for sub-second first paints. Custom gesture library for timeline scrubbing at 60fps. Image processing on-edge via Cloudflare Workers.'
