@@ -167,7 +167,7 @@ img { width: 100%; height: 100%; object-fit: cover; display: block; }
 .modal-brand { font-weight: 800; font-size: 1.2rem; letter-spacing: -0.02em; }
 
 /* Upgraded Pill Close Button */
-.modal-close { display: flex; align-items: center; gap: 0.5rem; background: transparent; color: var(--text); border: 1px solid rgba(253, 253, 253, 0.3); border-radius: 50px; padding: 0.4rem 1.2rem; font-family: var(--font-main); font-weight: 700; font-size: 0.8rem; cursor: none; transition: all 0.3s ease; }
+.modal-close { display: flex; align-items: center; gap: 0.5rem; background: transparent; color: var(--bg); border: 1px solid rgba(253, 253, 253, 0.3); border-radius: 50px; padding: 0.4rem 1.2rem; font-family: var(--font-main); font-weight: 700; font-size: 0.8rem; cursor: none; transition: all 0.3s ease; }
 .modal-close:hover { background: var(--bg); color: var(--text); border-color: var(--bg); }
 .modal-close .close-key { opacity: 0.6; font-weight: 500; }
 
@@ -193,16 +193,32 @@ img { width: 100%; height: 100%; object-fit: cover; display: block; }
 .m-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1rem; }
 .m-tags span { background: var(--text); color: var(--bg); padding: 0.4rem 1rem; border-radius: 50px; font-size: 0.75rem; font-weight: 600; text-transform: uppercase; }
 
+
 /* =====================================================
-   CUSTOM MODAL SCROLLBAR (AUTO-HIDING BRUTALIST)
+   CUSTOM MODAL SCROLLBAR (DESKTOP ONLY)
    ===================================================== */
-.modal-body::-webkit-scrollbar { width: 3px; }
-.modal-body::-webkit-scrollbar-track { background: transparent; }
-.modal-body::-webkit-scrollbar-thumb { background-color: transparent; border-radius: 0px; box-shadow: inset 0 0 0 10px transparent; transition: box-shadow 0.3s ease; }
-.modal-body.is-scrolling::-webkit-scrollbar-thumb { box-shadow: inset 0 0 0 10px var(--text); }
-.modal-body.is-scrolling::-webkit-scrollbar-thumb:hover, .modal-body::-webkit-scrollbar-thumb:hover { box-shadow: inset 0 0 0 10px var(--accent); }
-.modal-body { scrollbar-width: thin; scrollbar-color: transparent transparent; transition: scrollbar-color 0.3s ease; }
-.modal-body.is-scrolling { scrollbar-color: var(--text) transparent; }
+@media (min-width: 901px) {
+  .modal-body::-webkit-scrollbar { width: 3px; }
+  .modal-body::-webkit-scrollbar-track { background: transparent; }
+  .modal-body::-webkit-scrollbar-thumb { 
+    background-color: transparent; 
+    border-radius: 0px; 
+    box-shadow: inset 0 0 0 10px transparent; 
+    transition: box-shadow 0.3s ease; 
+  }
+  .modal-body.is-scrolling::-webkit-scrollbar-thumb { box-shadow: inset 0 0 0 10px var(--text); }
+  .modal-body.is-scrolling::-webkit-scrollbar-thumb:hover, 
+  .modal-body::-webkit-scrollbar-thumb:hover { 
+    box-shadow: inset 0 0 0 10px var(--accent); 
+  }
+  .modal-body { 
+    scrollbar-width: thin; 
+    scrollbar-color: transparent transparent; 
+    transition: scrollbar-color 0.3s ease; 
+  }
+  .modal-body.is-scrolling { scrollbar-color: var(--text) transparent; }
+}
+
 
 /* =====================================================
    CUSTOM CURSOR (Desktop Only)
@@ -239,19 +255,25 @@ img { width: 100%; height: 100%; object-fit: cover; display: block; }
    ===================================================== */
 @media (max-width: 768px) {
   .hide-mobile { display: none !important; }
+  
   .hero-title .indent { padding-left: 0; }
   .hero-title .outline-text { -webkit-text-stroke: 1px var(--text); }
+  
   .hero-bottom-grid { grid-template-columns: 1fr; }
   .h-col { border-right: none; border-bottom: 1px solid var(--border); padding: 2rem var(--gap); }
   .h-col.h-scroll { grid-column: span 1; }
+  
   .project-row { grid-template-columns: 1fr; }
   .proj-info { border-right: none; border-bottom: 1px solid var(--border); padding: 2rem var(--gap); }
   .proj-image { padding: 2rem var(--gap); }
+  
   .service-grid { grid-template-columns: 1fr; }
   .srv-item { border-right: none; padding: 2rem var(--gap); }
+  
   .contact-grid { grid-template-columns: 1fr; }
   .contact-info { border-right: none; border-bottom: 1px solid var(--border); padding: 2rem var(--gap); }
   .form-group input, .form-group textarea { padding: 1.5rem var(--gap); }
+  
   .footer-bottom { grid-template-columns: 1fr; gap: 1rem; text-align: left; }
   .ft-col { text-align: left !important; }
   .socials { justify-content: flex-start; }
