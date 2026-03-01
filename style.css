@@ -352,3 +352,21 @@ img { width: 100%; height: 100%; object-fit: cover; display: block; }
   .m-sidebar { border-right: none; border-bottom: 1px solid var(--border); padding: 2rem var(--gap); }
   .m-main { padding: 2rem var(--gap); }
 }
+/* Hero Image Filter */
+.hero-img-parallax {
+  /* Remove this line to get full color back: */
+  filter: grayscale(1) contrast(1.2) brightness(0.7); 
+}
+
+/* Project Image Filter */
+.img-inner img { 
+  /* Remove this line to get full color back: */
+  filter: grayscale(0.15) contrast(1.05); 
+}
+
+/* Modal Image Filter */
+.m-hero-img img { 
+  /* Remove this line to get full color back: */
+  filter: grayscale(0.2); 
+}
+
