@@ -1,43 +1,77 @@
-<!DOCTYPE html>
-<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sefin Gwachha - Creative Engineer & Developer</title>
-    <meta name="description" content="Sefin Gwachha is a Nepal-based Creative Engineer and Developer, crafting digital legacies and elevating brands globally with cinematic motion and performant code.">
+
+    <!-- 1. PRIMARY SEO META TAGS -->
+    <title>Sefin Gwachha | Creative Engineer & Developer</title>
+    <meta name="title" content="Sefin Gwachha | Creative Engineer & Developer">
+    <meta name="description" content="Sefin Gwachha is a Creative Engineer and Developer based in Nepal. Crafting award-winning digital legacies, brutalist UI/UX, cinematic motion, and performant code globally.">
+    <meta name="keywords" content="Sefin Gwachha, Creative Engineer, Web Developer Nepal, Motion Design, WebGL, Three.js, React, Next.js, GSAP Animation, Freelance Developer">
+    <meta name="author" content="Sefin Gwachha">
     
+    <!-- 2. SEARCH ENGINE CRAWLER INSTRUCTIONS -->
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+    <meta name="googlebot" content="index, follow">
+    <link rel="canonical" href="https://www.sefin.com.np/">
+    
+    <!-- 3. OPEN GRAPH / FACEBOOK / LINKEDIN -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.sefin.com.np/">
+    <meta property="og:title" content="Sefin Gwachha | Creative Engineer & Developer">
+    <meta property="og:description" content="Crafting digital legacies where performant code meets cinematic motion. Specializing in WebGL, GSAP, and React.">
+    <meta property="og:image" content="https://www.sefin.com.np/assets/social-preview.jpg">
+    <meta property="og:site_name" content="Sefin Gwachha Portfolio">
+
+    <!-- 4. TWITTER -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://www.sefin.com.np/">
+    <meta property="twitter:title" content="Sefin Gwachha | Creative Engineer">
+    <meta property="twitter:description" content="Crafting digital legacies where performant code meets cinematic motion. Specializing in WebGL, GSAP, and React.">
+    <meta property="twitter:image" content="https://www.sefin.com.np/assets/social-preview.jpg">
+
+    <!-- 5. FAVICONS & APP ICONS -->
+    <link rel="icon" href="/favicon.ico" sizes="any">
+    <link rel="icon" href="/icon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <meta name="theme-color" content="#080604"> <!-- Matches your --bg color -->
+
+    <!-- 6. PERFORMANCE / LCP OPTIMIZATION -->
     <link rel="preload" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&family=DM+Serif+Display&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&family=DM+Serif+Display&display=swap"></noscript>
-    
     <link rel="stylesheet" href="style.css">
+
+    <!-- 7. ADVANCED SEO: JSON-LD SCHEMA MARKUP -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org/",
+      "@type": "Person",
+      "name": "Sefin Gwachha",
+      "url": "https://www.sefin.com.np/",
+      "image": "https://www.sefin.com.np/assets/profile-image.jpg",
+      "jobTitle": "Creative Engineer & Developer",
+      "description": "Creative Engineer and Web Developer specializing in high-performance websites, cinematic motion design, GSAP, and WebGL.",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Bhaktapur",
+        "addressRegion": "Bagmati Province",
+        "addressCountry": "NP"
+      },
+      "sameAs": [
+        "https://linkedin.com/in/sefin-gwachha/",
+        "https://github.com/Sefingwachha"
+      ],
+      "alumniOf": {
+         "@type": "Organization",
+         "name": "Your University Name Here" 
+      },
+      "knowsAbout": ["Web Development", "Creative Engineering", "React", "Next.js", "GSAP", "WebGL", "Three.js", "UI/UX Design"]
+    }
+    </script>
 </head>
-<body data-barba="wrapper">
-    
-    <!-- PERSISTENT UI ELEMENTS (Outside Barba Container) -->
-    <div class="grain"></div>
-    <div class="vignette"></div>
 
-    <div class="grid-lines">
-        <span></span><span></span><span></span><span></span>
-    </div>
 
-    <!-- Screen Wipe Element for Default Transitions -->
-    <div class="page-transition"></div>
-
-    <!-- Custom Cursor -->
-    <div id="cursor">
-        <div class="cur-ring"></div>
-        <div class="cur-dot"></div>
-        <span class="cur-label">VIEW</span>
-    </div>
-
-    <!-- Project Image Hover Panel -->
-    <div id="img-panel">
-        <div id="img-panel-inner">
-            <img id="img-panel-src" src="" alt="Project preview image" draggable="false" />
-            <div class="img-panel-wipe"></div>
-            <div class="img-panel-info">
-                <span id="img-panel-title"></span>
+<span id="img-panel-title"></span>
+                <!-- WE RESUME HERE -->
                 <span id="img-panel-year"></span>
             </div>
         </div>
@@ -79,7 +113,7 @@
         </nav>
     </header>
 
-    <!-- BARBA DYNAMIC CONTAINER -->
+    <!-- BARBA DYNAMIC CONTAINER (This is what changes during page transitions) -->
     <div data-barba="container" data-barba-namespace="home">
         <div id="site-main">
             <main>
@@ -143,7 +177,7 @@
                             <div class="archive" id="archive">
                                 <div class="archive-head d-hide"><span>PROJECT</span><span>ROLE</span><span class="tr">YEAR</span></div>
                                 
-                                <!-- Notice data-barba-transition="expand" triggers the special animation -->
+                                <!-- Notice data-barba-transition="expand" triggers the special FLIP animation -->
                                 <a class="archive-row gs-row" href="project-euphoria.html" data-barba-transition="expand" data-img="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=2564&auto=format&fit=crop" data-title="EUPHORIA" data-year="2024">
                                     <span class="r-num">01</span><span class="r-name">EUPHORIA</span><span class="r-role d-hide">Platform Architecture</span><span class="r-year tr d-hide">2024</span><span class="r-arr">&#8599;</span>
                                 </a>
@@ -180,7 +214,7 @@
         </footer>
     </div>
 
-    <!-- LIBRARIES -->
+    <!-- LIBRARIES (Lenis for Smooth Scroll, GSAP for Animation, Barba for Transitions) -->
     <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.19/bundled/lenis.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
