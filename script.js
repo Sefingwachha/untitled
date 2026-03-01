@@ -119,19 +119,23 @@ document.addEventListener("DOMContentLoaded", () => {
   // 8. Project Data & Modal Logic
   const PROJECTS = {
     euphoria: {
-      title: 'EUPHORIA', client: 'Confidential', role: 'Lead Engineer', duration: '4 Months',
+      title: 'Expert', // Updated title
+      client: 'Confidential', 
+      role: 'Lead Engineer', 
+      duration: '4 Months',
       tags: ['Platform Architecture', 'WebGL', 'React', 'GSAP'],
-      // UPDATED TO YOUR IMAGE
-      img: 'image.png',
+      img: 'site.webp', // Updated Image
       overview: 'Euphoria is an immersive digital platform redefining how audiences discover and experience contemporary music. The brief demanded a site that felt less like a product and more like an environment.',
       challenge: 'The core tension was performance versus expressivity. WebGL shaders and real-time audio visualisations needed to coexist with a sub-100ms LCP.',
       execution: 'We built a bespoke rendering pipeline prioritising perceptual performance. Architecture separates presentation from data using a headless CMS feeding typed Next.js App Router routes. WebGL is isolated in a Web Worker.'
     },
     cherished: {
-      title: 'CHERISHED', client: 'Cherished Memories Ltd.', role: 'Full-Stack Engineer', duration: '3 Months',
+      title: 'CHERISHED', 
+      client: 'Cherished Memories Ltd.', 
+      role: 'Full-Stack Engineer', 
+      duration: '3 Months',
       tags: ['UI/UX Design', 'Next.js', 'PostgreSQL'],
-      // UPDATED TO YOUR IMAGE
-      img: 'image.png',
+      img: 'hero banner.webp', // Updated image
       overview: 'A platform for preserving family histories through interactive timelines, media galleries, and AI-assisted narrative generation.',
       challenge: 'Balancing feature density with emotional clarity. Every interaction had to be intuitive and warm — even for users unfamiliar with digital archives.',
       execution: 'Next.js App Router with React Server Components for sub-second first paints. Custom gesture library for timeline scrubbing at 60fps. Image processing on-edge via Cloudflare Workers.'
@@ -192,7 +196,6 @@ document.addEventListener("DOMContentLoaded", () => {
     modal.setAttribute('aria-hidden', 'true');
     if (lastFocusedElement) lastFocusedElement.focus();
     
-    // Delay scroll restoration to match CSS transition
     setTimeout(() => {
       lenis.start();
       document.body.style.overflow = '';
@@ -208,17 +211,3 @@ document.addEventListener("DOMContentLoaded", () => {
   document.querySelector('.modal-overlay').addEventListener('click', closeModal);
   document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && modal.classList.contains('is-open')) closeModal(); });
 });
-
-  const PROJECTS = {
-    euphoria: {
-      title: 'Expert', 
-      // ...
-      img: 'site.webp', // Change this to your specific project image
-    },
-    cherished: {
-      title: 'CHERISHED', 
-      // ...
-      img: 'hero banner.webp', // Change this to your specific project image
-    }
-  };
-
