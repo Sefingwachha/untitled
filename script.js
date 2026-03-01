@@ -1,346 +1,278 @@
-/**
-* SEFIN GWACHHA — Portfolio Script
-* This script is a refined version of the provided prototype code.
-* It includes an accurate asset preloader and is organized for maintainability.
-*/
-
 (function () {
     'use strict';
 
     /* ─────────────────────────────────────────
-    HELPERS & CONFIG
+       HELPERS & STATE
     ───────────────────────────────────────── */
     function lerp(a, b, t) { return a + (b - a) * t; }
     function clamp(v, lo, hi) { return Math.min(Math.max(v, lo), hi); }
     const IS_MOUSE_DEVICE = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
-
-    /* ─────────────────────────────────────────
-    GLOBAL MOUSE POSITION
-    ───────────────────────────────────────── */
+    
     let mouseX = window.innerWidth / 2;
     let mouseY = window.innerHeight / 2;
+    let isPanelTransitioning = false; // Prevents mouse follow during expanding animation
+    let lenis;
+
     document.addEventListener('mousemove', (e) => {
         mouseX = e.clientX;
         mouseY = e.clientY;
     }, { passive: true });
 
     /* ─────────────────────────────────────────
-    1. ACCURATE ASSET PRELOADER
+       1. LENIS SMOOTH SCROLL
     ───────────────────────────────────────── */
+    function initSmoothScroll() {
+        lenis = new Lenis({
+            duration: 1.2,
+            easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+            smooth: true,
+        });
+        lenis.on('scroll', ScrollTrigger.update);
+        gsap.ticker.add((time) => { lenis.raf(time * 1000); });
+        gsap.ticker.lagSmoothing(0, 0);
+    }
+    initSmoothScroll();
+
+    /* ─────────────────────────────────────────
+       2. GSAP SCROLL ANIMATIONS SETUP
+    ───────────────────────────────────────── */
+    gsap.registerPlugin(ScrollTrigger);
+
+    function initScrollAnimations() {
+        // Character Splitting for Hero
+        document.querySelectorAll('.h-word').forEach(el => {
+            if(!el.querySelector('.h-char')) { // Prevent double splitting
+                const word = el.getAttribute('data-word') || el.textContent.trim();
+                el.setAttribute('aria-label', word);
+                el.innerHTML = word.split('').map((ch, i) =>
+                    `<span class="h-char" aria-hidden="true" style="--ci:${i}">${ch === ' ' ? '&nbsp;' : ch}</span>`
+                ).join('');
+            }
+        });
+
+        // Basic Text Reveals (Manifesto, Services)
+        gsap.utils.toArray('.gs-reveal').forEach(el => {
+            gsap.fromTo(el, 
+                { y: 40, autoAlpha: 0 },
+                { y: 0, autoAlpha: 1, duration: 1, ease: "power3.out",
+                  scrollTrigger: { trigger: el, start: "top 85%", toggleActions: "play none none none" }
+                }
+            );
+        });
+
+        // About Headline Reveal
+        gsap.utils.toArray('.about-headline .mask span').forEach((span, i) => {
+            gsap.to(span, {
+                y: "0%", duration: 1.2, ease: "power4.out", delay: i * 0.08,
+                scrollTrigger: { trigger: ".about-headline", start: "top 80%" }
+            });
+        });
+
+        // Archive Rows Stagger
+        ScrollTrigger.batch(".gs-row", {
+            start: "top 85%",
+            onEnter: batch => gsap.to(batch, {autoAlpha: 1, y: 0, stagger: 0.1, duration: 0.8, ease: "power3.out"}),
+        });
+
+        // Hero Parallax Scrub
+        gsap.to(".hero-title", {
+            yPercent: 30, ease: "none",
+            scrollTrigger: { trigger: ".hero", start: "top top", end: "bottom top", scrub: true }
+        });
+    }
+
+    /* ─────────────────────────────────────────
+       3. PRELOADER & INITIAL LOAD HERO ANIMATION
+    ───────────────────────────────────────── */
+    function finishLoading() {
+        const tl = gsap.timeline({
+            onComplete: () => {
+                document.body.classList.add('page-ready');
+            }
+        });
+
+        tl.to(".pre-wipe", { scaleY: 1, transformOrigin: "bottom", duration: 0.8, ease: "power4.inOut" })
+          .set("#preloader", { autoAlpha: 0 })
+          .to(".h-char", { y: "0%", autoAlpha: 1, stagger: 0.04, duration: 1, ease: "power4.out" }, "-=0.2")
+          .to(".h-serif", { autoAlpha: 1, duration: 1 }, "-=0.8")
+          .to(".hero-eyebrow, .hero-foot", { y: 0, autoAlpha: 1, duration: 0.8 }, "-=0.6");
+    }
+
+    // Fake progress for presentation 
     const preNum = document.getElementById('pre-num');
     const preFill = document.getElementById('pre-fill');
-    const preWipe = document.getElementById('pre-wipe');
-
-    function showPage() {
-        document.body.classList.add('page-ready');
-    }
-
-    // Define critical assets to track
-    const criticalImages = Array.from(document.querySelectorAll('.archive-row[data-img]'));
-    const fontBebas = new FontFaceObserver('Bebas Neue');
-    const fontDMSans = new FontFaceObserver('DM Sans');
-    const fontDMSerif = new FontFaceObserver('DM Serif Display');
-
-    // Create promises for each asset
-    const imagePromises = criticalImages.map(row => new Promise(resolve => {
-        const img = new Image();
-        img.src = row.getAttribute('data-img');
-        img.onload = resolve;
-        img.onerror = resolve; // Resolve on error to not block the preloader
-    }));
-
-    const fontPromises = [fontBebas.load(), fontDMSans.load(), fontDMSerif.load()];
-    const allAssets = [...imagePromises, ...fontPromises];
-    const totalAssets = allAssets.length;
-    let loadedAssets = 0;
-
-    const updateProgress = () => {
-        loadedAssets++;
-        const progress = Math.round((loadedAssets / totalAssets) * 100);
+    let progress = 0;
+    const loadInterval = setInterval(() => {
+        progress += Math.floor(Math.random() * 10) + 1;
+        if (progress >= 100) {
+            progress = 100;
+            clearInterval(loadInterval);
+            // We call finishLoading inside Barba's 'once' hook below!
+        }
         if (preNum) preNum.textContent = progress;
         if (preFill) preFill.style.width = progress + '%';
-
-        if (loadedAssets === totalAssets) {
-            // All assets loaded, proceed to show page
-            setTimeout(() => {
-                if (preWipe) preWipe.style.transform = 'scaleY(1)';
-                setTimeout(showPage, preWipe ? 680 : 50);
-            }, 120);
-        }
-    };
-
-    // Attach updateProgress to each promise
-    allAssets.forEach(promise => {
-        promise.then(updateProgress).catch(updateProgress);
-    });
+    }, 80);
 
     /* ─────────────────────────────────────────
-    2. CHARACTER SPLITTING FOR ANIMATIONS
+       4. CUSTOM CURSOR & IMAGE PANEL
     ───────────────────────────────────────── */
-    document.querySelectorAll('.h-word').forEach(el => {
-        const word = el.getAttribute('data-word') || el.textContent.trim();
-        el.setAttribute('aria-label', word);
-        el.innerHTML = word.split('').map((ch, i) =>
-            `<span class="h-char" aria-hidden="true" style="--ci:${i}">${ch === ' ' ? '&nbsp;' : ch}</span>`
-        ).join('');
-    });
-
-    /* ─────────────────────────────────────────
-    3. CUSTOM CURSOR
-    ───────────────────────────────────────── */
-    const cursorEl = document.getElementById('cursor');
-    if (IS_MOUSE_DEVICE && cursorEl) {
-        let cx = mouseX, cy = mouseY;
-        (function cursorLoop() {
-            cx = lerp(cx, mouseX, 0.15);
-            cy = lerp(cy, mouseY, 0.15);
-            cursorEl.style.transform = `translate3d(${cx}px, ${cy}px, 0)`;
-            requestAnimationFrame(cursorLoop);
-        }());
-
-        document.querySelectorAll('a, button').forEach(el => {
-            el.addEventListener('mouseenter', () => cursorEl.classList.add('is-link'));
-            el.addEventListener('mouseleave', () => cursorEl.classList.remove('is-link'));
-        });
-    } else if (cursorEl) {
-        cursorEl.style.display = 'none';
-    }
-
-    /* ─────────────────────────────────────────
-    4. IMAGE HOVER PANEL
-    ───────────────────────────────────────── */
-    const panel = document.getElementById('img-panel');
-    const panelImg = document.getElementById('img-panel-src');
-    const panelTitle = document.getElementById('img-panel-title');
-    const panelYear = document.getElementById('img-panel-year');
-
-    if (IS_MOUSE_DEVICE && panel && panelImg) {
-        let px = mouseX, py = mouseY;
-        let tilt = 0, prevMX = mouseX;
-        let panelOn = false;
+    function initInteractiveUI() {
+        const cursorEl = document.getElementById('cursor');
+        const panel = document.getElementById('img-panel');
+        const panelImg = document.getElementById('img-panel-src');
+        const panelTitle = document.getElementById('img-panel-title');
+        const panelYear = document.getElementById('img-panel-year');
         const panelInner = document.getElementById('img-panel-inner');
 
-        (function panelLoop() {
-            px = lerp(px, mouseX, 0.08);
-            py = lerp(py, mouseY, 0.08);
-            tilt = lerp(tilt, clamp((mouseX - prevMX) * 0.4, -10, 10), 0.09);
-            prevMX = mouseX;
-            panel.style.left = `${px}px`;
-            panel.style.top = `${py}px`;
+        if (IS_MOUSE_DEVICE) {
+            let cx = mouseX, cy = mouseY, px = mouseX, py = mouseY;
+            let tilt = 0, prevMX = mouseX;
+            let panelOn = false;
 
-            if (panelInner) {
-                const rotateVal = panelOn ? tilt * 0.35 : -5;
-                const scaleVal = panelOn ? 1 : 0.82;
-                panelInner.style.transform = `translate(-50%, -60%) scale(${scaleVal}) rotate(${rotateVal}deg)`;
-            }
-            requestAnimationFrame(panelLoop);
-        }());
+            // Master Animation Loop for UI
+            (function uiLoop() {
+                // Cursor
+                cx = lerp(cx, mouseX, 0.15);
+                cy = lerp(cy, mouseY, 0.15);
+                if (cursorEl) cursorEl.style.transform = `translate3d(${cx}px, ${cy}px, 0)`;
 
-        document.querySelectorAll('.archive-row').forEach(row => {
-            row.addEventListener('mouseenter', function () {
-                const src = this.getAttribute('data-img') || '';
-                const title = this.getAttribute('data-title') || '';
-                const year = this.getAttribute('data-year') || '';
+                // Panel (Only move if NOT transitioning pages)
+                if (!isPanelTransitioning && panel) {
+                    px = lerp(px, mouseX, 0.08);
+                    py = lerp(py, mouseY, 0.08);
+                    tilt = lerp(tilt, clamp((mouseX - prevMX) * 0.4, -10, 10), 0.09);
+                    prevMX = mouseX;
 
-                if (src) panelImg.src = src;
-                if (panelTitle) panelTitle.textContent = title;
-                if (panelYear) panelYear.textContent = year;
+                    panel.style.left = `${px}px`;
+                    panel.style.top = `${py}px`;
 
-                px = mouseX; py = mouseY;
-                panel.style.left = `${px}px`;
-                panel.style.top = `${py}px`;
-
-                panelOn = true;
-                panel.classList.add('is-on');
-
-                if (cursorEl) {
-                    cursorEl.classList.remove('is-link');
-                    cursorEl.classList.add('is-view');
+                    if (panelInner && panelOn) {
+                        panelInner.style.transform = `translate(-50%, -60%) scale(1) rotate(${tilt * 0.35}deg)`;
+                    } else if (panelInner) {
+                        panelInner.style.transform = `translate(-50%, -60%) scale(0.82) rotate(-5deg)`;
+                    }
                 }
-            });
-
-            row.addEventListener('mouseleave', function () {
-                panelOn = false;
-                panel.classList.remove('is-on');
-                if (cursorEl) {
-                    cursorEl.classList.remove('is-view');
-                }
-            });
-
-            row.addEventListener('mousemove', function (e) {
-                const r = this.getBoundingClientRect();
-                const ry = (e.clientX - r.left - r.width / 2) / r.width;
-                const rx = (e.clientY - r.top - r.height / 2) / r.height;
-                this.style.transform = `perspective(1400px) rotateX(${-rx * 2.5}deg) rotateY(${ry * 2.5}deg)`;
-            });
-
-            row.addEventListener('mouseleave', function () {
-                this.style.transform = '';
-            });
-        });
-    } else if (panel) {
-        panel.style.display = 'none';
-    }
-
-    /* ─────────────────────────────────────────
-    5. MAGNETIC ELEMENTS
-    ───────────────────────────────────────── */
-    if (IS_MOUSE_DEVICE) {
-        document.querySelectorAll('[data-mag]').forEach(el => {
-            const strength = parseFloat(el.getAttribute('data-mag') || '0.3');
-            el.addEventListener('mousemove', function (e) {
-                const r = this.getBoundingClientRect();
-                const dx = (e.clientX - r.left - r.width / 2) * strength;
-                const dy = (e.clientY - r.top - r.height / 2) * strength;
-                this.style.transform = `translate(${dx}px, ${dy}px)`;
-            });
-            el.addEventListener('mouseleave', function () {
-                this.style.transition = 'transform 0.8s cubic-bezier(0.16,1,0.3,1)';
-                this.style.transform = '';
-                setTimeout(() => { this.style.transition = ''; }, 800);
-            });
-        });
-    }
-
-    /* ─────────────────────────────────────────
-    6. SCROLL REVEAL ANIMATIONS
-    ───────────────────────────────────────── */
-    const revealObserver = new IntersectionObserver((entries, obs) => {
-        entries.forEach(entry => {
-            if (!entry.isIntersecting) return;
-            const el = entry.target;
-            if (el.classList.contains('reveal-lines')) {
-                el.querySelectorAll('.mask').forEach((m, i) => {
-                    m.style.transitionDelay = `${i * 0.085}s`;
-                    m.classList.add('visible');
-                });
-            } else if (el.classList.contains('archive')) {
-                el.querySelectorAll('.reveal-up').forEach((row, i) => {
-                    row.style.transitionDelay = `${i * 0.1}s`;
-                    row.classList.add('visible');
-                });
-            } else {
-                el.classList.add('visible');
-            }
-            obs.unobserve(el);
-        });
-    }, { rootMargin: '0px 0px -5% 0px', threshold: 0 });
-
-    document.querySelectorAll('.mask, .reveal-up, .reveal-lines, .footer-eyebrow, .archive').forEach(el => {
-        revealObserver.observe(el);
-    });
-
-    const footerCta = document.querySelector('.footer-cta');
-    if (footerCta) {
-        new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (!entry.isIntersecting) return;
-                footerCta.querySelectorAll('.cta-line .mask').forEach((line, i) => {
-                    setTimeout(() => { line.classList.add('visible'); }, i * 150);
-                });
-            });
-        }, { threshold: 0.2 }).observe(footerCta);
-    }
-
-    /* ─────────────────────────────────────────
-    7. SCROLL-BASED PHYSICS & INTERACTIONS
-    ───────────────────────────────────────── */
-    let lastScrollY = window.pageYOffset;
-    let badgeDeg = 0;
-    let skewVal = 0;
-    let navHidden = false;
-    let skewTimer;
-    const badgeWheel = document.getElementById('badge-wheel');
-    const navEl = document.getElementById('nav');
-    const archiveEl = document.getElementById('archive');
-
-    window.addEventListener('scroll', () => {
-        requestAnimationFrame(() => {
-            const y = window.pageYOffset;
-            const dy = y - lastScrollY;
-
-            if (badgeWheel) {
-                badgeDeg += dy * 0.13;
-                badgeWheel.style.transform = `rotate(${badgeDeg}deg)`;
-            }
-
-            if (navEl) {
-                if (dy > 6 && y > 100 && !navHidden) {
-                    navEl.classList.add('nav-up');
-                    navHidden = true;
-                } else if (dy < -4 && navHidden) {
-                    navEl.classList.remove('nav-up');
-                    navHidden = false;
-                }
-            }
-
-            if (archiveEl && window.innerWidth >= 768) {
-                skewVal = lerp(skewVal, clamp(dy * 0.05, -3.5, 3.5), 0.2);
-                archiveEl.style.transform = `skewY(${skewVal}deg)`;
-                clearTimeout(skewTimer);
-                skewTimer = setTimeout(() => {
-                    skewVal = 0;
-                    archiveEl.style.transform = '';
-                }, 200);
-            }
-            lastScrollY = y;
-        });
-    }, { passive: true });
-
-    /* ─────────────────────────────────────────
-    8. HERO MOUSE PARALLAX
-    ───────────────────────────────────────── */
-    if (IS_MOUSE_DEVICE) {
-        const heroTitle = document.querySelector('.hero-title');
-        const heroEye = document.querySelector('.hero-eyebrow');
-        if (heroTitle) {
-            let hx = 0, hy = 0;
-            (function heroLoop() {
-                const nx = (mouseX / window.innerWidth - 0.5);
-                const ny = (mouseY / window.innerHeight - 0.5);
-                hx = lerp(hx, nx * 20, 0.055);
-                hy = lerp(hy, ny * 11, 0.055);
-                heroTitle.style.transform = `translate(${hx}px, ${hy}px)`;
-                if (heroEye) heroEye.style.transform = `translate(${hx * 0.4}px, ${hy * 0.4}px)`;
-                requestAnimationFrame(heroLoop);
+                requestAnimationFrame(uiLoop);
             }());
+
+            // Bind Hover Events dynamically
+            const bindHovers = () => {
+                document.querySelectorAll('a, button').forEach(el => {
+                    el.addEventListener('mouseenter', () => cursorEl?.classList.add('is-link'));
+                    el.addEventListener('mouseleave', () => cursorEl?.classList.remove('is-link'));
+                });
+
+                document.querySelectorAll('.archive-row').forEach(row => {
+                    row.addEventListener('mouseenter', function () {
+                        if(isPanelTransitioning) return;
+                        if (panelImg) panelImg.src = this.getAttribute('data-img') || '';
+                        if (panelTitle) panelTitle.textContent = this.getAttribute('data-title') || '';
+                        if (panelYear) panelYear.textContent = this.getAttribute('data-year') || '';
+                        px = mouseX; py = mouseY;
+                        panelOn = true;
+                        panel?.classList.add('is-on');
+                        cursorEl?.classList.replace('is-link', 'is-view');
+                    });
+                    row.addEventListener('mouseleave', function () {
+                        if(isPanelTransitioning) return;
+                        panelOn = false;
+                        panel?.classList.remove('is-on');
+                        cursorEl?.classList.remove('is-view');
+                    });
+                });
+            };
+            bindHovers();
+
+            // Rebind after Barba transitions
+            barba.hooks.after(() => { bindHovers(); });
         }
     }
+    initInteractiveUI();
 
     /* ─────────────────────────────────────────
-    9. MARQUEE INTERACTION
-    ───────────────────────────────────────── */
-    const marqueeEl = document.querySelector('.marquee');
-    if (marqueeEl) {
-        marqueeEl.addEventListener('mouseenter', function () {
-            this.querySelectorAll('.marquee-row').forEach(r => {
-                r.style.animationPlayState = 'paused';
-            });
-        });
-        marqueeEl.addEventListener('mouseleave', function () {
-            this.querySelectorAll('.marquee-row').forEach(r => {
-                r.style.animationPlayState = 'running';
-            });
-        });
-    }
-
-    /* ─────────────────────────────────────────
-    10. LIVE NEPAL TIME
+       5. LIVE TIME & MISC INTERACTIONS
     ───────────────────────────────────────── */
     const timeEl = document.getElementById('live-time');
     if (timeEl) {
-        const timeFmt = new Intl.DateTimeFormat('en-US', {
-            timeZone: 'Asia/Kathmandu',
-            hour: '2-digit',
-            minute: '2-digit',
-            second: '2-digit',
-            hour12: false
-        });
-        const updateTime = () => {
-            timeEl.textContent = `${timeFmt.format(new Date())} NPT`;
-        };
-        updateTime();
-        setInterval(updateTime, 1000);
+        setInterval(() => {
+            timeEl.textContent = `${new Intl.DateTimeFormat('en-US', { timeZone: 'Asia/Kathmandu', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false }).format(new Date())} NPT`;
+        }, 1000);
     }
 
-}());
+    /* ─────────────────────────────────────────
+       6. BARBA.JS PAGE TRANSITIONS
+    ───────────────────────────────────────── */
+    barba.init({
+        sync: true,
+        transitions: [
+            // IMAGE EXPAND TRANSITION
+            {
+                name: 'image-expand',
+                custom: ({ trigger }) => trigger && trigger.dataset && trigger.dataset.barbaTransition === 'expand',
+                async leave(data) {
+                    const done = this.async();
+                    isPanelTransitioning = true; // Freeze panel movement
+
+                    const panel = document.getElementById('img-panel');
+                    const panelInner = document.getElementById('img-panel-inner');
+                    const cursorEl = document.getElementById('cursor');
+                    
+                    panel.classList.add('is-transitioning');
+                    if(cursorEl) cursorEl.style.opacity = '0'; // Hide cursor temporarily
+
+                    const tl = gsap.timeline({ onComplete: done });
+
+                    // Expand image to center of viewport
+                    tl.to(panelInner, {
+                        width: '100vw', height: '100vh', scale: 1, rotate: 0,
+                        xPercent: -50, yPercent: -50, top: '50vh', left: '50vw',
+                        duration: 1.2, ease: 'expo.inOut'
+                    }, 0);
+
+                    // Fade out current page behind it
+                    tl.to(data.current.container, { autoAlpha: 0, duration: 0.8, ease: 'power3.inOut' }, 0);
+                },
+                async enter(data) {
+                    // Reset the floating image panel back to default hidden state
+                    const panel = document.getElementById('img-panel');
+                    const panelInner = document.getElementById('img-panel-inner');
+                    const cursorEl = document.getElementById('cursor');
+
+                    gsap.set(panelInner, { clearProps: "all" }); 
+                    panel.classList.remove('is-transitioning', 'is-on');
+                    isPanelTransitioning = false;
+                    if(cursorEl) cursorEl.style.opacity = '1';
+
+                    // Fade in new page content (Assuming the new page has a full screen hero image that matches)
+                    gsap.from(data.next.container, { autoAlpha: 0, duration: 1, ease: 'power3.out' });
+                }
+            },
+            // DEFAULT WIPE TRANSITION
+            {
+                name: 'default-wipe',
+                async leave(data) {
+                    const done = this.async();
+                    await gsap.to('.page-transition', { duration: 0.8, scaleY: 1, transformOrigin: 'bottom left', ease: 'expo.inOut' });
+                    done();
+                },
+                async enter(data) {
+                    gsap.to('.page-transition', { duration: 0.8, scaleY: 0, transformOrigin: 'top left', ease: 'expo.inOut', delay: 0.1 });
+                },
+                async once(data) {
+                    // This fires on the very first initial page load
+                    initScrollAnimations();
+                    // Let the setInterval finish, it will call finishLoading if needed, but for safety:
+                    setTimeout(finishLoading, 1000); 
+                }
+            }
+        ]
+    });
+
+    // CRITICAL: Refresh scroll & animations when DOM swaps
+    barba.hooks.after(() => {
+        lenis.scrollTo(0, { immediate: true });
+        ScrollTrigger.refresh();
+        initScrollAnimations();
+    });
+
+})();
