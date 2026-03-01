@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>404 | Page Not Found</title>
+  
+  <meta name="robots" content="noindex, follow"> <!-- Tells Google not to index the error page -->
+  <link rel="icon" type="image/png" href="logo.png">
+
+  <!-- Inter Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  
+  <!-- Uses your exact same global stylesheet -->
+  <link rel="stylesheet" href="style.css">
+
+  <style>
+    /* 404 Specific Layout Overrides */
+    body {
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      justify-content: center;
+      background: var(--text); /* Stark black background for contrast */
+      color: var(--bg); /* White text */
+      overflow: hidden; /* No scrolling needed on a 404 */
+    }
+
+    .error-wrapper {
+      padding: var(--gap);
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 2rem;
+    }
+
+    .error-code {
+      font-size: clamp(8rem, 25vw, 20rem);
+      font-weight: 900;
+      line-height: 0.8;
+      letter-spacing: -0.05em;
+      color: transparent;
+      -webkit-text-stroke: 2px var(--bg); /* Hollow brutalist text */
+      animation: glitch 3s infinite; /* Adds a subtle broken effect */
+    }
+
+    .error-msg {
+      font-size: clamp(1.5rem, 4vw, 3rem);
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: -0.02em;
+    }
+
+    .error-btn {
+      margin-top: 3rem;
+      background: var(--bg);
+      color: var(--text);
+      padding: 1rem 3rem;
+      border-radius: 50px;
+      font-size: 1rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      border: 2px solid transparent;
+      transition: all 0.3s ease;
+      cursor: none;
+    }
+    
+    .error-btn:hover {
+      background: transparent;
+      color: var(--bg);
+      border-color: var(--bg);
+    }
+
+    @keyframes glitch {
+      0% { transform: translate(0); }
+      20% { transform: translate(-2px, 2px); }
+      40% { transform: translate(-2px, -2px); }
+      60% { transform: translate(2px, 2px); }
+      80% { transform: translate(2px, -2px); }
+      100% { transform: translate(0); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Custom Cursor -->
+  <div class="custom-cursor" aria-hidden="true">
+    <span class="cursor-text">HOME</span>
+  </div>
+
+  <main class="error-wrapper">
+    <!-- Massive Glitching 404 Text -->
+    <h1 class="error-code">404</h1>
+    
+    <p class="error-msg">SYSTEM NOT FOUND.</p>
+    
+    <!-- Return Home Button -->
+    <a href="/" class="error-btn">RETURN TO ARCHIVE</a>
+  </main>
+
+  <!-- Include your script so the custom cursor still works! -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="script.js"></script>
+
+  <!-- Small inline script to ensure the cursor works on the dark background -->
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const cursor = document.querySelector('.custom-cursor');
+      const btn = document.querySelector('.error-btn');
+      
+      if (cursor && btn && window.matchMedia("(hover: hover)").matches) {
+        btn.addEventListener('mouseenter', () => cursor.classList.add('is-link'));
+        btn.addEventListener('mouseleave', () => cursor.classList.remove('is-link'));
+      }
+    });
+  </script>
+
+</body>
+</html>
