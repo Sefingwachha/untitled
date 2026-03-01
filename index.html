@@ -5,12 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
   <!-- =====================================================
-       PRIMARY SEO META TAGS
+       PRIMARY SEO META TAGS (Optimized for "Sefin Developer/Designer")
        ===================================================== -->
   <title>Sefin Gwachha | Freelance Web Developer & UI/UX Designer</title>
   <meta name="description" content="Portfolio of Sefin Gwachha, a freelance Web Developer, UI/UX Designer, and Creative Engineer based in Bhaktapur, Nepal. Building high-performance websites and digital experiences.">
   <meta name="keywords" content="Sefin, Sefin Gwachha, Web Developer, UI/UX Designer, Frontend Developer, Web Designer Nepal, Freelance Developer, React, Next.js, WebGL, creative developer bhaktapur">
   <meta name="author" content="Sefin Gwachha">
+  
+  <!-- Tells Google to index the site, follow all links, and show large image previews in search -->
   <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
   <link rel="canonical" href="https://www.sefin.com.np/"> 
 
@@ -18,15 +20,21 @@
   <link rel="icon" type="image/png" href="logo.png">
   <link rel="apple-touch-icon" href="logo.png">
 
-  <!-- Open Graph / Social Media -->
+  <!-- Open Graph / Social Media (LinkedIn, Twitter, iMessage) -->
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://www.sefin.com.np/">
   <meta property="og:title" content="Sefin Gwachha | Web Developer & Designer">
   <meta property="og:description" content="Portfolio of Sefin Gwachha. Bridging the gap between high-end UI/UX design and ruthless technical performance.">
   <meta property="og:image" content="logo.png">
 
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Sefin Gwachha | Web Developer & Designer">
+  <meta name="twitter:description" content="Portfolio of Sefin Gwachha. Bridging the gap between high-end UI/UX design and ruthless technical performance.">
+  <meta name="twitter:image" content="logo.png">
+
   <!-- =====================================================
-       JSON-LD SCHEMA (Tells Google exactly who you are)
+       JSON-LD SCHEMA (The ultimate SEO weapon for personal branding)
        ===================================================== -->
   <script type="application/ld+json">
   {
@@ -47,7 +55,7 @@
       "https://linkedin.com/in/sefin-gwachha/",
       "https://github.com/Sefingwachha"
     ],
-    "knowsAbout": ["Web Development", "UI/UX Design", "React", "Next.js", "Frontend Engineering", Creative Developer]
+    "knowsAbout": ["Web Development", "UI/UX Design", "React", "Next.js", "Frontend Engineering", "Creative Developer"]
   }
   </script>
 
@@ -60,7 +68,7 @@
 <body>
 
   <!-- Custom Cursor -->
-  <div class="custom-cursor">
+  <div class="custom-cursor" aria-hidden="true">
     <span class="cursor-text">VIEW</span>
   </div>
 
@@ -70,11 +78,11 @@
     <div class="nav-status hide-mobile">
       <span class="dot"></span> ACCEPTING PROJECTS '<span class="current-year-short">26</span>
     </div>
-    <div class="nav-links">
+    <nav class="nav-links" aria-label="Main Navigation">
       <a href="#work" class="hide-mobile">Work</a>
       <a href="#about" class="hide-mobile">Capabilities</a>
       <a href="#contact" class="btn">Let's Talk</a>
-    </div>
+    </nav>
   </header>
 
   <main id="smooth-wrapper">
@@ -95,8 +103,8 @@
         </div>
 
         <div class="hero-media border-bottom">
-          <!-- Keyword-rich ALT tags -->
-          <img class="hero-img-parallax" src="image.png" alt="Sefin Gwachha - Freelance Web Developer and UI/UX Designer Portfolio">
+          <!-- Keyword-rich ALT tags, fetchpriority high for Hero -->
+          <img class="hero-img-parallax" src="image.png" alt="Sefin Gwachha - Freelance Web Developer and UI/UX Designer Portfolio" fetchpriority="high">
           <div class="media-overlay">
             <span class="pulse-dot-white"></span>
             <p>SYSTEMS ONLINE</p>
@@ -119,7 +127,7 @@
       </section>
 
       <!-- Marquee Ticker (Stuffed with SEO Keywords natively) -->
-      <div class="marquee-wrap border-top border-bottom">
+      <div class="marquee-wrap border-top border-bottom" aria-hidden="true">
         <div class="marquee">
           <span>WEB DEVELOPMENT</span> <span class="star">✦</span>
           <span>UI/UX DESIGN</span> <span class="star">✦</span>
@@ -143,8 +151,8 @@
           <a href="#contact" class="btn-outline hide-mobile">Start a Project</a>
         </div>
 
-        <!-- Project 1 -->
-        <div class="project-row border-bottom" data-project="euphoria" role="button" tabindex="0">
+        <!-- Project 1 (Changed to semantic <article> tag for SEO) -->
+        <article class="project-row border-bottom" data-project="euphoria" role="button" tabindex="0">
           <div class="proj-info">
             <div class="proj-tags"><span>Web Development</span><span>WebGL</span></div>
             <h3 class="proj-title"><span class="title-mask"><span>EXPERT</span></span></h3>
@@ -152,12 +160,12 @@
             <span class="proj-link">View Case Study ↗</span>
           </div>
           <div class="proj-image">
-            <div class="img-inner"><img src="site.webp" alt="Expert Project - Web Development by Sefin Gwachha"></div>
+            <div class="img-inner"><img src="site.webp" alt="Expert Project - Web Development by Sefin Gwachha" loading="lazy"></div>
           </div>
-        </div>
+        </article>
 
         <!-- Project 2 -->
-        <div class="project-row border-bottom" data-project="cherished" role="button" tabindex="0">
+        <article class="project-row border-bottom" data-project="cherished" role="button" tabindex="0">
           <div class="proj-info">
             <div class="proj-tags"><span>UI/UX Design</span><span>Next.js</span></div>
             <h3 class="proj-title"><span class="title-mask"><span>CHERISHED</span></span></h3>
@@ -165,12 +173,12 @@
             <span class="proj-link">View Case Study ↗</span>
           </div>
           <div class="proj-image">
-            <div class="img-inner"><img src="hero banner.webp" alt="Cherished Project - UI/UX Design by Sefin Gwachha"></div>
+            <div class="img-inner"><img src="hero banner.webp" alt="Cherished Project - UI/UX Design by Sefin Gwachha" loading="lazy"></div>
           </div>
-        </div>
+        </article>
 
         <!-- Project 3 -->
-        <div class="project-row border-bottom" data-project="meridian" role="button" tabindex="0">
+        <article class="project-row border-bottom" data-project="meridian" role="button" tabindex="0">
           <div class="proj-info">
             <div class="proj-tags"><span>Brand Identity</span><span>Frontend</span></div>
             <h3 class="proj-title"><span class="title-mask"><span>MERIDIAN</span></span></h3>
@@ -178,9 +186,10 @@
             <span class="proj-link">View Case Study ↗</span>
           </div>
           <div class="proj-image">
-            <div class="img-inner"><img src="Main Frame.webp" alt="Meridian Project - Frontend Development"></div>
+            <div class="img-inner"><img src="Main Frame.webp" alt="Meridian Project - Frontend Development" loading="lazy"></div>
           </div>
-        </div>
+        </article>
+
       </section>
 
       <!-- Services Grid (Updated with Keywords) -->
@@ -220,9 +229,12 @@
           </div>
           <div class="contact-form-wrap">
             <form id="contact-form" class="contact-form">
-              <div class="form-group border-bottom"><input type="text" id="name" placeholder="YOUR NAME *" required></div>
-              <div class="form-group border-bottom"><input type="email" id="email" placeholder="YOUR EMAIL *" required></div>
-              <div class="form-group border-bottom"><textarea id="message" placeholder="TELL ME ABOUT YOUR PROJECT *" rows="4" required></textarea></div>
+              <!-- Web3Forms Access Key for direct-to-gmail functionality -->
+              <input type="hidden" name="access_key" value="YOUR_ACCESS_KEY_HERE">
+              
+              <div class="form-group border-bottom"><input type="text" id="name" name="name" placeholder="YOUR NAME *" required></div>
+              <div class="form-group border-bottom"><input type="email" id="email" name="email" placeholder="YOUR EMAIL *" required></div>
+              <div class="form-group border-bottom"><textarea id="message" name="message" placeholder="TELL ME ABOUT YOUR PROJECT *" rows="4" required></textarea></div>
               <button type="submit" class="submit-btn"><span>SEND INQUIRY ↗</span></button>
             </form>
             <div id="form-success" class="form-success is-hidden">
@@ -260,7 +272,7 @@
     <div class="modal-content">
       <header class="modal-header border-bottom">
         <div class="modal-brand">CASE STUDY</div>
-        <button id="modal-close" class="modal-close"><span>CLOSE [ESC]</span></button>
+        <button id="modal-close" class="modal-close" aria-label="Close modal"><span>CLOSE [ESC]</span></button>
       </header>
       <div id="modal-loader" class="modal-loader"><div class="brutalist-spinner"></div></div>
       <div id="modal-body" class="modal-body grid-2"></div>
