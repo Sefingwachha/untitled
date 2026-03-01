@@ -53,9 +53,7 @@ html.lenis,html.lenis body{height:auto;}
 }
 .tag-label::before{content:'';width:24px;height:1px;background:var(--muted);flex-shrink:0;}
 
-/* ── 4. ANIMATION INITIAL STATES ──
-   Elements hidden via opacity+transform. JS reveals them.
-   Using !important so nothing overrides initial hidden state before JS runs. */
+/* ── 4. ANIMATION INITIAL STATES ── */
 .anim-fade{opacity:0;}
 .anim-up  {opacity:0;transform:translateY(30px);}
 .anim-project{opacity:0;transform:translateY(44px);}
@@ -234,7 +232,6 @@ html.lenis,html.lenis body{height:auto;}
   position:absolute;top:50%;left:var(--gap);right:var(--gap);
   height:1px;background:var(--border);z-index:0;
   transform:scaleX(0);transform-origin:left center;
-  /* JS will animate this */
 }
 .hero-portrait{
   position:absolute;top:50%;left:50%;
@@ -257,8 +254,6 @@ html.lenis,html.lenis body{height:auto;}
   position:absolute;inset:0;
   background:linear-gradient(180deg,transparent 40%,rgba(7,6,4,.65) 100%);
 }
-
-/* Giant heading */
 .hero-title{
   position:relative;z-index:2;
   font-family:'Bebas Neue',sans-serif;
@@ -268,14 +263,11 @@ html.lenis,html.lenis body{height:auto;}
   margin-bottom:.4vw;
 }
 .hl{overflow:hidden;display:flex;align-items:baseline;gap:.4vw;}
-/* Words start below — JS translates them up */
 .hw,.hs{display:inline-block;transform:translateY(115%);will-change:transform;}
 .hs{
   font-family:'DM Serif Display',serif;font-style:italic;
   font-size:clamp(2.8rem,9vw,11.5rem);color:var(--accent);line-height:.9;
 }
-
-/* Bottom bar */
 .hero-bottom{
   position:relative;z-index:3;
   display:flex;justify-content:space-between;align-items:flex-end;
@@ -284,7 +276,7 @@ html.lenis,html.lenis body{height:auto;}
 .hero-meta{
   font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;
   color:var(--muted2);line-height:1.75;
-  opacity:0;transform:translateY(16px);/* JS reveals */
+  opacity:0;transform:translateY(16px);
 }
 .hm-right{text-align:right;}
 .hero-scroll{
@@ -342,21 +334,14 @@ html.lenis,html.lenis body{height:auto;}
 }
 .about-link:hover{color:var(--accent);}
 .about-link:hover::after{width:100%;}
-
-/* Manifesto heading */
-.manifesto-body{}
 .manifesto-heading{
   font-family:'Bebas Neue',sans-serif;
   font-size:clamp(2.6rem,6.5vw,7.8rem);
   line-height:1.06;letter-spacing:.01em;
   margin-bottom:9vw;
 }
-.manifesto-heading .mask>span{transform:translateY(110%);}/* JS reveals */
-
-/* Services */
-.services-grid{
-  display:grid;grid-template-columns:1fr 1fr;gap:0;
-}
+.manifesto-heading .mask>span{transform:translateY(110%);}
+.services-grid{display:grid;grid-template-columns:1fr 1fr;gap:0;}
 .service-item{padding:2.5rem 0;border-top:1px solid var(--border);}
 .service-item:nth-child(even){padding-left:2.5vw;}
 .service-item:nth-last-child(1),.service-item:nth-last-child(2){border-bottom:1px solid var(--border);}
@@ -385,32 +370,19 @@ html.lenis,html.lenis body{height:auto;}
   font-size:.68rem;letter-spacing:.18em;text-transform:uppercase;
   color:var(--muted);text-align:right;line-height:2.1;
 }
-
-/* Project list */
 .projects-list{max-width:1800px;margin:0 auto;padding:0 var(--gap);}
-
 .project-item{
   position:relative;
   display:grid;grid-template-columns:1fr 1.65fr;gap:5vw;align-items:center;
   border-top:1px solid var(--border);padding:4.5vw 0;
   cursor:none;
-  /* anim-project gives initial hidden state */
 }
 .project-item:last-child{border-bottom:1px solid var(--border);}
-
-/* Hover interactions */
 .project-item:hover .pi-img img{transform:scale(1.02);}
 .project-item:hover .pi-cta{opacity:1;transform:translateX(0);}
 .project-item:hover .pw{transform:translateX(5px);}
-
-.pi-left{
-  display:flex;flex-direction:column;justify-content:space-between;
-  min-height:220px;
-}
-.pi-idx{
-  font-family:'DM Serif Display',serif;font-style:italic;
-  font-size:.78rem;color:var(--muted);display:block;
-}
+.pi-left{display:flex;flex-direction:column;justify-content:space-between;min-height:220px;}
+.pi-idx{font-family:'DM Serif Display',serif;font-style:italic;font-size:.78rem;color:var(--muted);display:block;}
 .pi-bottom{margin-top:auto;}
 .pi-title{
   font-family:'Bebas Neue',sans-serif;
@@ -435,8 +407,7 @@ html.lenis,html.lenis body{height:auto;}
 .pi-img{border-radius:3px;overflow:hidden;aspect-ratio:16/9.5;position:relative;}
 .pi-img img{
   width:100%;height:100%;object-fit:cover;
-  transform:scale(1.05);
-  transition:transform 1.3s var(--ease);
+  transform:scale(1.05);transition:transform 1.3s var(--ease);
   filter:grayscale(.15) contrast(1.05);
 }
 .pi-tint{
@@ -487,9 +458,7 @@ html.lenis,html.lenis body{height:auto;}
   display:grid;grid-template-columns:repeat(3,1fr);
   border:1px solid var(--border);
 }
-.num-item{
-  padding:5vw 4vw;border-right:1px solid var(--border);position:relative;overflow:hidden;
-}
+.num-item{padding:5vw 4vw;border-right:1px solid var(--border);position:relative;overflow:hidden;}
 .num-item:last-child{border-right:none;}
 .num-item::before{
   content:'';position:absolute;inset:0;
@@ -507,7 +476,7 @@ html.lenis,html.lenis body{height:auto;}
 .num-label{font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-bottom:.6rem;}
 .num-sub{font-size:.83rem;color:var(--muted2);font-weight:300;}
 
-/* ── 16. SITE WRAP (footer peek) ── */
+/* ── 16. SITE WRAP ── */
 #site{
   position:relative;z-index:2;background:var(--bg);
   border-radius:0 0 2rem 2rem;
@@ -529,7 +498,6 @@ html.lenis,html.lenis body{height:auto;}
 .footer-eyebrow{
   font-size:.64rem;letter-spacing:.3em;text-transform:uppercase;
   color:var(--muted);margin-bottom:2.5rem;
-  /* anim-fade hides it — JS reveals */
 }
 .footer-cta{
   display:block;
@@ -557,9 +525,7 @@ html.lenis,html.lenis body{height:auto;}
 }
 .fc-val{font-size:.86rem;}
 .fc-links{display:flex;flex-direction:column;gap:.5rem;}
-.fc-link{
-  font-size:.86rem;position:relative;display:inline-block;transition:color .3s;
-}
+.fc-link{font-size:.86rem;position:relative;display:inline-block;transition:color .3s;}
 .fc-link::after{
   content:'';position:absolute;bottom:-1px;left:0;
   width:0;height:1px;background:var(--fg);transition:width .45s var(--ease);
@@ -580,7 +546,6 @@ html.lenis,html.lenis body{height:auto;}
   pointer-events:none;
 }
 #modal.is-open{transform:translateY(0);pointer-events:all;}
-
 .modal-close{
   position:fixed;top:1.6rem;right:var(--gap);z-index:9991;
   display:flex;align-items:center;gap:.75rem;
@@ -602,8 +567,6 @@ html.lenis,html.lenis body{height:auto;}
 .modal-close:hover .close-x{background:var(--fg);border-color:var(--fg);color:var(--bg);}
 .close-lbl{display:none;}
 @media(min-width:640px){.close-lbl{display:block;}}
-
-/* Modal content */
 #modal-body{max-width:1200px;margin:0 auto;padding:7rem var(--gap) 6rem;}
 .m-eyebrow{
   font-size:.64rem;letter-spacing:.26em;text-transform:uppercase;color:var(--muted);
@@ -641,9 +604,7 @@ html.lenis,html.lenis body{height:auto;}
   font-family:'DM Serif Display',serif;font-style:italic;
   font-size:1.2rem;color:var(--accent2);line-height:1.65;
 }
-.m-outcome{
-  margin-top:5rem;padding:4rem;background:var(--bg3);border-radius:4px;border:1px solid var(--border);
-}
+.m-outcome{margin-top:5rem;padding:4rem;background:var(--bg3);border-radius:4px;border:1px solid var(--border);}
 .m-outcome-title{font-size:.64rem;letter-spacing:.24em;text-transform:uppercase;color:var(--muted);margin-bottom:2.5rem;}
 .m-outcome-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:3rem;}
 .m-stat-num{
