@@ -208,3 +208,17 @@ document.addEventListener("DOMContentLoaded", () => {
   document.querySelector('.modal-overlay').addEventListener('click', closeModal);
   document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && modal.classList.contains('is-open')) closeModal(); });
 });
+
+  const PROJECTS = {
+    euphoria: {
+      title: 'Expert', 
+      // ...
+      img: 'site.webp', // Change this to your specific project image
+    },
+    cherished: {
+      title: 'CHERISHED', 
+      // ...
+      img: 'hero banner.webp', // Change this to your specific project image
+    }
+  };
+
