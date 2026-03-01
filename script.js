@@ -1,7 +1,6 @@
 /**
- * SEFIN GWACHHA — script.js v3.0
- * Completely rewritten — matches HTML class names exactly.
- * Defensive: works even if Lenis or GSAP CDN fails.
+ * SEFIN GWACHHA — script.js v3.1
+ * Added Dynamic Year Update & Accessibility Focus Trap
  */
 (function () {
   'use strict';
@@ -53,7 +52,6 @@
   function hasL()   { return typeof Lenis !== 'undefined'; }
   function hasST()  { return hasG() && typeof ScrollTrigger !== 'undefined'; }
 
-  /* Force-show hidden elements (CSS fallback when no GSAP) */
   function show(el) {
     if (!el) return;
     el.style.opacity = '1';
@@ -64,6 +62,14 @@
 
   /* ─── STATE ─────────────────────────────────────────── */
   var lenis = null;
+  var lastFocusedElement = null; // For modal accessibility
+
+  /* ─── 0. DYNAMIC YEAR ───────────────────────────────── */
+  function initDynamicYear() {
+    var year = new Date().getFullYear();
+    qsa('.current-year').forEach(function(el) { el.textContent = year; });
+    qsa('.current-year-short').forEach(function(el) { el.textContent = year.toString().slice(-2); });
+  }
 
   /* ─── 1. LENIS ──────────────────────────────────────── */
   function initLenis() {
@@ -109,6 +115,7 @@
       el.addEventListener('mouseenter', function(){ cur.classList.add('is-link'); });
       el.addEventListener('mouseleave', function(){ cur.classList.remove('is-link'); });
     });
+
     qsa('.project-item').forEach(function(el){
       el.addEventListener('mouseenter', function(){
         cur.classList.remove('is-link');
@@ -123,7 +130,6 @@
     var numEl  = qs('#pre-num');
     var fillEl = qs('#pre-fill');
     var pct = 0;
-
     var t = setInterval(function(){
       pct = Math.min(100, pct + Math.floor(Math.random()*17) + 4);
       if (numEl)  numEl.textContent  = pct;
@@ -135,8 +141,6 @@
   /* ─── 5. HERO ENTRY ─────────────────────────────────── */
   function heroEntry(done) {
     var nav = qs('#nav');
-
-    /* — No GSAP fallback — */
     if (!hasG()) {
       var pre = qs('#preloader');
       if (pre) { pre.style.display='none'; }
@@ -146,42 +150,22 @@
       return;
     }
 
-    /* — GSAP timeline — */
     gsap.timeline({
       onComplete: function(){
         document.body.classList.add('page-ready');
         if (done) done();
       }
     })
-    /* Curtain wipe — hides preloader */
     .to('.pre-curtain', { scaleX:1, duration:0.78, ease:'power4.inOut' })
     .set('#preloader',  { autoAlpha:0 })
-
-    /* Hero horizontal rule */
     .to('.hero-rule', { scaleX:1, duration:1.5, ease:'power3.inOut' }, '-=0.2')
-
-    /* Portrait fades in */
     .to('.hero-portrait', { autoAlpha:1, duration:1.3, ease:'power3.out' }, '-=1.3')
-
-    /* Big words slide up — targets .hw and .hs */
     .to('.hw, .hs', {
-      y: '0%',
-      autoAlpha: 1,
-      duration: 1.45,
-      ease: 'power4.out',
-      stagger: 0.1
+      y: '0%', autoAlpha: 1, duration: 1.45, ease: 'power4.out', stagger: 0.1
     }, '-=1.1')
-
-    /* Bottom bar */
     .to('.hero-meta, .hero-scroll', {
-      y: 0,
-      autoAlpha: 1,
-      duration: 1.0,
-      ease: 'power3.out',
-      stagger: 0.09
+      y: 0, autoAlpha: 1, duration: 1.0, ease: 'power3.out', stagger: 0.09
     }, '-=0.85')
-
-    /* Show nav */
     .add(function(){ if(nav) nav.classList.add('is-visible'); }, '-=0.5');
   }
 
@@ -203,74 +187,47 @@
 
   /* ─── 7. SCROLL ANIMATIONS ───────────────────────────── */
   function initScrollAnims() {
-    /* Fallback — no GSAP/ST */
     if (!hasG() || !hasST()) {
-      showAll(
-        '.anim-fade,.anim-up,.anim-project,'+
-        '.manifesto-heading .mask>span,'+
-        '.works-title .mask>span,'+
-        '.process-title .mask>span,'+
-        '.footer-cta .mask>span,'+
-        '.footer-eyebrow'
-      );
+      showAll('.anim-fade,.anim-up,.anim-project,.manifesto-heading .mask>span,.works-title .mask>span,.process-title .mask>span,.footer-cta .mask>span,.footer-eyebrow');
       initCountersIO();
       return;
     }
 
     var T = 'top 86%';
 
-    /* .anim-fade */
     qsa('.anim-fade').forEach(function(el){
-      gsap.to(el, { opacity:1, duration:0.9, ease:'power2.out',
-        scrollTrigger:{ trigger:el, start:T } });
+      gsap.to(el, { opacity:1, duration:0.9, ease:'power2.out', scrollTrigger:{ trigger:el, start:T } });
     });
 
-    /* .anim-up — NOTE: must clear transform too */
     qsa('.anim-up').forEach(function(el){
       var d = parseFloat(getComputedStyle(el).getPropertyValue('--sd')) || 0;
-      gsap.to(el, { y:0, opacity:1, duration:1.05, ease:'power3.out', delay:d,
-        scrollTrigger:{ trigger:el, start:T } });
+      gsap.to(el, { y:0, opacity:1, duration:1.05, ease:'power3.out', delay:d, scrollTrigger:{ trigger:el, start:T } });
     });
 
-    /* .anim-project */
     qsa('.anim-project').forEach(function(el){
-      gsap.to(el, { y:0, opacity:1, duration:1.15, ease:'power3.out',
-        scrollTrigger:{ trigger:el, start:T } });
+      gsap.to(el, { y:0, opacity:1, duration:1.15, ease:'power3.out', scrollTrigger:{ trigger:el, start:T } });
     });
 
-    /* Manifesto lines — targets mask>span inside .manifesto-heading */
     qsa('.manifesto-heading .mask>span').forEach(function(span, i){
-      gsap.to(span, { y:'0%', duration:1.3, ease:'power4.out', delay:i*0.065,
-        scrollTrigger:{ trigger:'.manifesto-heading', start:'top 82%' } });
+      gsap.to(span, { y:'0%', duration:1.3, ease:'power4.out', delay:i*0.065, scrollTrigger:{ trigger:'.manifesto-heading', start:'top 82%' } });
     });
 
-    /* Works title */
     qsa('.works-title .mask>span').forEach(function(span){
-      gsap.to(span, { y:'0%', duration:1.15, ease:'power4.out',
-        scrollTrigger:{ trigger:'.works-title', start:T } });
+      gsap.to(span, { y:'0%', duration:1.15, ease:'power4.out', scrollTrigger:{ trigger:'.works-title', start:T } });
     });
 
-    /* Process title */
     qsa('.process-title .mask>span').forEach(function(span,i){
-      gsap.to(span, { y:'0%', duration:1.15, ease:'power4.out', delay:i*0.07,
-        scrollTrigger:{ trigger:'.process-title', start:T } });
+      gsap.to(span, { y:'0%', duration:1.15, ease:'power4.out', delay:i*0.07, scrollTrigger:{ trigger:'.process-title', start:T } });
     });
 
-    /* Footer eyebrow */
-    gsap.to('.footer-eyebrow', { opacity:1, y:0, duration:0.9, ease:'power3.out',
-      scrollTrigger:{ trigger:'.footer-top', start:'top 85%' } });
+    gsap.to('.footer-eyebrow', { opacity:1, y:0, duration:0.9, ease:'power3.out', scrollTrigger:{ trigger:'.footer-top', start:'top 85%' } });
 
-    /* Footer CTA lines */
     qsa('.footer-cta .mask>span').forEach(function(span,i){
-      gsap.to(span, { y:'0%', duration:1.4, ease:'power4.out', delay:i*0.1,
-        scrollTrigger:{ trigger:'.footer-cta', start:'top 90%' } });
+      gsap.to(span, { y:'0%', duration:1.4, ease:'power4.out', delay:i*0.1, scrollTrigger:{ trigger:'.footer-cta', start:'top 90%' } });
     });
 
-    /* Hero portrait parallax */
-    gsap.to('.hero-portrait', { yPercent:18, ease:'none',
-      scrollTrigger:{ trigger:'#hero', start:'top top', end:'bottom top', scrub:1.4 } });
+    gsap.to('.hero-portrait', { yPercent:18, ease:'none', scrollTrigger:{ trigger:'#hero', start:'top top', end:'bottom top', scrub:1.4 } });
 
-    /* Animated number counters */
     qsa('[data-count]').forEach(function(el){
       var target = parseInt(el.dataset.count, 10);
       var suffix = el.dataset.suffix || '';
@@ -284,12 +241,9 @@
     });
   }
 
-  /* Fallback counters using IntersectionObserver */
   function initCountersIO() {
     if (!('IntersectionObserver' in window)) {
-      qsa('[data-count]').forEach(function(el){
-        el.textContent = el.dataset.count + (el.dataset.suffix||'');
-      });
+      qsa('[data-count]').forEach(function(el){ el.textContent = el.dataset.count + (el.dataset.suffix||''); });
       return;
     }
     var io = new IntersectionObserver(function(entries, obs){
@@ -308,7 +262,7 @@
     qsa('[data-count]').forEach(function(el){ io.observe(el); });
   }
 
-  /* ─── 8. MODAL ───────────────────────────────────────── */
+  /* ─── 8. MODAL (With Accessibility Focus) ────────────── */
   function buildModal(p) {
     var tags = p.tags.map(function(t){ return '<span class="m-tech">'+t+'</span>'; }).join('');
     return (
@@ -346,25 +300,31 @@
 
   function initModal() {
     var modal   = qs('#modal');
-    var body    = qs('#modal-body');
     var closeBtn= qs('#modal-close');
     if (!modal || !closeBtn) return;
 
     function open(key) {
       var p = PROJECTS[key]; if (!p) return;
+      
+      // Save currently focused element for accessibility
+      lastFocusedElement = document.activeElement;
+      
       modal.innerHTML = closeBtn.outerHTML + buildModal(p);
-      /* Re-bind close button since we replaced innerHTML */
       var newClose = qs('#modal-close', modal);
       if (newClose) newClose.addEventListener('click', close);
 
       modal.classList.add('is-open');
       modal.setAttribute('aria-hidden','false');
+      
       var cl = qs('.modal-close', modal);
       if (cl) cl.classList.add('is-visible');
 
       if (lenis) lenis.stop();
       document.body.style.overflow = 'hidden';
       modal.scrollTop = 0;
+      
+      // Shift focus to the modal wrapper
+      modal.focus();
     }
 
     function close() {
@@ -372,6 +332,11 @@
       modal.setAttribute('aria-hidden','true');
       if (lenis) lenis.start();
       document.body.style.overflow = '';
+      
+      // Return focus to the original element
+      if (lastFocusedElement) {
+        lastFocusedElement.focus();
+      }
     }
 
     qsa('.project-item').forEach(function(el){
@@ -400,11 +365,11 @@
 
   /* ─── BOOT ───────────────────────────────────────────── */
   function boot() {
+    initDynamicYear();
     initGsap();
     initLenis();
     initCursor();
     initTime();
-
     runPreloader(function(){
       heroEntry(function(){
         document.body.classList.add('page-ready');
