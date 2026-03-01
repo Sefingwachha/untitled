@@ -3,378 +3,178 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <!-- SEO & Meta -->
-  <title>Sefin Gwachha — Creative Engineer & Developer</title>
-  <meta name="description" content="Sefin Gwachha — Creative Engineer & Developer based in Nepal. Crafting digital legacies where performant code meets cinematic motion.">
-  <meta name="keywords" content="Creative Engineer, Web Developer, Motion Design, WebGL, Three.js, React, Next.js, Sefin Gwachha, Nepal">
-  <meta name="author" content="Sefin Gwachha">
-  <link rel="canonical" href="https://www.sefin.com.np/">
-
-  <!-- Open Graph -->
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://www.sefin.com.np/">
-  <meta property="og:title" content="Sefin Gwachha — Creative Engineer">
-  <meta property="og:description" content="Crafting digital legacies where performant code meets cinematic motion.">
-  <meta property="og:image" content="https://www.sefin.com.np/og-image.jpg"> <!-- Replace with your actual image -->
-
-  <!-- Twitter -->
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Sefin Gwachha — Creative Engineer">
-  <meta name="twitter:description" content="Crafting digital legacies where performant code meets cinematic motion.">
-
-  <!-- JSON-LD Structured Data for Google -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "Person",
-    "name": "Sefin Gwachha",
-    "url": "https://www.sefin.com.np/",
-    "jobTitle": "Creative Engineer & Developer",
-    "address": {
-      "@type": "PostalAddress",
-      "addressLocality": "Kathmandu",
-      "addressCountry": "Nepal"
-    },
-    "sameAs": [
-      "https://linkedin.com/in/sefin-gwachha/",
-      "https://github.com/Sefingwachha"
-    ]
-  }
-  </script>
-
-  <!-- Favicon -->
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='16' fill='%23070604'/%3E%3Ctext x='50' y='68' font-family='Georgia%2C serif' font-size='44' font-weight='bold' font-style='italic' text-anchor='middle' fill='%23c4a97d'%3ESG%3C/text%3E%3C/svg%3E">
-  <link rel="apple-touch-icon" href="logo.png">
-
-  <!-- Fonts -->
+  <title>Sefin Gwachha — Digital Engineer</title>
+  
+  <!-- Inter Font for that clean, brutalist agency look -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-  <!-- Ambient FX -->
-  <div class="grain" aria-hidden="true"></div>
-  <div class="vignette" aria-hidden="true"></div>
-  <div class="grid-lines" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
-
   <!-- Custom Cursor -->
-  <div id="cursor" aria-hidden="true">
-    <div class="cur-outer"></div>
-    <div class="cur-inner"></div>
-    <span class="cur-label">VIEW</span>
-  </div>
-
-  <!-- Spinning Badge -->
-  <a href="mailto:sefingwachha@gmail.com" class="badge" aria-label="Available for work — Email Sefin">
-    <div class="badge-wheel">
-      <svg viewBox="0 0 100 100" aria-hidden="true">
-        <defs><path id="rp" d="M50,50 m-37,0 a37,37 0 1,1 74,0 a37,37 0 1,1 -74,0"/></defs>
-        <text font-size="10.5" letter-spacing="2.2">
-          <textPath href="#rp">AVAILABLE FOR WORK ✦ LET'S TALK ✦ </textPath>
-        </text>
-      </svg>
-      <div class="badge-dot"></div>
-    </div>
-  </a>
-
-  <!-- Preloader -->
-  <div id="preloader">
-    <div class="pre-wrap">
-      <p class="pre-sig">SEFIN</p>
-      <div class="pre-track"><div class="pre-fill" id="pre-fill"></div></div>
-      <p class="pre-count"><span id="pre-num">0</span>%</p>
-    </div>
-    <div class="pre-curtain"></div>
+  <div class="custom-cursor">
+    <span class="cursor-text">VIEW</span>
   </div>
 
   <!-- Navigation -->
-  <header id="nav">
-    <a href="#hero" class="nav-logo" aria-label="Back to top">SEFIN<sup>©</sup></a>
-    <div class="nav-status hide-sm">
-      <span class="pulse-dot"></span>
-      <span>ACCEPTING CLIENTS — <span class="current-year">2026</span></span>
+  <header class="nav">
+    <div class="nav-logo">SEFIN GWACHHA</div>
+    <div class="nav-status hide-mobile">
+      <span class="dot"></span> ACCEPTING PROJECTS '26
     </div>
-    <nav class="nav-right" aria-label="Main Navigation">
-      <a href="#about" class="nav-link hide-sm">About</a>
-      <a href="#works" class="nav-link hide-sm">Works</a>
-      <a href="#process" class="nav-link hide-sm">Process</a>
-      <a href="mailto:sefingwachha@gmail.com" class="nav-btn">LET'S TALK</a>
-    </nav>
+    <div class="nav-links">
+      <a href="#work" class="hide-mobile">Work</a>
+      <a href="#about" class="hide-mobile">About</a>
+      <a href="mailto:sefingwachha@gmail.com" class="btn">Let's Talk</a>
+    </div>
   </header>
 
-  <!-- SITE WRAP (Semantic Main) -->
-  <main id="site">
+  <!-- Main Content -->
+  <main id="smooth-wrapper">
+    <div id="smooth-content">
 
-    <!-- HERO -->
-    <section id="hero">
-      <div class="hero-glow" aria-hidden="true"></div>
-      <div class="hero-rule" aria-hidden="true"></div>
-      <div class="hero-portrait" aria-hidden="true">
-        <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=2564&auto=format&fit=crop" alt="Abstract rendering" width="700" height="900" fetchpriority="high">
-        <div class="hero-portrait-tint"></div>
-      </div>
-      <h1 class="hero-title" aria-label="Creative Digital Engineer">
-        <span class="hl"><span class="hw">CREATIVE</span></span>
-        <span class="hl"><em class="hs">digital</em><span class="hw">ENGI</span></span>
-        <span class="hl"><span class="hw">NEER.</span></span>
-      </h1>
-      <div class="hero-bottom">
-        <p class="hero-meta hm-left">BASED IN NEPAL<br>WORKING GLOBALLY</p>
-        <div class="hero-scroll">
-          <span>SCROLL</span>
-          <div class="scroll-bar"></div>
+      <!-- Hero Section -->
+      <section class="hero">
+        <div class="hero-top">
+          <p class="eyebrow">Creative Engineering & WebGL</p>
+          <h1 class="hero-title">
+            <span>ENGINEERED</span><br>
+            <span>FOR BRANDS</span><br>
+            <span>THAT MEAN</span><br>
+            <span>BUSINESS.</span>
+          </h1>
         </div>
-        <p class="hero-meta hm-right">PORTFOLIO<br><span class="current-year">2026</span>©</p>
-      </div>
-    </section>
+        <div class="hero-bottom grid-2">
+          <div class="hero-desc border-right">
+            <p>Companies call me when performance meets design. I move digital experiences through their most critical inflection points.</p>
+          </div>
+          <div class="hero-stats">
+            <div class="stat">
+              <h2>98+</h2>
+              <p>Lighthouse Perf</p>
+            </div>
+            <div class="stat">
+              <h2>4YRS</h2>
+              <p>Engineering</p>
+            </div>
+          </div>
+        </div>
+      </section>
 
-    <!-- TICKER -->
-    <div class="ticker bdr-b" aria-hidden="true">
-      <div class="ticker-inner">
-        <span>CREATIVE DEVELOPMENT</span><b>✦</b>
-        <span>MOTION DESIGN</span><b>✦</b>
-        <span>WEBGL & THREE.JS</span><b>✦</b>
-        <span>REACT & NEXT.JS</span><b>✦</b>
-        <span>ART DIRECTION</span><b>✦</b>
-        <span>UI/UX SYSTEMS</span><b>✦</b>
-        <span>TYPESCRIPT</span><b>✦</b>
-        <span>GSAP & LENIS</span><b>✦</b>
-        <span>CREATIVE DEVELOPMENT</span><b>✦</b>
-        <span>MOTION DESIGN</span><b>✦</b>
-        <span>WEBGL & THREE.JS</span><b>✦</b>
-        <span>REACT & NEXT.JS</span><b>✦</b>
-        <span>ART DIRECTION</span><b>✦</b>
-        <span>UI/UX SYSTEMS</span><b>✦</b>
-        <span>TYPESCRIPT</span><b>✦</b>
-        <span>GSAP & LENIS</span><b>✦</b>
+      <!-- Marquee Ticker -->
+      <div class="marquee-wrap border-top border-bottom">
+        <div class="marquee">
+          <span>CREATIVE DEVELOPMENT</span> <span class="star">✦</span>
+          <span>MOTION DESIGN</span> <span class="star">✦</span>
+          <span>WEBGL & THREE.JS</span> <span class="star">✦</span>
+          <span>REACT & NEXT.JS</span> <span class="star">✦</span>
+          <span>CREATIVE DEVELOPMENT</span> <span class="star">✦</span>
+          <span>MOTION DESIGN</span> <span class="star">✦</span>
+          <span>WEBGL & THREE.JS</span> <span class="star">✦</span>
+          <span>REACT & NEXT.JS</span> <span class="star">✦</span>
+        </div>
       </div>
+
+      <!-- Projects Section -->
+      <section id="work" class="projects">
+        <div class="section-header border-bottom">
+          <h2 class="section-title">SELECTED WORKS</h2>
+          <a href="#" class="btn-outline hide-mobile">View All Results</a>
+        </div>
+
+        <!-- Project 1 -->
+        <div class="project-row border-bottom">
+          <div class="proj-info">
+            <div class="proj-tags">
+              <span>Platform Architecture</span>
+              <span>WebGL</span>
+            </div>
+            <h3 class="proj-title">EUPHORIA</h3>
+            <p class="proj-desc">Redefining a beloved music platform with custom WebGL shaders and real-time audio visualisations.</p>
+            <a href="#" class="proj-link">View Case Study ↗</a>
+          </div>
+          <div class="proj-image">
+            <div class="img-inner">
+              <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=2564&auto=format&fit=crop" alt="Euphoria">
+            </div>
+          </div>
+        </div>
+
+        <!-- Project 2 -->
+        <div class="project-row border-bottom">
+          <div class="proj-info">
+            <div class="proj-tags">
+              <span>UI/UX Design</span>
+              <span>Next.js</span>
+            </div>
+            <h3 class="proj-title">CHERISHED</h3>
+            <p class="proj-desc">Securing sub-second first paints for a modern family history archive platform using React Server Components.</p>
+            <a href="#" class="proj-link">View Case Study ↗</a>
+          </div>
+          <div class="proj-image">
+            <div class="img-inner">
+              <img src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=2670&auto=format&fit=crop" alt="Cherished">
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Services Grid (Agency Style) -->
+      <section id="about" class="services">
+        <div class="section-header border-bottom">
+          <h2 class="section-title">THE CAPABILITIES</h2>
+        </div>
+        <div class="service-grid">
+          <div class="srv-item border-right border-bottom">
+            <h4>01</h4>
+            <h3>FRONTEND ENGINEERING</h3>
+            <p>React, Next.js, TypeScript. Architecting scalable, ultra-fast infrastructures built to endure.</p>
+          </div>
+          <div class="srv-item border-right border-bottom">
+            <h4>02</h4>
+            <h3>MOTION & WEBGL</h3>
+            <p>GSAP, Three.js, Canvas API. Fluid, hardware-accelerated interactions that feel expensive.</p>
+          </div>
+          <div class="srv-item border-right border-bottom">
+            <h4>03</h4>
+            <h3>ART DIRECTION</h3>
+            <p>Visual systems, typography hierarchies, and brand identities crafted with editorial precision.</p>
+          </div>
+          <div class="srv-item border-bottom">
+            <h4>04</h4>
+            <h3>UI/UX SYSTEMS</h3>
+            <p>Design systems that scale. Interfaces that think. Every interaction architected with intent.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Huge Footer CTA -->
+      <footer class="footer">
+        <div class="footer-top border-bottom">
+          <p class="eyebrow text-center">BORN TO BE A HALL OF FAMER?</p>
+          <a href="mailto:sefingwachha@gmail.com" class="huge-cta">
+            LET'S WORK <br>TOGETHER
+          </a>
+        </div>
+        <div class="footer-bottom">
+          <div class="ft-col">
+            <p>© SEFIN GWACHHA 2026</p>
+          </div>
+          <div class="ft-col text-center">
+            <p>KATHMANDU, NEPAL</p>
+          </div>
+          <div class="ft-col text-right socials">
+            <a href="https://linkedin.com/in/sefin-gwachha/" target="_blank">LinkedIn</a>
+            <a href="https://github.com/Sefingwachha" target="_blank">GitHub</a>
+          </div>
+        </div>
+      </footer>
+
     </div>
-
-    <!-- ABOUT / MANIFESTO -->
-    <section id="about" class="bdr-t">
-      <div class="about-grid">
-        <aside class="about-sticky">
-          <p class="tag-label anim-fade">( 01 ) MANIFESTO</p>
-          <h2 class="about-name anim-fade">Sefin<br>Gwachha</h2>
-          <p class="about-bio anim-fade">
-            A creative engineer fusing technical precision with visual intelligence.
-            Building digital experiences that outlast trends.
-          </p>
-          <div class="about-links anim-fade">
-            <a href="https://linkedin.com/in/sefin-gwachha/" target="_blank" rel="noopener" class="about-link">LinkedIn ↗</a>
-            <a href="https://github.com/Sefingwachha" target="_blank" rel="noopener" class="about-link">GitHub ↗</a>
-          </div>
-        </aside>
-        <div class="manifesto-body">
-          <h3 class="manifesto-heading">
-            <span class="mask"><span>I engineer digital</span></span>
-            <span class="mask"><span>experiences where</span></span>
-            <span class="mask"><span>performant code</span></span>
-            <span class="mask"><span>meets <em class="serif-i">cinematic</em></span></span>
-            <span class="mask"><span>motion.</span></span>
-          </h3>
-          <div class="services-grid">
-            <div class="service-item anim-up">
-              <span class="service-num">01.</span>
-              <h4 class="service-title">ENGINEERING</h4>
-              <p class="service-desc">React, Next.js, TypeScript. Architecting scalable, ultra-fast infrastructures built to endure.</p>
-            </div>
-            <div class="service-item anim-up" style="--sd:0.1s">
-              <span class="service-num">02.</span>
-              <h4 class="service-title">MOTION & WEBGL</h4>
-              <p class="service-desc">GSAP, Three.js, Canvas API. Fluid, hardware-accelerated interactions that feel expensive.</p>
-            </div>
-            <div class="service-item anim-up" style="--sd:0.05s">
-              <span class="service-num">03.</span>
-              <h4 class="service-title">ART DIRECTION</h4>
-              <p class="service-desc">Visual systems, typography hierarchies, and brand identities crafted with editorial precision.</p>
-            </div>
-            <div class="service-item anim-up" style="--sd:0.15s">
-              <span class="service-num">04.</span>
-              <h4 class="service-title">UI/UX SYSTEMS</h4>
-              <p class="service-desc">Design systems that scale. Interfaces that think. Every interaction architected with intent.</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- WORKS -->
-    <section id="works" class="bdr-t">
-      <div class="works-header">
-        <div>
-          <p class="tag-label anim-fade">( 02 ) SELECTED WORKS</p>
-          <h2 class="works-title"><span class="mask"><span>ARCHIVE</span></span></h2>
-        </div>
-        <p class="works-meta hide-sm anim-fade">2023 — <span class="current-year">2026</span><br>CASE STUDIES</p>
-      </div>
-      <div class="projects-list">
-        <article class="project-item anim-project" data-project="euphoria" role="button" tabindex="0" aria-label="Euphoria — click to view case study">
-          <div class="pi-left">
-            <span class="pi-idx">01 / 03</span>
-            <div class="pi-bottom">
-              <h3 class="pi-title"><span class="pw">EU</span><span class="pw">PHORIA</span></h3>
-              <div class="pi-tags">
-                <span>Platform Architecture</span><span>WebGL</span><span>React</span>
-              </div>
-              <span class="pi-cta">View Case Study →</span>
-            </div>
-          </div>
-          <div class="pi-img-wrap">
-            <div class="pi-img">
-              <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=2564&auto=format&fit=crop" alt="Euphoria project" loading="lazy" width="1200" height="750">
-              <div class="pi-tint"></div>
-            </div>
-          </div>
-          <span class="pi-year">2024</span>
-        </article>
-
-        <article class="project-item anim-project" data-project="cherished" role="button" tabindex="0" aria-label="Cherished — click to view case study">
-          <div class="pi-left">
-            <span class="pi-idx">02 / 03</span>
-            <div class="pi-bottom">
-              <h3 class="pi-title"><span class="pw">CHER</span><span class="pw">ISHED</span></h3>
-              <div class="pi-tags">
-                <span>UI/UX Design</span><span>Next.js</span><span>GSAP</span>
-              </div>
-              <span class="pi-cta">View Case Study →</span>
-            </div>
-          </div>
-          <div class="pi-img-wrap">
-            <div class="pi-img">
-              <img src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=2670&auto=format&fit=crop" alt="Cherished project" loading="lazy" width="1200" height="750">
-              <div class="pi-tint"></div>
-            </div>
-          </div>
-          <span class="pi-year">2024</span>
-        </article>
-
-        <article class="project-item anim-project" data-project="meridian" role="button" tabindex="0" aria-label="Meridian — click to view case study">
-          <div class="pi-left">
-            <span class="pi-idx">03 / 03</span>
-            <div class="pi-bottom">
-              <h3 class="pi-title"><span class="pw">MERI</span><span class="pw">DIAN</span></h3>
-              <div class="pi-tags">
-                <span>Brand Identity</span><span>Three.js</span><span>TypeScript</span>
-              </div>
-              <span class="pi-cta">View Case Study →</span>
-            </div>
-          </div>
-          <div class="pi-img-wrap">
-            <div class="pi-img">
-              <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?q=80&w=2560&auto=format&fit=crop" alt="Meridian project" loading="lazy" width="1200" height="750">
-              <div class="pi-tint"></div>
-            </div>
-          </div>
-          <span class="pi-year">2023</span>
-        </article>
-      </div>
-    </section>
-
-    <!-- PROCESS -->
-    <section id="process" class="bdr-t">
-      <div class="process-header">
-        <div>
-          <p class="tag-label anim-fade">( 03 ) PROCESS</p>
-          <h2 class="process-title">
-            <span class="mask"><span>HOW</span></span>
-            <span class="mask"><span><em class="serif-i">I</em> WORK</span></span>
-          </h2>
-        </div>
-        <span class="process-count hide-sm anim-fade">04 PHASES</span>
-      </div>
-      <div class="process-track">
-        <div class="process-step anim-up">
-          <span class="step-num">01.</span>
-          <h3 class="step-name">DISCOVER</h3>
-          <p class="step-desc">Deep client immersion. Understanding goals, constraints, and the story that needs to be told before a single pixel is placed.</p>
-        </div>
-        <div class="process-step anim-up" style="--sd:0.08s">
-          <span class="step-num">02.</span>
-          <h3 class="step-name">ARCHITECT</h3>
-          <p class="step-desc">Systems thinking. Information architecture, tech stack selection, performance budgeting, and creative direction aligned to brand intent.</p>
-        </div>
-        <div class="process-step anim-up" style="--sd:0.16s">
-          <span class="step-num">03.</span>
-          <h3 class="step-name">ENGINEER</h3>
-          <p class="step-desc">Where code becomes craft. Clean, scalable engineering fused with cinematic motion systems. Every interaction deliberate and tested.</p>
-        </div>
-        <div class="process-step anim-up" style="--sd:0.24s">
-          <span class="step-num">04.</span>
-          <h3 class="step-name">REFINE</h3>
-          <p class="step-desc">Remove 30%. Scale type 20%. Slow animations 15%. Increase whitespace 25%. Restraint is the final design decision.</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- NUMBERS -->
-    <section id="numbers" class="bdr-t">
-      <div class="numbers-grid">
-        <div class="num-item anim-up">
-          <div class="num-big" data-count="12">0</div>
-          <p class="num-label">Projects Shipped</p>
-          <p class="num-sub">Across 6 countries, 4 industries</p>
-        </div>
-        <div class="num-item anim-up" style="--sd:0.1s">
-          <div class="num-big" data-count="98">0</div>
-          <p class="num-label">Lighthouse Score</p>
-          <p class="num-sub">Performance-first, always</p>
-        </div>
-        <div class="num-item anim-up" style="--sd:0.2s">
-          <div class="num-big" data-count="4" data-suffix="yr">0</div>
-          <p class="num-label">Engineering Experience</p>
-          <p class="num-sub">Art × Code × Craft</p>
-        </div>
-      </div>
-    </section>
-  </main><!-- /#site -->
-
-  <!-- FOOTER -->
-  <footer id="footer">
-    <div class="footer-top">
-      <p class="footer-eyebrow anim-fade">READY TO ELEVATE YOUR BRAND?</p>
-      <a href="mailto:sefingwachha@gmail.com" class="footer-cta">
-        <span class="mask ft-line1"><span>LET'S</span></span>
-        <span class="mask ft-line2"><span><em class="serif-i">create</em> TOGETHER →</span></span>
-      </a>
-    </div>
-    <div class="footer-bottom bdr-t">
-      <div class="fc anim-fade">
-        <span class="fc-label">STATUS</span>
-        <p class="fc-val">OPEN FOR PROJECTS '<span class="current-year-short">26</span></p>
-      </div>
-      <div class="fc hide-sm anim-fade">
-        <span class="fc-label">LOCAL TIME</span>
-        <p class="fc-val"><span id="live-time">--:--:--</span> NPT</p>
-      </div>
-      <div class="fc hide-sm anim-fade">
-        <span class="fc-label">LOCATION</span>
-        <p class="fc-val">KATHMANDU, NEPAL</p>
-      </div>
-      <div class="fc anim-fade">
-        <span class="fc-label">SOCIALS</span>
-        <div class="fc-links">
-          <a href="https://linkedin.com/in/sefin-gwachha/" target="_blank" rel="noopener" class="fc-link">LinkedIn</a>
-          <a href="https://github.com/Sefingwachha" target="_blank" rel="noopener" class="fc-link">GitHub</a>
-          <a href="mailto:sefingwachha@gmail.com" class="fc-link">Email</a>
-        </div>
-      </div>
-      <p class="footer-copy hide-sm">© SEFIN GWACHHA <span class="current-year">2026</span></p>
-    </div>
-  </footer>
-
-  <!-- CASE STUDY MODAL -->
-  <div id="modal" role="dialog" aria-modal="true" aria-hidden="true" tabindex="-1">
-    <button id="modal-close" class="modal-close" aria-label="Close">
-      <span class="close-x"><span></span><span></span></span>
-      <span class="close-lbl">CLOSE</span>
-    </button>
-    <div id="modal-body"></div>
-  </div>
+  </main>
 
   <!-- Scripts -->
   <script src="https://unpkg.com/lenis@1.1.14/dist/lenis.min.js"></script>
