@@ -1,16 +1,21 @@
 # ==========================================
-# robots.txt for sefin.com.np
+# SEFIN GWACHHA - SECURE ROBOTS.TXT
 # ==========================================
 
-# Allow all search engine bots to crawl the entire site
 User-agent: *
 Allow: /
 
-# Block bots from crawling unnecessary or private files (Optional, but good practice)
-Disallow: /cgi-bin/
-Disallow: /wp-admin/
+# EXPLICITLY ALLOW ASSETS (Crucial for Google rendering & Core Web Vitals)
+Allow: /*.css$
+Allow: /*.js$
+Allow: /*.png$
+Allow: /*.webp$
+
+# BLOCK SYSTEM FILES & SPAM PATHS
+Disallow: /.git/
 Disallow: /node_modules/
+Disallow: /*.md$
 Disallow: /*.json$
 
-# Link to your sitemap to help Google index your site faster
+# SITEMAP LINK (Points bots directly to your map)
 Sitemap: https://www.sefin.com.np/sitemap.xml
