@@ -73,7 +73,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     requestAnimationFrame(renderCursor);
 
-    // Cursor Hover States
     document.querySelectorAll('.nav a').forEach(link => {
       link.addEventListener('mouseenter', () => cursor.classList.add('is-nav'));
       link.addEventListener('mouseleave', () => cursor.classList.remove('is-nav'));
@@ -86,34 +85,53 @@ document.addEventListener("DOMContentLoaded", () => {
       row.addEventListener('mouseenter', () => cursor.classList.add('is-view'));
       row.addEventListener('mouseleave', () => cursor.classList.remove('is-view'));
     });
-    // Hide Custom Cursor over Form Inputs
     document.querySelectorAll('input, textarea').forEach(input => {
       input.addEventListener('mouseenter', () => cursor.style.display = 'none');
       input.addEventListener('mouseleave', () => cursor.style.display = 'flex');
     });
   }
 
-  // 7. Contact Form Logic
+  // =====================================================
+  // 7. EMAILJS CONTACT FORM LOGIC
+  // =====================================================
   const contactForm = document.getElementById('contact-form');
   const formSuccess = document.getElementById('form-success');
-  const formSubmitBtn = document.querySelector('.submit-btn');
+  const formSubmitBtn = document.getElementById('submit-btn');
 
   if (contactForm) {
-    contactForm.addEventListener('submit', (e) => {
-      e.preventDefault(); 
+    contactForm.addEventListener('submit', function(event) {
+      event.preventDefault(); 
+
       const originalText = formSubmitBtn.innerHTML;
       formSubmitBtn.innerHTML = '<span>SENDING...</span>';
-      
-      setTimeout(() => {
-        formSuccess.classList.remove('is-hidden');
-        contactForm.reset();
-        formSubmitBtn.innerHTML = originalText;
-        setTimeout(() => { formSuccess.classList.add('is-hidden'); }, 5000);
-      }, 1500);
+      formSubmitBtn.style.pointerEvents = 'none'; 
+
+      // ⚠️ IMPORTANT: REPLACE THESE WITH YOUR ACTUAL IDS FROM EMAILJS ⚠️
+      const serviceID = 'YOUR_SERVICE_ID_HERE'; 
+      const templateID = 'YOUR_TEMPLATE_ID_HERE'; 
+
+      emailjs.sendForm(serviceID, templateID, this)
+        .then(() => {
+          formSuccess.classList.remove('is-hidden');
+          formSuccess.innerHTML = "<h3>MESSAGE RECEIVED.</h3><p>I will be in touch shortly.</p>";
+          contactForm.reset();
+          formSubmitBtn.innerHTML = originalText;
+          formSubmitBtn.style.pointerEvents = 'auto';
+          
+          setTimeout(() => { formSuccess.classList.add('is-hidden'); }, 5000);
+        }, (error) => {
+          console.log('FAILED...', error);
+          formSuccess.classList.remove('is-hidden');
+          formSuccess.innerHTML = "<h3 style='color:red;'>TRANSMISSION FAILED.</h3><p>Please email me directly at sefingwachha@gmail.com</p>";
+          formSubmitBtn.innerHTML = originalText;
+          formSubmitBtn.style.pointerEvents = 'auto';
+          
+          setTimeout(() => { formSuccess.classList.add('is-hidden'); }, 5000);
+        });
     });
   }
 
-  // 8. Project Data & Modal Logic (SYNCED WITH HTML)
+  // 8. Project Data & Modal Logic
   const PROJECTS = {
     'jyotisha-saas': {
       title: 'Export Service Hub', 
@@ -164,7 +182,6 @@ document.addEventListener("DOMContentLoaded", () => {
     modalLoader.classList.remove('is-hidden');
     modalBody.classList.remove('is-loaded');
 
-    // Added explicit width/height for layout shift prevention in modal
     modalBody.innerHTML = `
       <aside class="m-sidebar">
         <h2 class="m-title">${data.title}</h2>
@@ -231,5 +248,21 @@ document.addEventListener("DOMContentLoaded", () => {
   document.addEventListener('keydown', (e) => { 
     if (e.key === 'Escape' && modal.classList.contains('is-open')) closeModal(); 
   });
+
+  // =====================================================
+  // 9. GITHUB CONTRIBUTION GRAPH INITIATOR
+  // =====================================================
+  if (document.querySelector('.calendar')) {
+    GitHubCalendar(".calendar", "Sefingwachha", {
+      responsive: true,
+      tooltips: true,
+      global_stats: false 
+    }).then(() => {
+      gsap.fromTo('.calendar', 
+        { opacity: 0, y: 20 }, 
+        { opacity: 1, y: 0, duration: 1, ease: "power3.out" }
+      );
+    });
+  }
 
 });
