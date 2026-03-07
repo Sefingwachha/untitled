@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
-  
+
   // 1. Initialize Lenis Smooth Scrolling
   const lenis = new Lenis({
     duration: 1.2,
@@ -64,7 +64,7 @@ document.addEventListener("DOMContentLoaded", () => {
     let cursorX = mouseX; let cursorY = mouseY;
     
     window.addEventListener('mousemove', (e) => { mouseX = e.clientX; mouseY = e.clientY; });
-
+    
     function renderCursor() {
       cursorX += (mouseX - cursorX) * 0.15;
       cursorY += (mouseY - cursorY) * 0.15;
@@ -78,17 +78,14 @@ document.addEventListener("DOMContentLoaded", () => {
       link.addEventListener('mouseenter', () => cursor.classList.add('is-nav'));
       link.addEventListener('mouseleave', () => cursor.classList.remove('is-nav'));
     });
-
     document.querySelectorAll('a:not(.nav a):not(.proj-link), button').forEach(link => {
       link.addEventListener('mouseenter', () => cursor.classList.add('is-link'));
       link.addEventListener('mouseleave', () => cursor.classList.remove('is-link'));
     });
-
     document.querySelectorAll('.project-row').forEach(row => {
       row.addEventListener('mouseenter', () => cursor.classList.add('is-view'));
       row.addEventListener('mouseleave', () => cursor.classList.remove('is-view'));
     });
-
     // Hide Custom Cursor over Form Inputs
     document.querySelectorAll('input, textarea').forEach(input => {
       input.addEventListener('mouseenter', () => cursor.style.display = 'none');
@@ -116,29 +113,40 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // 8. Project Data & Modal Logic
+  // 8. Project Data & Modal Logic (SYNCED WITH HTML)
   const PROJECTS = {
-    euphoria: {
-      title: 'Expert', // Updated title
-      client: 'Confidential', 
-      role: 'Lead Engineer', 
-      duration: '4 Months',
-      tags: ['Platform Architecture', 'WebGL', 'React', 'GSAP'],
-      img: 'site.webp', // Updated Image
-      overview: 'Euphoria is an immersive digital platform redefining how audiences discover and experience contemporary music. The brief demanded a site that felt less like a product and more like an environment.',
-      challenge: 'The core tension was performance versus expressivity. WebGL shaders and real-time audio visualisations needed to coexist with a sub-100ms LCP.',
-      execution: 'We built a bespoke rendering pipeline prioritising perceptual performance. Architecture separates presentation from data using a headless CMS feeding typed Next.js App Router routes. WebGL is isolated in a Web Worker.'
+    'jyotisha-saas': {
+      title: 'Export Service Hub', 
+      client: 'Internal SaaS', 
+      role: 'Full-Stack Architect', 
+      duration: 'Ongoing',
+      tags: ['Next.js', 'PostgreSQL', 'Prisma', 'Node.js'],
+      img: 'site.webp', 
+      overview: 'Architected and deployed a highly scalable Software-as-a-Service (SaaS) platform. The system handles complex business logic including tiered subscription models and secure payment gateway integrations.',
+      challenge: 'The primary constraint was ensuring absolute data integrity across complex relational databases while maintaining a sub-100ms Largest Contentful Paint (LCP) for the end user.',
+      execution: 'Engineered a high-performance full-stack infrastructure utilizing Next.js, Node.js, and a PostgreSQL database mapped via Prisma ORM. Automated dynamic PDF report generation and containerized deployment with Docker.'
     },
-    cherished: {
-      title: 'CHERISHED', 
-      client: 'Cherished Memories Ltd.', 
-      role: 'Full-Stack Engineer', 
-      duration: '3 Months',
-      tags: ['UI/UX Design', 'Next.js', 'PostgreSQL'],
-      img: 'hero banner.webp', // Updated image
-      overview: 'A platform for preserving family histories through interactive timelines, media galleries, and AI-assisted narrative generation.',
-      challenge: 'Balancing feature density with emotional clarity. Every interaction had to be intuitive and warm — even for users unfamiliar with digital archives.',
-      execution: 'Next.js App Router with React Server Components for sub-second first paints. Custom gesture library for timeline scrubbing at 60fps. Image processing on-edge via Cloudflare Workers.'
+    'temporal-archive': {
+      title: 'TEMPORAL ARCHIVE', 
+      client: 'Personal Brand', 
+      role: 'Creative Developer', 
+      duration: '8 Weeks',
+      tags: ['WebGL', 'GSAP', 'Core Web Vitals', 'UI/UX'],
+      img: 'herobanner.webp', 
+      overview: 'An Awwwards-caliber personal developer portfolio focused on bridging the gap between editorial UI/UX design and ruthless technical performance.',
+      challenge: 'Balancing heavy, hardware-accelerated WebGL animations and cinematic scroll interactions with the strict Core Web Vitals optimization required for a perfect 100/100 Lighthouse score.',
+      execution: 'Implemented advanced frontend engineering techniques including custom shaders and GSAP ScrollTrigger, all sitting on top of a highly optimized, semantic HTML5 structure with comprehensive JSON-LD SEO schema.'
+    },
+    'enterprise-java': {
+      title: 'DATA ANALYSIS & OOP', 
+      client: 'Academic Data Project', 
+      role: 'Data Analyst & Backend Dev', 
+      duration: '12 Weeks',
+      tags: ['Machine Learning', 'Java OOP', 'Regression Analysis'],
+      img: 'mainframe.webp', 
+      overview: 'Conducted advanced data science analysis to generate highly detailed Regression and Classification Analysis Reports for complex AI/ML datasets.',
+      challenge: 'Extracting actionable insights from raw datasets while simultaneously engineering a secure, scalable software architecture that adheres to strict academic evaluation standards.',
+      execution: 'Leveraged deep expertise in machine learning analysis while engineering robust software architectures using strict Java Object-Oriented Programming (OOP) principles, including advanced polymorphism and secure database interactions.'
     }
   };
 
@@ -156,6 +164,7 @@ document.addEventListener("DOMContentLoaded", () => {
     modalLoader.classList.remove('is-hidden');
     modalBody.classList.remove('is-loaded');
 
+    // Added explicit width/height for layout shift prevention in modal
     modalBody.innerHTML = `
       <aside class="m-sidebar">
         <h2 class="m-title">${data.title}</h2>
@@ -166,7 +175,9 @@ document.addEventListener("DOMContentLoaded", () => {
         <div class="m-tags">${data.tags.map(tag => `<span>${tag}</span>`).join('')}</div>
       </aside>
       <main class="m-main">
-        <div class="m-hero-img"><img id="modal-image" src="${data.img}" alt="${data.title}"></div>
+        <div class="m-hero-img">
+          <img id="modal-image" src="${data.img}" alt="${data.title} - Web Development Case Study" width="1200" height="800" loading="lazy">
+        </div>
         <h3 class="m-section-title">OVERVIEW</h3><p class="m-text">${data.overview}</p>
         <h3 class="m-section-title">THE CHALLENGE</h3><p class="m-text">${data.challenge}</p>
         <h3 class="m-section-title">EXECUTION</h3><p class="m-text">${data.execution}</p>
@@ -188,7 +199,10 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
     if (modalImage.complete) { handleImageLoad(); } 
-    else { modalImage.addEventListener('load', handleImageLoad); modalImage.addEventListener('error', handleImageLoad); }
+    else { 
+      modalImage.addEventListener('load', handleImageLoad); 
+      modalImage.addEventListener('error', handleImageLoad); 
+    }
   }
 
   function closeModal() {
@@ -204,10 +218,18 @@ document.addEventListener("DOMContentLoaded", () => {
 
   document.querySelectorAll('.project-row').forEach(row => {
     row.addEventListener('click', () => openModal(row.dataset.project));
-    row.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openModal(row.dataset.project); } });
+    row.addEventListener('keydown', (e) => { 
+      if (e.key === 'Enter' || e.key === ' ') { 
+        e.preventDefault(); 
+        openModal(row.dataset.project); 
+      } 
+    });
   });
 
   modalClose.addEventListener('click', closeModal);
   document.querySelector('.modal-overlay').addEventListener('click', closeModal);
-  document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && modal.classList.contains('is-open')) closeModal(); });
+  document.addEventListener('keydown', (e) => { 
+    if (e.key === 'Escape' && modal.classList.contains('is-open')) closeModal(); 
+  });
+
 });
