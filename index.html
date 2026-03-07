@@ -5,11 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
   <!-- =====================================================
-       PRIMARY SEO META TAGS (Optimized for "Sefin Developer/Designer")
+       PRIMARY SEO META TAGS
        ===================================================== -->
   <title>Sefin Gwachha | Freelance Web Developer & UI/UX Designer</title>
-  <meta name="description" content="Portfolio of Sefin Gwachha, a freelance Web Developer, UI/UX Designer, and Creative Engineer based in Bhaktapur, Nepal. Building high-performance websites and digital experiences.">
-  <meta name="keywords" content="Sefin, Sefin Gwachha, Web Developer, UI/UX Designer, Frontend Developer, Web Designer Nepal, Freelance Developer, React, Next.js, WebGL, creative developer bhaktapur">
+  <meta name="description" content="Portfolio of Sefin Gwachha, a freelance Web Developer, UI/UX Designer, and Creative Engineer based in Bhaktapur, Nepal. Building high-performance Next.js websites and digital experiences.">
+  <meta name="keywords" content="Sefin, Sefin Gwachha, Web Developer, UI/UX Designer, Frontend Developer, Web Designer Nepal, Freelance Developer, React, Next.js, WebGL, creative developer bhaktapur, PostgreSQL, SaaS developer">
   <meta name="author" content="Sefin Gwachha">
   
   <!-- Tells Google to index the site, follow all links, and show large image previews in search -->
@@ -17,24 +17,24 @@
   <link rel="canonical" href="https://www.sefin.com.np/"> 
 
   <!-- Favicon -->
-  <link rel="icon" type="image/png" href="logo.png">
-  <link rel="apple-touch-icon" href="logo.png">
+  <link rel="icon" type="image/png" href="logo.webp">
+  <link rel="apple-touch-icon" href="logo.webp">
 
-  <!-- Open Graph / Social Media (LinkedIn, Twitter, iMessage) -->
+  <!-- Open Graph / Social Media -->
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://www.sefin.com.np/">
   <meta property="og:title" content="Sefin Gwachha | Web Developer & Designer">
   <meta property="og:description" content="Portfolio of Sefin Gwachha. Bridging the gap between high-end UI/UX design and ruthless technical performance.">
-  <meta property="og:image" content="logo.png">
+  <meta property="og:image" content="https://www.sefin.com.np/logo.webp">
 
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Sefin Gwachha | Web Developer & Designer">
   <meta name="twitter:description" content="Portfolio of Sefin Gwachha. Bridging the gap between high-end UI/UX design and ruthless technical performance.">
-  <meta name="twitter:image" content="logo.png">
+  <meta name="twitter:image" content="https://www.sefin.com.np/logo.webp">
 
   <!-- =====================================================
-       JSON-LD SCHEMA (The ultimate SEO weapon for personal branding)
+       JSON-LD SCHEMA 
        ===================================================== -->
   <script type="application/ld+json">
   {
@@ -42,20 +42,21 @@
     "@type": "Person",
     "name": "Sefin Gwachha",
     "alternateName": "Sefin",
-    "jobTitle": ["Web Developer", "UI/UX Designer", "Frontend Developer", "Creative Developer"],
+    "jobTitle": ["Web Developer", "UI/UX Designer", "Frontend Developer", "Creative Developer", "Next.js Engineer"],
     "url": "https://www.sefin.com.np/",
-    "image": "https://www.sefin.com.np/logo.png",
-    "description": "Freelance Web Developer and UI/UX Designer based in Bhaktapur, Nepal.",
+    "image": "https://www.sefin.com.np/logo.webp",
+    "description": "Freelance Web Developer and UI/UX Designer based in Bhaktapur, Nepal. Specializing in React, Next.js, and immersive WebGL experiences.",
     "address": {
       "@type": "PostalAddress",
-      "addressLocality": "Kathmandu, Bhaktapur",
+      "addressLocality": "Bhaktapur",
+      "addressRegion": "Bagmati",
       "addressCountry": "Nepal"
     },
     "sameAs": [
       "https://linkedin.com/in/sefin-gwachha/",
       "https://github.com/Sefingwachha"
     ],
-    "knowsAbout": ["Web Development", "UI/UX Design", "React", "Next.js", "Frontend Engineering", "Creative Developer"]
+    "knowsAbout": ["Web Development", "UI/UX Design", "React", "Next.js", "PostgreSQL", "Frontend Engineering", "WebGL", "GSAP"]
   }
   </script>
 
@@ -65,8 +66,8 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
-<body>
 
+<body>
   <!-- Custom Cursor -->
   <div class="custom-cursor" aria-hidden="true">
     <span class="cursor-text">VIEW</span>
@@ -87,13 +88,11 @@
 
   <main id="smooth-wrapper">
     <div id="smooth-content">
-
+      
       <!-- Hero Section -->
       <section class="hero">
         <div class="hero-top border-bottom">
-          <!-- H1 is critical for SEO: Contains your name and target job titles -->
           <h1 class="eyebrow">Sefin Gwachha — Web Developer & UI/UX Designer</h1>
-          
           <h2 class="hero-title">
             <span class="title-mask"><span>DIGITAL</span></span>
             <span class="title-mask"><span class="indent">EXPERIENCES</span></span>
@@ -101,22 +100,20 @@
             <span class="title-mask"><span class="indent outline-text">TO ENDURE.</span></span>
           </h2>
         </div>
-
         <div class="hero-media border-bottom">
-          <!-- Keyword-rich ALT tags, fetchpriority high for Hero -->
-          <img class="hero-img-parallax" src="image.png" alt="Sefin Gwachha - Freelance Web Developer and UI/UX Designer Portfolio" fetchpriority="high">
+          <!-- Added explicit width/height to prevent CLS, kept fetchpriority high for LCP -->
+          <img class="hero-img-parallax" src="hero-image.webp" alt="Sefin Gwachha - Freelance Web Developer and UI/UX Designer Portfolio" width="1920" height="1080" fetchpriority="high">
           <div class="media-overlay">
             <span class="pulse-dot-white"></span>
             <p>SYSTEMS ONLINE</p>
           </div>
         </div>
-
         <div class="hero-bottom-grid">
           <div class="h-col h-desc border-right">
             <p>I bridge the gap between high-end UI/UX design and ruthless frontend development. Based in Nepal, building globally.</p>
           </div>
           <div class="h-col h-stat border-right">
-            <h2>10<span class="small-caps">Lighthouse</span></h2>
+            <h2>100<span class="small-caps">Lighthouse</span></h2>
             <p>Performance First</p>
           </div>
           <div class="h-col h-scroll">
@@ -126,7 +123,7 @@
         </div>
       </section>
 
-      <!-- Marquee Ticker (Stuffed with SEO Keywords natively) -->
+      <!-- Marquee Ticker -->
       <div class="marquee-wrap border-top border-bottom" aria-hidden="true">
         <div class="marquee">
           <span>WEB DEVELOPMENT</span> <span class="star">✦</span>
@@ -142,7 +139,7 @@
         </div>
       </div>
 
-      <!-- Projects Section -->
+      <!-- Projects Section (Updated with LSI Keywords and Real Context) -->
       <section id="work" class="projects">
         <div class="section-header border-bottom">
           <h2 class="section-title">
@@ -151,68 +148,68 @@
           <a href="#contact" class="btn-outline hide-mobile">Start a Project</a>
         </div>
 
-        <!-- Project 1 (Changed to semantic <article> tag for SEO) -->
-        <article class="project-row border-bottom" data-project="euphoria" role="button" tabindex="0">
+        <!-- Project 1: Jyotisha SaaS -->
+        <article class="project-row border-bottom" data-project="jyotisha-saas" role="button" tabindex="0">
           <div class="proj-info">
-            <div class="proj-tags"><span>Web Development</span><span>WebGL</span></div>
-            <h3 class="proj-title"><span class="title-mask"><span>EXPERT</span></span></h3>
-            <p class="proj-desc">Redefining a beloved music platform with custom WebGL shaders and real-time audio visualisations.</p>
+            <div class="proj-tags"><span>Next.js SaaS</span><span>PostgreSQL</span></div>
+            <h3 class="proj-title"><span class="title-mask"><span>JYOTISHA</span></span></h3>
+            <p class="proj-desc">Architected a high-performance Vedic Astrology SaaS platform. Engineered a full-stack infrastructure utilizing Next.js, Node.js, and a PostgreSQL database managed via Prisma ORM.</p>
             <span class="proj-link">View Case Study ↗</span>
           </div>
           <div class="proj-image">
-            <div class="img-inner"><img src="site.webp" alt="Expert Project - Web Development by Sefin Gwachha" loading="lazy"></div>
+            <!-- Explicit dimensions for CLS fix -->
+            <div class="img-inner"><img src="jyotisha.webp" alt="Jyotisha SaaS Platform - Next.js and PostgreSQL development" width="800" height="600" loading="lazy"></div>
           </div>
         </article>
 
-        <!-- Project 2 -->
-        <article class="project-row border-bottom" data-project="cherished" role="button" tabindex="0">
+        <!-- Project 2: Awwwards Portfolio -->
+        <article class="project-row border-bottom" data-project="temporal-archive" role="button" tabindex="0">
           <div class="proj-info">
-            <div class="proj-tags"><span>UI/UX Design</span><span>Next.js</span></div>
-            <h3 class="proj-title"><span class="title-mask"><span>CHERISHED</span></span></h3>
-            <p class="proj-desc">Securing sub-second first paints for a modern family history archive platform using React Server Components.</p>
+            <div class="proj-tags"><span>WebGL</span><span>GSAP Motion</span></div>
+            <h3 class="proj-title"><span class="title-mask"><span>TEMPORAL</span></span></h3>
+            <p class="proj-desc">Developed an Awwwards-caliber personal developer portfolio focused on ruthless performance. Leveraged advanced frontend engineering, custom shaders, and Three.js.</p>
             <span class="proj-link">View Case Study ↗</span>
           </div>
           <div class="proj-image">
-            <div class="img-inner"><img src="hero banner.webp" alt="Cherished Project - UI/UX Design by Sefin Gwachha" loading="lazy"></div>
+            <div class="img-inner"><img src="portfolio-banner.webp" alt="Temporal Archive - WebGL and GSAP Frontend Engineering" width="800" height="600" loading="lazy"></div>
           </div>
         </article>
 
-        <!-- Project 3 -->
-        <article class="project-row border-bottom" data-project="meridian" role="button" tabindex="0">
+        <!-- Project 3: AI/ML & Java -->
+        <article class="project-row border-bottom" data-project="enterprise-java" role="button" tabindex="0">
           <div class="proj-info">
-            <div class="proj-tags"><span>Brand Identity</span><span>Frontend</span></div>
-            <h3 class="proj-title"><span class="title-mask"><span>MERIDIAN</span></span></h3>
-            <p class="proj-desc">A WebGL-first site built around a bespoke 3D typographic sculpture responding to scroll velocity.</p>
+            <div class="proj-tags"><span>Machine Learning</span><span>Java OOP</span></div>
+            <h3 class="proj-title"><span class="title-mask"><span>ANALYSIS</span></span></h3>
+            <p class="proj-desc">Conducted advanced data science analysis generating Regression Reports, while engineering robust, scalable software architectures using strict Java OOP principles.</p>
             <span class="proj-link">View Case Study ↗</span>
           </div>
           <div class="proj-image">
-            <div class="img-inner"><img src="Main Frame.webp" alt="Meridian Project - Frontend Development" loading="lazy"></div>
+            <div class="img-inner"><img src="java-data.webp" alt="Machine Learning Regression Analysis and Java OOP Architecture" width="800" height="600" loading="lazy"></div>
           </div>
         </article>
-
       </section>
 
-      <!-- Services Grid (Updated with Keywords) -->
+      <!-- Services Grid -->
       <section id="about" class="services">
         <div class="section-header border-bottom">
           <h2 class="section-title"><span class="title-mask"><span>THE CAPABILITIES</span></span></h2>
         </div>
         <div class="service-grid">
           <div class="srv-item border-right border-bottom">
-            <h4>01</h4><h3>WEB DEVELOPMENT</h3>
-            <p>React, Next.js, TypeScript. Architecting scalable, ultra-fast infrastructures built to endure.</p>
+            <h4>01</h4><h3>FULL-STACK WEB DEVELOPMENT</h3>
+            <p>React, Next.js, Node.js, PostgreSQL. Architecting highly scalable, ultra-fast infrastructures built to endure.</p>
           </div>
           <div class="srv-item border-right border-bottom">
             <h4>02</h4><h3>UI/UX DESIGN</h3>
-            <p>Visual systems, typography hierarchies, and brand identities crafted with editorial precision.</p>
+            <p>Visual systems, typography hierarchies, and premium brand identities crafted with editorial precision.</p>
           </div>
           <div class="srv-item border-right border-bottom">
             <h4>03</h4><h3>MOTION & WEBGL</h3>
-            <p>GSAP, Three.js, Canvas API. Fluid, hardware-accelerated interactions that feel expensive.</p>
+            <p>GSAP, Three.js, Canvas API. Fluid, hardware-accelerated interactions that secure 100/100 Core Web Vitals.</p>
           </div>
           <div class="srv-item border-bottom">
             <h4>04</h4><h3>SYSTEMS ARCHITECTURE</h3>
-            <p>Design systems that scale. Interfaces that think. Every interaction architected with intent.</p>
+            <p>Design systems that scale. Database architectures that think. Every interaction engineered with intent.</p>
           </div>
         </div>
       </section>
@@ -225,11 +222,11 @@
               <span class="title-mask"><span>START A</span></span>
               <span class="title-mask"><span>PROJECT</span></span>
             </h2>
-            <p class="contact-desc">Looking for a developer or designer? I am currently accepting new partnerships. Outline your project below.</p>
+            <p class="contact-desc">Looking for a Next.js developer or UI/UX designer? I am currently accepting new partnerships. Outline your project below.</p>
           </div>
           <div class="contact-form-wrap">
             <form id="contact-form" class="contact-form">
-              <!-- Web3Forms Access Key for direct-to-gmail functionality -->
+              <!-- Web3Forms Access Key -->
               <input type="hidden" name="access_key" value="YOUR_ACCESS_KEY_HERE">
               
               <div class="form-group border-bottom"><input type="text" id="name" name="name" placeholder="YOUR NAME *" required></div>
@@ -248,21 +245,21 @@
       <footer class="footer">
         <div class="footer-top border-bottom">
           <p class="eyebrow text-center" style="color:var(--bg); opacity:0.6;">LOOKING FOR A WEB DEVELOPER & DESIGNER?</p>
-          <a href="#contact" class="huge-cta">
-            <span class="title-mask"><span>LET'S WORK</span></span>
-            <span class="title-mask"><span>TOGETHER</span></span>
-          </a>
-        </div>
+         <a href="mailto:sefingwachha@gmail.com?subject=Project%20Inquiry%20-%20sefin.com.np" class="huge-cta">
+  <span class="title-mask"><span>LET'S WORK</span></span>
+  <span class="title-mask"><span>TOGETHER</span></span>
+</a>
+      </div>
         <div class="footer-bottom">
           <div class="ft-col"><p>SEFIN GWACHHA © <span class="current-year">2026</span></p></div>
-          <div class="ft-col text-center"><p>KATHMANDU, NEPAL</p></div>
+          <div class="ft-col text-center"><p>BHAKTAPUR, NEPAL</p></div>
           <div class="ft-col text-right socials">
             <a href="https://linkedin.com/in/sefin-gwachha/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
             <a href="https://github.com/Sefingwachha" target="_blank" rel="noopener noreferrer">GitHub</a>
+            <a href="https://www.instagram.com/___sefin?igsh=aW4xdXIyY2FzanYz" target="_blank" rel="noopener noreferrer">Instagram</a>
           </div>
         </div>
       </footer>
-
     </div>
   </main>
 
@@ -278,10 +275,7 @@
         </button>
       </header>
       <div id="modal-loader" class="modal-loader"><div class="brutalist-spinner"></div></div>
-      
-      <!-- ADDED data-lenis-prevent SO YOU CAN SCROLL INSIDE IT -->
       <div id="modal-body" class="modal-body grid-2" data-lenis-prevent></div>
-      
     </div>
   </div>
 
