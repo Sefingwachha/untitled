@@ -9,7 +9,7 @@
   <!-- PRIMARY SEO -->
   <title>Sefin Gwachha | Web Developer in Bhaktapur Nepal</title>
   <meta name="description" content="Sefin Gwachha is a frontend developer and UI UX designer based in Bhaktapur, Kathmandu Valley, Nepal specializing in modern web development and user interface design.">
-  <meta name="keywords" content="Sefin, Sefin Gwachha, creative developer Bhaktapur,  web developer Bhaktapur, frontend developer Nepal, UI UX designer Nepal, freelance developer Nepal, React, Next.js, WebGL">
+  <meta name="keywords" content="Sefin, Sefin Gwachha, creative developer Bhaktapur, web developer Bhaktapur, frontend developer Nepal, UI UX designer Nepal, freelance developer Nepal, React, Next.js, WebGL">
   <meta name="author" content="Sefin Gwachha">
 
   <link rel="canonical" href="https://www.sefin.com.np">
@@ -46,20 +46,29 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="preload" href="style.css" as="style">
   <link rel="stylesheet" href="style.css">
-
-  <!-- DNS PREFETCH -->
   <link rel="dns-prefetch" href="//fonts.googleapis.com">
 
-  <!-- =====================================================
-       JSON-LD SCHEMA (Flawless Syntax - No Backslashes)
-       ===================================================== -->
+  <!-- GITHUB CALENDAR CSS & JS -->
+  <link rel="stylesheet" href="https://unpkg.com/github-calendar@latest/dist/github-calendar-responsive.css"/>
+  <script src="https://unpkg.com/github-calendar@latest/dist/github-calendar.min.js"></script>
+
+  <!-- EMAILJS INTEGRATION -->
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+  <script type="text/javascript">
+    (function() {
+      // Your specific EmailJS Public Key
+      emailjs.init({ publicKey: "fL987Xzq3urwqyufJ" });
+    })();
+  </script>
+
+  <!-- JSON-LD SCHEMA -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "Person",
     "name": "Sefin Gwachha",
     "alternateName": "Sefin",
-    "jobTitle": ["Web Developer","creative developer Bhaktapur", "UI/UX Designer", "Frontend Developer", "Next.js Engineer"],
+    "jobTitle": ["Web Developer", "creative developer Bhaktapur", "UI/UX Designer", "Frontend Developer", "Next.js Engineer"],
     "url": "https://www.sefin.com.np/",
     "image": "https://www.sefin.com.np/logo.png",
     "description": "Frontend developer and UI UX designer based in Bhaktapur, Kathmandu Valley, Nepal.",
@@ -223,6 +232,21 @@
         </div>
       </section>
 
+      <!-- GitHub Activity Section -->
+      <section id="activity" class="activity border-top">
+        <div class="section-header border-bottom">
+          <h2 class="section-title">
+            <span class="title-mask"><span>CODE</span></span>
+            <span class="title-mask"><span>ACTIVITY</span></span>
+          </h2>
+        </div>
+        <div class="github-graph-wrapper" style="padding: 4vw; border-bottom: 1px solid var(--border, #333);">
+          <div class="calendar">
+            Loading Sefin's GitHub Contributions...
+          </div>
+        </div>
+      </section>
+
       <!-- Contact Section -->
       <section id="contact" class="contact border-top">
         <div class="contact-grid">
@@ -235,12 +259,10 @@
           </div>
           <div class="contact-form-wrap">
             <form id="contact-form" class="contact-form">
-              <!-- If using Web3Forms, put your real key here -->
-              <input type="hidden" name="access_key" value="YOUR_ACCESS_KEY_HERE">
               <div class="form-group border-bottom"><input type="text" id="name" name="name" placeholder="YOUR NAME *" required></div>
               <div class="form-group border-bottom"><input type="email" id="email" name="email" placeholder="YOUR EMAIL *" required></div>
               <div class="form-group border-bottom"><textarea id="message" name="message" placeholder="TELL ME ABOUT YOUR PROJECT *" rows="4" required></textarea></div>
-              <button type="submit" class="submit-btn"><span>SEND INQUIRY ↗</span></button>
+              <button type="submit" class="submit-btn" id="submit-btn"><span>SEND INQUIRY ↗</span></button>
             </form>
             <div id="form-success" class="form-success is-hidden">
               <h3>MESSAGE RECEIVED.</h3><p>I will be in touch shortly.</p>
