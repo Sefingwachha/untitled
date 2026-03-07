@@ -106,9 +106,9 @@ document.addEventListener("DOMContentLoaded", () => {
       formSubmitBtn.innerHTML = '<span>SENDING...</span>';
       formSubmitBtn.style.pointerEvents = 'none'; 
 
-      // ⚠️ IMPORTANT: REPLACE THESE WITH YOUR ACTUAL IDS FROM EMAILJS ⚠️
-      const serviceID = 'YOUR_SERVICE_ID_HERE'; 
-      const templateID = 'YOUR_TEMPLATE_ID_HERE'; 
+      // ⚠️ IMPORTANT: IDS FROM EMAILJS ⚠️
+      const serviceID = 'service_qe1l5ie'; 
+      const templateID = 'template_xvcyzsn'; 
 
       emailjs.sendForm(serviceID, templateID, this)
         .then(() => {
