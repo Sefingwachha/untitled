@@ -92,49 +92,66 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // =====================================================
-  // 7. EMAILJS CONTACT FORM LOGIC (HARDCODED PAYLOAD)
+  // 7. EMAILJS CONTACT FORM LOGIC (REFACTORED)
   // =====================================================
   const contactForm = document.getElementById('contact-form');
-  const formSuccess = document.getElementById('form-success');
-  const formSubmitBtn = document.getElementById('submit-btn');
-
   if (contactForm) {
+    const emailJsConfig = {
+      serviceID: 'service_8g0b2to',
+      templateID: 'template_x21l65x',
+    };
+
+    const formSubmitBtn = document.getElementById('submit-btn');
+    const formSuccessEl = document.getElementById('form-success');
+    const originalBtnText = formSubmitBtn.innerHTML;
+
+    const setFormState = (state, message, color) => {
+      formSuccessEl.classList.remove('is-hidden');
+      formSuccessEl.innerHTML = `<h3 style='color:${color || 'inherit'};'>${message.title}</h3><p>${message.body}</p>`;
+      
+      if (state === 'submitting') {
+        formSubmitBtn.innerHTML = '<span>SENDING...</span>';
+        formSubmitBtn.style.pointerEvents = 'none';
+      } else {
+        formSubmitBtn.innerHTML = originalBtnText;
+        formSubmitBtn.style.pointerEvents = 'auto';
+        if (state === 'success') {
+          contactForm.reset();
+        }
+      }
+    };
+
+    const hideStatusMessage = () => {
+      formSuccessEl.classList.add('is-hidden');
+    };
+
     contactForm.addEventListener('submit', function(event) {
-      event.preventDefault(); 
+      event.preventDefault();
 
-      const originalText = formSubmitBtn.innerHTML;
-      formSubmitBtn.innerHTML = '<span>SENDING...</span>';
-      formSubmitBtn.style.pointerEvents = 'none'; 
+      setFormState('submitting', { title: '', body: '' });
 
-      const serviceID = 'service_8g0b2to'; 
-      const templateID = 'template_x21l65x'; 
-
-      // Manually grab the data from the form to ensure it sends correctly
       const templateParams = {
         name: document.getElementById('name').value,
         email: document.getElementById('email').value,
         message: document.getElementById('message').value
       };
 
-      // Send the data explicitly
-      emailjs.send(serviceID, templateID, templateParams)
-        .then(() => {
-          console.log('SUCCESS! Email sent.');
-          formSuccess.classList.remove('is-hidden');
-          formSuccess.innerHTML = "<h3>MESSAGE RECEIVED.</h3><p>I will be in touch shortly.</p>";
-          contactForm.reset();
-          formSubmitBtn.innerHTML = originalText;
-          formSubmitBtn.style.pointerEvents = 'auto';
-          
-          setTimeout(() => { formSuccess.classList.add('is-hidden'); }, 5000);
-        }, (error) => {
+      emailjs.send(emailJsConfig.serviceID, emailJsConfig.templateID, templateParams)
+        .then((response) => {
+          console.log('SUCCESS!', response.status, response.text);
+          setFormState('success', {
+            title: 'MESSAGE RECEIVED.',
+            body: 'I will be in touch shortly.'
+          });
+          setTimeout(hideStatusMessage, 5000);
+        })
+        .catch((error) => {
           console.error('FAILED...', error);
-          formSuccess.classList.remove('is-hidden');
-          formSuccess.innerHTML = "<h3 style='color:red;'>TRANSMISSION FAILED.</h3><p>Please email me directly at sefingwachha@gmail.com</p>";
-          formSubmitBtn.innerHTML = originalText;
-          formSubmitBtn.style.pointerEvents = 'auto';
-          
-          setTimeout(() => { formSuccess.classList.add('is-hidden'); }, 5000);
+          setFormState('error', {
+            title: 'TRANSMISSION FAILED.',
+            body: 'Please email me directly at sefingwachha@gmail.com'
+          }, 'red');
+          setTimeout(hideStatusMessage, 5000);
         });
     });
   }
@@ -185,11 +202,9 @@ document.addEventListener("DOMContentLoaded", () => {
   function openModal(projectId) {
     const data = PROJECTS[projectId];
     if (!data) return;
-
     lastFocusedElement = document.activeElement;
     modalLoader.classList.remove('is-hidden');
     modalBody.classList.remove('is-loaded');
-
     modalBody.innerHTML = `
       <aside class="m-sidebar">
         <h2 class="m-title">${data.title}</h2>
@@ -222,7 +237,6 @@ document.addEventListener("DOMContentLoaded", () => {
         modalBody.classList.add('is-loaded');
       }, 300); 
     };
-
     if (modalImage.complete) { handleImageLoad(); } 
     else { 
       modalImage.addEventListener('load', handleImageLoad); 
@@ -272,5 +286,4 @@ document.addEventListener("DOMContentLoaded", () => {
       );
     });
   }
-
 });
