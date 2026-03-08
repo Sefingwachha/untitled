@@ -92,7 +92,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // =====================================================
-  // 7. EMAILJS CONTACT FORM LOGIC
+  // 7. EMAILJS CONTACT FORM LOGIC (HARDCODED PAYLOAD)
   // =====================================================
   const contactForm = document.getElementById('contact-form');
   const formSuccess = document.getElementById('form-success');
@@ -106,12 +106,20 @@ document.addEventListener("DOMContentLoaded", () => {
       formSubmitBtn.innerHTML = '<span>SENDING...</span>';
       formSubmitBtn.style.pointerEvents = 'none'; 
 
-      // ⚠️ IMPORTANT: IDS FROM EMAILJS ⚠️
-      const serviceID = 'service_qe1l5ie'; 
-      const templateID = 'template_xvcyzsn'; 
+      const serviceID = 'service_8g0b2to'; 
+      const templateID = 'template_x21l65x'; 
 
-      emailjs.sendForm(serviceID, templateID, this)
+      // Manually grab the data from the form to ensure it sends correctly
+      const templateParams = {
+        name: document.getElementById('name').value,
+        email: document.getElementById('email').value,
+        message: document.getElementById('message').value
+      };
+
+      // Send the data explicitly
+      emailjs.send(serviceID, templateID, templateParams)
         .then(() => {
+          console.log('SUCCESS! Email sent.');
           formSuccess.classList.remove('is-hidden');
           formSuccess.innerHTML = "<h3>MESSAGE RECEIVED.</h3><p>I will be in touch shortly.</p>";
           contactForm.reset();
@@ -120,7 +128,7 @@ document.addEventListener("DOMContentLoaded", () => {
           
           setTimeout(() => { formSuccess.classList.add('is-hidden'); }, 5000);
         }, (error) => {
-          console.log('FAILED...', error);
+          console.error('FAILED...', error);
           formSuccess.classList.remove('is-hidden');
           formSuccess.innerHTML = "<h3 style='color:red;'>TRANSMISSION FAILED.</h3><p>Please email me directly at sefingwachha@gmail.com</p>";
           formSubmitBtn.innerHTML = originalText;
