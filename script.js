@@ -97,8 +97,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const contactForm = document.getElementById('contact-form');
   if (contactForm) {
     const emailJsConfig = {
-      serviceID: 'service_8g0b2to',
-      templateID: 'template_x21l65x',
+      serviceID: 'service_qe1l5ie',
+      templateID: 'template_xvcyzsn',
     };
 
     const formSubmitBtn = document.getElementById('submit-btn');
